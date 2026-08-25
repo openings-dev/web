@@ -382,6 +382,8 @@ export const deTranslations: TranslationMessages = {
       github: "GitHub",
       bluesky: "Bluesky",
       mastodon: "Mastodon",
+      threads: "Threads",
+      instagram: "Instagram",
       contributing: "Mitwirken",
       reportIssue: "Problem melden",
       privacyPolicy: "Datenschutzerklärung",
@@ -393,6 +395,8 @@ export const deTranslations: TranslationMessages = {
       githubAriaLabel: "openings.dev auf GitHub öffnen",
       blueskyAriaLabel: "openings.dev auf Bluesky öffnen",
       mastodonAriaLabel: "openings.dev auf Mastodon öffnen",
+      threadsAriaLabel: "openings.dev auf Threads öffnen",
+      instagramAriaLabel: "openings.dev auf Instagram öffnen",
     },
   },
   docsHub: {

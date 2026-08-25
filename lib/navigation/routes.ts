@@ -23,6 +23,8 @@ export const EXTERNAL_ROUTES = {
   githubRepository: "https://github.com/openings-dev/web",
   bluesky: "https://bsky.app/profile/openingshq.bsky.social",
   mastodon: "https://mastodon.social/@openingshq",
+  threads: "https://www.threads.com/@openingshq",
+  instagram: "https://www.instagram.com/openingshq/",
   reportIssue:
     "https://github.com/openings-dev/web/issues/new/choose",
   support: "mailto:support@openings.dev",

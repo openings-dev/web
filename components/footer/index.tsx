@@ -3,7 +3,9 @@
 import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
 import { BlueskyIcon } from "@/components/icons/bluesky";
 import { GithubIcon } from "@/components/icons/github";
+import { InstagramIcon } from "@/components/icons/instagram";
 import { MastodonIcon } from "@/components/icons/mastodon";
+import { ThreadsIcon } from "@/components/icons/threads";
 import { EXTERNAL_ROUTES, PUBLIC_ROUTES } from "@/lib/navigation/routes";
 import { cn } from "@/lib/utils/tailwind";
 import { FooterBottom } from "./footer-bottom";
@@ -117,6 +119,20 @@ export function Footer({
       icon: MastodonIcon,
       external: true,
       ariaLabel: footerMessages.social.mastodonAriaLabel,
+    },
+    {
+      label: footerMessages.links.threads,
+      href: EXTERNAL_ROUTES.threads,
+      icon: ThreadsIcon,
+      external: true,
+      ariaLabel: footerMessages.social.threadsAriaLabel,
+    },
+    {
+      label: footerMessages.links.instagram,
+      href: EXTERNAL_ROUTES.instagram,
+      icon: InstagramIcon,
+      external: true,
+      ariaLabel: footerMessages.social.instagramAriaLabel,
     },
   ];
 
