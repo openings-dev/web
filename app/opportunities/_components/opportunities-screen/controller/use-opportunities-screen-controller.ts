@@ -1,5 +1,5 @@
 import * as React from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
 import { ALL_FILTER_VALUE, DEFAULT_FILTERS } from "./defaults";
 import { buildServerFilters } from "./server-filters";
@@ -28,7 +28,6 @@ export function useOpportunitiesScreenController({
   forcedRepository,
   forcedAuthor,
 }: OpportunitiesScreenProps) {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { locale, messages } = useI18n();
@@ -94,10 +93,12 @@ export function useOpportunitiesScreenController({
     nextSearchParams.delete("job");
     const nextSearch = nextSearchParams.toString();
 
-    router.replace(nextSearch ? `${pathname}?${nextSearch}` : pathname, {
-      scroll: false,
-    });
-  }, [pathname, router, searchParams, setSelectedOpportunityId]);
+    window.history.replaceState(
+      null,
+      "",
+      nextSearch ? `${pathname}?${nextSearch}` : pathname,
+    );
+  }, [pathname, searchParams, setSelectedOpportunityId]);
   const handleBeforeReload = React.useCallback(() => {
     setSelectedOpportunityId(null);
     setFilters((previous) => (previous.page === 1 ? previous : { ...previous, page: 1 }));
@@ -168,7 +169,6 @@ export function useOpportunitiesScreenController({
       !remote.isLoading &&
       !remote.hasLoadError,
     pathname,
-    router,
     currentSearch: searchParams.toString(),
     filtersForUrl,
     preservedParams: preservedParamsForUrl,
