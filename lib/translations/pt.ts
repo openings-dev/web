@@ -69,8 +69,8 @@ export const ptTranslations: TranslationMessages = {
   },
   sponsorship: {
     banner: {
-      message: "Faça sua vaga chegar primeiro.",
-      detail: "Destaque por 30 dias no Openings.",
+      message: "Ajude a manter o Openings no ar anunciando suas vagas.",
+      detail: "Sua vaga ganha 30 dias de destaque.",
       action: "Anunciar uma vaga",
     },
     badge: {

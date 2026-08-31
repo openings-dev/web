@@ -168,6 +168,55 @@ for (const translationSource of translationSources) {
     "Every locale must provide complete sponsored banner copy",
   );
 }
+const expectedBannerCopy = [
+  {
+    locale: "en",
+    message: "Help keep Openings running by posting your jobs.",
+    detail: "Your job gets 30 days of featured placement.",
+    action: "Post a job",
+  },
+  {
+    locale: "pt",
+    message: "Ajude a manter o Openings no ar anunciando suas vagas.",
+    detail: "Sua vaga ganha 30 dias de destaque.",
+    action: "Anunciar uma vaga",
+  },
+  {
+    locale: "es",
+    message: "Ayuda a mantener Openings en marcha publicando tus vacantes.",
+    detail: "Tu vacante obtiene 30 días de visibilidad destacada.",
+    action: "Publicar una vacante",
+  },
+  {
+    locale: "it",
+    message: "Aiuta Openings a restare online pubblicando le tue offerte.",
+    detail: "La tua offerta ottiene 30 giorni in evidenza.",
+    action: "Pubblica un'offerta",
+  },
+  {
+    locale: "fr",
+    message: "Aidez Openings à rester en ligne en publiant vos offres.",
+    detail: "Votre offre bénéficie de 30 jours de mise en avant.",
+    action: "Publier une offre",
+  },
+  {
+    locale: "de",
+    message: "Halten Sie Openings mit Ihrer Stellenanzeige am Laufen.",
+    detail: "Ihre Stelle wird 30 Tage lang hervorgehoben.",
+    action: "Stelle veröffentlichen",
+  },
+];
+for (const [index, expected] of expectedBannerCopy.entries()) {
+  const translationSource = translationSources[index];
+  assert.ok(translationSource, `Missing ${expected.locale} translation source`);
+
+  for (const key of ["message", "detail", "action"]) {
+    assert.ok(
+      translationSource.includes(`${key}: ${JSON.stringify(expected[key])}`),
+      `The ${expected.locale} sponsorship banner must use the approved ${key}`,
+    );
+  }
+}
 assert.match(
   bannerSource,
   /messages\.sponsorship\.banner/u,

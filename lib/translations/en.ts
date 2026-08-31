@@ -68,9 +68,9 @@ export const enTranslations: TranslationMessages = {
   },
   sponsorship: {
     banner: {
-      message: "Put your job first.",
-      detail: "Get 30 days of sponsored placement on Openings.",
-      action: "Sponsor a job",
+      message: "Help keep Openings running by posting your jobs.",
+      detail: "Your job gets 30 days of featured placement.",
+      action: "Post a job",
     },
     badge: {
       label: "Sponsored",

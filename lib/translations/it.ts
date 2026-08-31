@@ -68,9 +68,9 @@ export const itTranslations: TranslationMessages = {
   },
   sponsorship: {
     banner: {
-      message: "Porta la tua offerta in primo piano.",
-      detail: "30 giorni di visibilità sponsorizzata su Openings.",
-      action: "Sponsorizza un'offerta",
+      message: "Aiuta Openings a restare online pubblicando le tue offerte.",
+      detail: "La tua offerta ottiene 30 giorni in evidenza.",
+      action: "Pubblica un'offerta",
     },
     badge: {
       label: "Sponsorizzata",

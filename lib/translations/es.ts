@@ -68,9 +68,9 @@ export const esTranslations: TranslationMessages = {
   },
   sponsorship: {
     banner: {
-      message: "Haz que tu vacante aparezca primero.",
-      detail: "Destácala durante 30 días en Openings.",
-      action: "Anunciar una vacante",
+      message: "Ayuda a mantener Openings en marcha publicando tus vacantes.",
+      detail: "Tu vacante obtiene 30 días de visibilidad destacada.",
+      action: "Publicar una vacante",
     },
     badge: {
       label: "Patrocinada",

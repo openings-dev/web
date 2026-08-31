@@ -68,9 +68,9 @@ export const deTranslations: TranslationMessages = {
   },
   sponsorship: {
     banner: {
-      message: "Bringen Sie Ihre Stelle nach vorn.",
-      detail: "30 Tage gesponserte Platzierung auf Openings.",
-      action: "Stelle hervorheben",
+      message: "Halten Sie Openings mit Ihrer Stellenanzeige am Laufen.",
+      detail: "Ihre Stelle wird 30 Tage lang hervorgehoben.",
+      action: "Stelle veröffentlichen",
     },
     badge: {
       label: "Gesponsert",
