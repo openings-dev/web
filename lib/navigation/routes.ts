@@ -25,6 +25,8 @@ export const EXTERNAL_ROUTES = {
   mastodon: "https://mastodon.social/@openingshq",
   threads: "https://www.threads.com/@openingshq",
   instagram: "https://www.instagram.com/openingshq/",
+  sponsoredJobRequest:
+    "https://github.com/openings-dev/jobs/issues/new?template=sponsored-job.yml",
   reportIssue:
     "https://github.com/openings-dev/web/issues/new/choose",
   support: "mailto:support@openings.dev",

@@ -66,6 +66,13 @@ export const esTranslations: TranslationMessages = {
       originalSource: "Fuente original conservada",
     },
   },
+  sponsorship: {
+    banner: {
+      message: "Haz que tu vacante aparezca primero.",
+      detail: "Destácala durante 30 días en Openings.",
+      action: "Anunciar una vacante",
+    },
+  },
   notFound: {
     kicker: "Error 404",
     title: "No encontramos esa página",

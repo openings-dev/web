@@ -14,12 +14,24 @@ const [
   apiTypesSource,
   validationSource,
   artifactsSource,
+  routesSource,
+  appShellSource,
+  messageTypesSource,
+  bannerSource,
+  ...translationSources
 ] = await Promise.all([
   source("lib/opportunities/enums.ts"),
   source("lib/opportunities/types.ts"),
   source("lib/opportunities/api-types.ts"),
   source("lib/opportunities/static-artifact-validation.ts"),
   source("lib/opportunities/static-artifacts.ts"),
+  source("lib/navigation/routes.ts"),
+  source("app/_components/app-shell/index.tsx"),
+  source("lib/translations/types.ts"),
+  source("components/sponsored-opportunities-banner/index.tsx").catch(() => ""),
+  ...["en", "pt", "es", "it", "fr", "de"].map((locale) =>
+    source(`lib/translations/${locale}.ts`)
+  ),
 ]);
 
 assert.match(
@@ -125,6 +137,44 @@ assert.deepEqual(
     "oldest",
   ),
   ["sponsored-old", "sponsored-new", "organic-old", "organic-new"],
+);
+
+assert.match(
+  routesSource,
+  /sponsoredJobRequest:\s*"https:\/\/github\.com\/openings-dev\/jobs\/issues\/new\?template=sponsored-job\.yml"/u,
+  "The advertiser route must point to the sponsored job Issue Form",
+);
+assert.match(
+  appShellSource,
+  /<Header\s*\/>[\s\S]*?<SponsoredOpportunitiesBanner\s*\/>[\s\S]*?<main/u,
+  "AppShell must render the advertiser banner below the header and before content",
+);
+assert.match(
+  messageTypesSource,
+  /sponsorship:\s*\{[\s\S]*?banner:\s*\{[\s\S]*?message: string;[\s\S]*?detail: string;[\s\S]*?action: string;/u,
+  "The translation contract must type the sponsored banner copy",
+);
+for (const translationSource of translationSources) {
+  assert.match(
+    translationSource,
+    /sponsorship:\s*\{[\s\S]*?banner:\s*\{[\s\S]*?message:\s*"[^"\n]+"[\s\S]*?detail:\s*"[^"\n]+"[\s\S]*?action:\s*"[^"\n]+"/u,
+    "Every locale must provide complete sponsored banner copy",
+  );
+}
+assert.match(
+  bannerSource,
+  /messages\.sponsorship\.banner/u,
+  "The shared banner must use localized copy",
+);
+assert.match(
+  bannerSource,
+  /EXTERNAL_ROUTES\.sponsoredJobRequest/u,
+  "The shared banner must use the governed advertiser destination",
+);
+assert.match(
+  bannerSource,
+  /target="_blank"[\s\S]*?rel="noreferrer"/u,
+  "The external advertiser action must open safely",
 );
 
 console.log("Sponsored opportunity data contract is valid.");

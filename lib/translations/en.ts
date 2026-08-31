@@ -66,6 +66,13 @@ export const enTranslations: TranslationMessages = {
       originalSource: "Original source preserved",
     },
   },
+  sponsorship: {
+    banner: {
+      message: "Put your job first.",
+      detail: "Get 30 days of sponsored placement on Openings.",
+      action: "Sponsor a job",
+    },
+  },
   notFound: {
     kicker: "404",
     title: "We couldn’t find that page",

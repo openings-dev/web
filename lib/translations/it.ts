@@ -66,6 +66,13 @@ export const itTranslations: TranslationMessages = {
       originalSource: "Fonte originale preservata",
     },
   },
+  sponsorship: {
+    banner: {
+      message: "Porta la tua offerta in primo piano.",
+      detail: "30 giorni di visibilità sponsorizzata su Openings.",
+      action: "Sponsorizza un'offerta",
+    },
+  },
   notFound: {
     kicker: "Errore 404",
     title: "Non troviamo questa pagina",

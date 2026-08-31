@@ -67,6 +67,13 @@ export const frTranslations: TranslationMessages = {
       originalSource: "Source d’origine conservée",
     },
   },
+  sponsorship: {
+    banner: {
+      message: "Placez votre offre en tête.",
+      detail: "Mettez-la en avant pendant 30 jours sur Openings.",
+      action: "Sponsoriser une offre",
+    },
+  },
   notFound: {
     kicker: "404",
     title: "Cette page est introuvable",

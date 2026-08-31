@@ -66,6 +66,13 @@ export const deTranslations: TranslationMessages = {
       originalSource: "Originalquelle bleibt erhalten",
     },
   },
+  sponsorship: {
+    banner: {
+      message: "Bringen Sie Ihre Stelle nach vorn.",
+      detail: "30 Tage gesponserte Platzierung auf Openings.",
+      action: "Stelle hervorheben",
+    },
+  },
   notFound: {
     kicker: "404",
     title: "Diese Seite konnten wir nicht finden",

@@ -65,6 +65,13 @@ export interface TranslationMessages {
       originalSource: string;
     };
   };
+  sponsorship: {
+    banner: {
+      message: string;
+      detail: string;
+      action: string;
+    };
+  };
   notFound: {
     kicker: string;
     title: string;
