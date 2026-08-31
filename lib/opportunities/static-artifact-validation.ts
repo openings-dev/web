@@ -1,5 +1,6 @@
 import {
   OpportunityIssueState,
+  OpportunityPromotionType,
   OpportunitySalaryPeriod,
   OpportunitySourceType,
 } from "./enums";
@@ -40,7 +41,7 @@ export interface StaticOpportunityBucket {
 type UnknownRecord = Record<string, unknown>;
 type ArtifactValidator<T extends object> = (value: unknown) => value is T;
 
-const STATIC_OPPORTUNITY_SCHEMA_VERSION = 4;
+const STATIC_OPPORTUNITY_SCHEMA_VERSION = 5;
 const ISO_CURRENCY_PATTERN = /^[A-Za-z]{3}$/;
 const DATA_HASH_PATTERN = /^[a-f\d]{64}$/i;
 
@@ -48,6 +49,7 @@ const MANIFEST_CACHE = new WeakMap<object, StaticManifest>();
 const FACET_INDEX_CACHE = new WeakMap<object, StaticFacetIndex>();
 const SEARCH_INDEX_CACHE = new WeakMap<object, StaticSearchIndex>();
 const ORDER_CACHE = new WeakMap<object, StaticOpportunityOrder>();
+const PROMOTIONS_CACHE = new WeakMap<object, StaticOpportunityOrder>();
 const JOB_IDS_CACHE = new WeakMap<object, StaticOpportunityOrder>();
 const PAGE_LOOKUP_CACHE = new WeakMap<object, StaticOpportunityPageLookup>();
 const PAGE_CACHE = new WeakMap<object, StaticOpportunityPage>();
@@ -203,6 +205,10 @@ function isOpportunitySalary(value: unknown): value is OpportunitySalary {
       value.period === OpportunitySalaryPeriod.Hour);
 }
 
+function isOpportunityPromotion(value: unknown): boolean {
+  return isRecord(value) && value.type === OpportunityPromotionType.Sponsored;
+}
+
 function isOpportunityItem(value: unknown): value is OpportunityItem {
   if (!isRecord(value)) return false;
 
@@ -222,6 +228,7 @@ function isOpportunityItem(value: unknown): value is OpportunityItem {
     isOpportunityCommunity(value.community) &&
     isOptionalString(value.companyName) &&
     (value.salary === undefined || isOpportunitySalary(value.salary)) &&
+    (value.promotion === undefined || isOpportunityPromotion(value.promotion)) &&
     isTimestamp(value.createdAt) &&
     isTimestamp(value.updatedAt) &&
     isHttpUrl(value.url) &&
@@ -247,6 +254,7 @@ function isStaticManifest(value: unknown): value is StaticManifest {
     isPositiveInteger(value.pageSize) &&
     isRecord(totals) &&
     isNonNegativeInteger(totals.openOpportunities) &&
+    isNonNegativeInteger(totals.sponsoredOpportunities) &&
     isNonNegativeInteger(totals.pages) &&
     isNonNegativeInteger(totals.repositories) &&
     isNonNegativeInteger(totals.countries) &&
@@ -258,6 +266,7 @@ function isStaticManifest(value: unknown): value is StaticManifest {
     isNonEmptyString(files.search) &&
     isNonEmptyString(files.jobIds) &&
     isNonEmptyString(files.order) &&
+    isNonEmptyString(files.promotions) &&
     isNonEmptyString(files.communities) &&
     isOpportunityFilterFacets(value.facets) &&
     Array.isArray(value.pages) &&
@@ -283,6 +292,7 @@ function isStaticManifest(value: unknown): value is StaticManifest {
     files.search,
     files.jobIds,
     files.order,
+    files.promotions,
     files.communities,
     ...pageFiles,
   ] as string[];
@@ -440,6 +450,19 @@ export function parseStaticOpportunityOrder(
     path,
     name: "order index",
     cache: ORDER_CACHE,
+    validate: isStaticOpportunityOrder,
+  });
+}
+
+export function parseStaticOpportunityPromotions(
+  value: unknown,
+  path: string,
+): StaticOpportunityOrder {
+  return parseArtifact({
+    value,
+    path,
+    name: "promotions index",
+    cache: PROMOTIONS_CACHE,
     validate: isStaticOpportunityOrder,
   });
 }

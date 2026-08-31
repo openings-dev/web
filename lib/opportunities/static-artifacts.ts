@@ -13,6 +13,7 @@ import {
   parseStaticOpportunityOrder,
   parseStaticOpportunityPage,
   parseStaticOpportunityPageLookup,
+  parseStaticOpportunityPromotions,
   parseStaticOpportunitySearchIndex,
   type StaticOpportunityBucket,
   type StaticOpportunityOrder,
@@ -60,6 +61,7 @@ const FACET_INDEX_CACHE = new Map<string, Promise<StaticFacetIndex>>();
 const COMMUNITIES_CACHE = new Map<string, Promise<StaticCommunities>>();
 const SEARCH_INDEX_CACHE = new Map<string, Promise<StaticSearchIndex>>();
 const ORDER_CACHE = new Map<string, Promise<StaticOpportunityOrder>>();
+const PROMOTIONS_CACHE = new Map<string, Promise<StaticOpportunityOrder>>();
 const JOB_IDS_CACHE = new Map<string, Promise<StaticOpportunityOrder>>();
 const PAGE_LOOKUP_CACHE = new Map<string, Promise<StaticOpportunityPageLookup>>();
 const PAGE_CACHE = new Map<string, Promise<StaticOpportunityPage>>();
@@ -77,6 +79,7 @@ function clearStaticArtifactCaches() {
   COMMUNITIES_CACHE.clear();
   SEARCH_INDEX_CACHE.clear();
   ORDER_CACHE.clear();
+  PROMOTIONS_CACHE.clear();
   JOB_IDS_CACHE.clear();
   PAGE_LOOKUP_CACHE.clear();
   PAGE_CACHE.clear();
@@ -331,6 +334,18 @@ export async function loadOpportunityOrder(
   return payload.ids;
 }
 
+export async function loadOpportunityPromotions(
+  manifest: StaticManifest,
+) {
+  const payload = await loadVersionedStaticArtifact(
+    manifest.files.promotions,
+    manifest,
+    parseStaticOpportunityPromotions,
+    PROMOTIONS_CACHE,
+  );
+  return payload.ids;
+}
+
 export async function loadOpportunityJobIds(
   manifest: StaticManifest,
 ) {
@@ -369,20 +384,29 @@ export async function assertStaticOpportunityIndexConsistency(
       parseStaticOpportunityPageLookup,
       PAGE_LOOKUP_CACHE,
     ),
-  ]).then(([order, jobIds, pageLookup]) => {
+    loadVersionedStaticArtifact(
+      manifest.files.promotions,
+      manifest,
+      parseStaticOpportunityPromotions,
+      PROMOTIONS_CACHE,
+    ),
+  ]).then(([order, jobIds, pageLookup, promotions]) => {
     const orderIds = new Set(order.ids);
     const jobIdSet = new Set(jobIds.ids);
     const lookupIds = new Set(Object.keys(pageLookup.pageLookup));
     const expectedCount = manifest.totals.openOpportunities;
+    const sponsoredCount = manifest.totals.sponsoredOpportunities;
     const setsMatch = orderIds.size === expectedCount &&
       jobIdSet.size === expectedCount &&
       lookupIds.size === expectedCount &&
-      order.ids.every((id) => jobIdSet.has(id) && lookupIds.has(id));
+      promotions.ids.length === sponsoredCount &&
+      order.ids.every((id) => jobIdSet.has(id) && lookupIds.has(id)) &&
+      promotions.ids.every((id) => orderIds.has(id));
 
     if (!setsMatch) {
       retryStaticArtifactView(
         view,
-        "Static opportunity order, job IDs, page lookup, and manifest total do not match",
+        "Static opportunity order, promotions, job IDs, page lookup, and manifest totals do not match",
       );
     }
   });

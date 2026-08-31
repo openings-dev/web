@@ -3,6 +3,10 @@ export enum OpportunityIssueState {
   Closed = "closed",
 }
 
+export enum OpportunityPromotionType {
+  Sponsored = "sponsored",
+}
+
 export enum OpportunitySalaryPeriod {
   Month = "month",
   Year = "year",

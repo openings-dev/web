@@ -12,7 +12,8 @@
     "lint": "eslint",
     "test:job-header": "node tooling/validate-opportunity-details-header.mjs",
     "test:metadata": "node tooling/validate-metadata-export.mjs",
-    "test:communities": "node tooling/validate-communities-artifact.mjs"
+    "test:communities": "node tooling/validate-communities-artifact.mjs",
+    "test:sponsored": "node tooling/validate-sponsored-opportunities.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

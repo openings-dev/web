@@ -31,6 +31,7 @@ export interface StaticManifestPage {
 
 export interface StaticManifestTotals {
   openOpportunities: number;
+  sponsoredOpportunities: number;
   pages: number;
   repositories: number;
   countries: number;
@@ -39,7 +40,7 @@ export interface StaticManifestTotals {
 }
 
 export interface StaticManifest {
-  schemaVersion: 4;
+  schemaVersion: 5;
   generatedAt: string;
   dataHash: string;
   pageSize: number;
@@ -50,6 +51,7 @@ export interface StaticManifest {
     search: string;
     jobIds: string;
     order: string;
+    promotions: string;
     communities: string;
   };
   facets: OpportunityFilterFacets;

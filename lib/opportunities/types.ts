@@ -1,11 +1,13 @@
 import type {
   OpportunityIssueState,
+  OpportunityPromotionType,
   OpportunitySalaryPeriod,
   OpportunitySourceType,
 } from "./enums";
 
 export {
   OpportunityIssueState,
+  OpportunityPromotionType,
   OpportunitySalaryPeriod,
   OpportunitySortOrder,
   OpportunitySourceType,
@@ -34,6 +36,10 @@ export interface OpportunitySalary {
   period: OpportunitySalaryPeriod;
 }
 
+export interface OpportunityPromotion {
+  type: OpportunityPromotionType;
+}
+
 export interface OpportunityItem {
   id: string;
   sourceId?: string;
@@ -50,6 +56,7 @@ export interface OpportunityItem {
   community: OpportunityCommunity;
   companyName?: string;
   salary?: OpportunitySalary;
+  promotion?: OpportunityPromotion;
   createdAt: string;
   updatedAt: string;
   url: string;
