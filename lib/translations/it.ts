@@ -72,6 +72,10 @@ export const itTranslations: TranslationMessages = {
       detail: "30 giorni di visibilità sponsorizzata su Openings.",
       action: "Sponsorizza un'offerta",
     },
+    badge: {
+      label: "Sponsorizzata",
+      description: "Posizionamento a pagamento mostrato prima delle offerte organiche pertinenti.",
+    },
   },
   notFound: {
     kicker: "Errore 404",

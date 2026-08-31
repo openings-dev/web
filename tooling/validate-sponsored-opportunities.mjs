@@ -18,6 +18,9 @@ const [
   appShellSource,
   messageTypesSource,
   bannerSource,
+  sponsoredBadgeSource,
+  opportunityCardSource,
+  opportunityDetailsSource,
   ...translationSources
 ] = await Promise.all([
   source("lib/opportunities/enums.ts"),
@@ -29,6 +32,10 @@ const [
   source("app/_components/app-shell/index.tsx"),
   source("lib/translations/types.ts"),
   source("components/sponsored-opportunities-banner/index.tsx").catch(() => ""),
+  source("app/opportunities/_components/opportunities-screen/sponsored-badge/index.tsx")
+    .catch(() => ""),
+  source("app/opportunities/_components/opportunities-screen/opportunity-card/index.tsx"),
+  source("app/opportunities/_components/opportunity-details/index.tsx"),
   ...["en", "pt", "es", "it", "fr", "de"].map((locale) =>
     source(`lib/translations/${locale}.ts`)
   ),
@@ -175,6 +182,38 @@ assert.match(
   bannerSource,
   /target="_blank"[\s\S]*?rel="noreferrer"/u,
   "The external advertiser action must open safely",
+);
+assert.match(
+  messageTypesSource,
+  /badge:\s*\{[\s\S]*?label: string;[\s\S]*?description: string;/u,
+  "The translation contract must type sponsored disclosure copy",
+);
+for (const translationSource of translationSources) {
+  assert.match(
+    translationSource,
+    /badge:\s*\{[\s\S]*?label:\s*"[^"\n]+"[\s\S]*?description:\s*"[^"\n]+"/u,
+    "Every locale must provide sponsored disclosure copy",
+  );
+}
+assert.match(
+  sponsoredBadgeSource,
+  /promotion\?\.type !== OpportunityPromotionType\.Sponsored/u,
+  "The badge must render only for the sponsored enum value",
+);
+assert.match(
+  sponsoredBadgeSource,
+  /messages\.sponsorship\.badge/u,
+  "The badge must use localized disclosure copy",
+);
+assert.match(
+  opportunityCardSource,
+  /<SponsoredBadge promotion=\{item\.promotion\}\s*\/>/u,
+  "Opportunity cards must disclose sponsored placement",
+);
+assert.match(
+  opportunityDetailsSource,
+  /<SponsoredBadge promotion=\{item\.promotion\}\s*\/>/u,
+  "Shared job details must disclose sponsored placement",
 );
 
 console.log("Sponsored opportunity data contract is valid.");

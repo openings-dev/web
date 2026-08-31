@@ -72,6 +72,10 @@ export const esTranslations: TranslationMessages = {
       detail: "Destácala durante 30 días en Openings.",
       action: "Anunciar una vacante",
     },
+    badge: {
+      label: "Patrocinada",
+      description: "Posicionamiento de pago mostrado antes de las vacantes orgánicas coincidentes.",
+    },
   },
   notFound: {
     kicker: "Error 404",

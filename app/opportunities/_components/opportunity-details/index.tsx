@@ -12,6 +12,7 @@ import { DrawerIdentities } from "@/app/opportunities/_components/opportunities-
 import { DrawerMetadata } from "@/app/opportunities/_components/opportunities-screen/opportunity-drawer/drawer-metadata";
 import { DrawerTags } from "@/app/opportunities/_components/opportunities-screen/opportunity-drawer/drawer-tags";
 import { OpportunityMarkdown } from "@/app/opportunities/_components/opportunities-screen/opportunity-drawer/opportunity-markdown";
+import { SponsoredBadge } from "@/app/opportunities/_components/opportunities-screen/sponsored-badge";
 import { formatTemplate } from "@/lib/utils/format-template";
 import { cn } from "@/lib/utils/tailwind";
 import {
@@ -109,9 +110,12 @@ export function OpportunityDetails({
       <div className={cn("min-h-0 flex-1", isDialog && "overflow-y-auto overscroll-contain")}>
         <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-7 sm:px-6 sm:py-9 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,22rem)] lg:gap-12 lg:px-8 lg:py-12">
           <main className="min-w-0">
-            <p className="mb-4 text-label font-semibold text-primary-deep">
-              {copy.detailsTitle}
-            </p>
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <p className="text-label font-semibold text-primary-deep">
+                {copy.detailsTitle}
+              </p>
+              <SponsoredBadge promotion={item.promotion} />
+            </div>
             <DrawerIdentities
               item={item}
               hideCommunityIdentity={hideCommunityIdentity}

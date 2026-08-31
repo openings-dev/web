@@ -73,6 +73,10 @@ export const ptTranslations: TranslationMessages = {
       detail: "Destaque por 30 dias no Openings.",
       action: "Anunciar uma vaga",
     },
+    badge: {
+      label: "Patrocinada",
+      description: "Posicionamento pago exibido antes das vagas orgânicas correspondentes.",
+    },
   },
   notFound: {
     kicker: "404",

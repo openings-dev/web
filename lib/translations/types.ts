@@ -71,6 +71,10 @@ export interface TranslationMessages {
       detail: string;
       action: string;
     };
+    badge: {
+      label: string;
+      description: string;
+    };
   };
   notFound: {
     kicker: string;

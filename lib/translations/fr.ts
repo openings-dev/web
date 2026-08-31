@@ -73,6 +73,10 @@ export const frTranslations: TranslationMessages = {
       detail: "Mettez-la en avant pendant 30 jours sur Openings.",
       action: "Sponsoriser une offre",
     },
+    badge: {
+      label: "Sponsorisée",
+      description: "Placement payant affiché avant les offres organiques correspondantes.",
+    },
   },
   notFound: {
     kicker: "404",

@@ -72,6 +72,10 @@ export const deTranslations: TranslationMessages = {
       detail: "30 Tage gesponserte Platzierung auf Openings.",
       action: "Stelle hervorheben",
     },
+    badge: {
+      label: "Gesponsert",
+      description: "Bezahlte Platzierung vor passenden organischen Stellen.",
+    },
   },
   notFound: {
     kicker: "404",

@@ -17,6 +17,7 @@ import { OpportunityCardHeader } from "./opportunity-card-header";
 import { OpportunityCardMeta } from "./opportunity-card-meta";
 import { OpportunityCardTags } from "./opportunity-card-tags";
 import { getOpportunityDetailsElementIds } from "./trigger-contract";
+import { SponsoredBadge } from "../sponsored-badge";
 
 export function OpportunityCard({
   item,
@@ -111,6 +112,7 @@ export function OpportunityCard({
                 ) : null}
               </div>
             ) : null}
+            <SponsoredBadge promotion={item.promotion} />
             <OpportunityCardHeader
               title={item.title}
               excerpt={item.excerpt}

@@ -72,6 +72,10 @@ export const enTranslations: TranslationMessages = {
       detail: "Get 30 days of sponsored placement on Openings.",
       action: "Sponsor a job",
     },
+    badge: {
+      label: "Sponsored",
+      description: "Paid placement shown before matching organic jobs.",
+    },
   },
   notFound: {
     kicker: "404",
