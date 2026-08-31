@@ -1,10 +1,10 @@
 import {
   OpportunityIssueState,
-  OpportunitySortOrder,
   type OpportunityFiltersState,
   type OpportunityItem,
 } from "@/app/opportunities/_components/opportunities-screen/types";
 import { normalizeOpportunitySearchText } from "@/lib/opportunities/index-operations";
+import { compareOpportunities } from "@/lib/opportunities/sort-opportunities";
 import { canonicalTagValue } from "./tag-normalization";
 
 export function matchesSearch(opportunity: OpportunityItem, searchText: string) {
@@ -57,13 +57,9 @@ export function getFilteredOpportunities(
         matchesSearch(opportunity, filters.searchText)
       );
     })
-    .sort((left, right) => {
-      const leftDate = new Date(left.createdAt).getTime();
-      const rightDate = new Date(right.createdAt).getTime();
-      return filters.sortOrder === OpportunitySortOrder.Recent
-        ? rightDate - leftDate
-        : leftDate - rightDate;
-    });
+    .sort((left, right) =>
+      compareOpportunities(left, right, filters.sortOrder)
+    );
 }
 
 export function dedupeOpportunities(items: OpportunityItem[]) {

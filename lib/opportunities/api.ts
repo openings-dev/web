@@ -1,4 +1,4 @@
-import { OpportunitySortOrder, type OpportunityFilterFacets } from "./types";
+import type { OpportunityFilterFacets } from "./types";
 import type {
   OpportunitiesApiPayload,
   OpportunityDimensionKey,
@@ -19,9 +19,11 @@ import {
   loadOpportunityItems,
   loadOpportunityManifest,
   loadOpportunityOrder,
+  loadOpportunityPromotions,
   loadOpportunitySearchIndex,
   withStaticArtifactRecovery,
 } from "./static-artifacts";
+import { sortOpportunityIdsByPromotion } from "./sort-opportunities";
 
 export type {
   OpportunitiesApiMeta,
@@ -115,9 +117,12 @@ export async function fetchOpportunitiesPage(
       filters,
       searchHits,
     });
-    const orderedIds = filters.sortOrder === OpportunitySortOrder.Oldest
-      ? [...recentIds].reverse()
-      : recentIds;
+    const sponsoredIds = new Set(await loadOpportunityPromotions(manifest));
+    const orderedIds = sortOpportunityIdsByPromotion(
+      recentIds,
+      sponsoredIds,
+      filters.sortOrder,
+    );
     const offset = parseOpportunityOffset(params.cursor);
     const limit = Math.max(1, params.limit);
     const pageIds = orderedIds.slice(offset, offset + limit);

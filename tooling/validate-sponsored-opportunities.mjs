@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import ts from "typescript";
 
 async function source(relativePath) {
   return readFile(path.join(process.cwd(), relativePath), "utf8");
@@ -70,6 +71,60 @@ assert.match(
   artifactsSource,
   /manifest\.files\.promotions/u,
   "Static index consistency must include the promotions artifact",
+);
+
+const sortingTypeScript = await source("lib/opportunities/sort-opportunities.ts")
+  .catch(() => "");
+const sortingJavaScript = ts.transpileModule(sortingTypeScript, {
+  compilerOptions: {
+    module: ts.ModuleKind.ESNext,
+    target: ts.ScriptTarget.ES2022,
+  },
+}).outputText;
+const sortingModule = await import(
+  `data:text/javascript;base64,${Buffer.from(sortingJavaScript).toString("base64")}`
+).catch(() => ({}));
+assert.equal(
+  typeof sortingModule.compareOpportunities,
+  "function",
+  "Sponsored sorting must expose a pure opportunity comparator",
+);
+assert.equal(
+  typeof sortingModule.sortOpportunityIdsByPromotion,
+  "function",
+  "Static API sorting must expose promotion-aware ID ordering",
+);
+
+const opportunity = (id, createdAt, sponsored = false) => ({
+  id,
+  createdAt,
+  ...(sponsored ? { promotion: { type: "sponsored" } } : {}),
+});
+const recentInput = [
+  opportunity("organic-new", "2026-08-31T00:00:00.000Z"),
+  opportunity("sponsored-old", "2026-08-01T00:00:00.000Z", true),
+  opportunity("organic-old", "2026-07-01T00:00:00.000Z"),
+  opportunity("sponsored-new", "2026-08-15T00:00:00.000Z", true),
+];
+assert.deepEqual(
+  [...recentInput]
+    .sort((left, right) => sortingModule.compareOpportunities(left, right, "recent"))
+    .map(({ id }) => id),
+  ["sponsored-new", "sponsored-old", "organic-new", "organic-old"],
+);
+assert.deepEqual(
+  [...recentInput]
+    .sort((left, right) => sortingModule.compareOpportunities(left, right, "oldest"))
+    .map(({ id }) => id),
+  ["sponsored-old", "sponsored-new", "organic-old", "organic-new"],
+);
+assert.deepEqual(
+  sortingModule.sortOpportunityIdsByPromotion(
+    ["sponsored-new", "sponsored-old", "organic-new", "organic-old"],
+    new Set(["sponsored-new", "sponsored-old"]),
+    "oldest",
+  ),
+  ["sponsored-old", "sponsored-new", "organic-old", "organic-new"],
 );
 
 console.log("Sponsored opportunity data contract is valid.");
