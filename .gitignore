@@ -17,6 +17,7 @@
 /.worktrees/
 /.superpowers/
 /specs/
+/docs/superpowers/specs/
 /scripts/
 
 # next.js
