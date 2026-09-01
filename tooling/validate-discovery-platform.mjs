@@ -16,6 +16,7 @@ const [
   staticApiSource,
   listFooterSource,
   listControllerSource,
+  urlSyncSource,
   defaultsSource,
   opportunityDetailsSource,
   routesSource,
@@ -30,6 +31,7 @@ const [
   source("lib/opportunities/static-api.ts"),
   source("app/opportunities/_components/opportunities-screen/opportunities-list/list-footer/index.tsx"),
   source("app/opportunities/_components/opportunities-screen/controller/use-opportunities-screen-controller.ts"),
+  source("app/opportunities/_components/opportunities-screen/controller/use-url-sync.ts"),
   source("app/opportunities/_components/opportunities-screen/controller/defaults.ts"),
   source("app/opportunities/_components/opportunity-details/index.tsx"),
   source("lib/navigation/routes.ts"),
@@ -151,6 +153,16 @@ assert.match(listFooterSource, /onClick=\{onLoadMore\}/u, "Loading more must req
 assert.doesNotMatch(listControllerSource, /IntersectionObserver/u, "Automatic infinite scrolling must stay disabled");
 assert.doesNotMatch(listControllerSource, /useEnsurePageLoaded/u, "Pagination must not prefetch extra pages automatically");
 assert.doesNotMatch(listControllerSource, /useForcedAuthorAutoload/u, "Author profiles must not load pages automatically");
+assert.doesNotMatch(
+  `${listControllerSource}\n${urlSyncSource}`,
+  /\buseRouter\b|\brouter\.replace\b/u,
+  "Listing filters and job selection must not trigger an RSC navigation",
+);
+assert.match(
+  urlSyncSource,
+  /window\.history\.replaceState\(null,\s*"",\s*href\)/u,
+  "Listing URL state must use the Next.js-integrated native History API",
+);
 assert.match(defaultsSource, /country:\s*ALL_FILTER_VALUE/u, "The unfiltered landing page must show opportunities globally");
 assert.match(opportunityDetailsSource, /buildOpportunityReportMailto/u, "Reports must go to support by email");
 assert.match(routesSource, /reportIssue:\s*"mailto:support@openings\.dev"/u, "Every report entry point must use the support email");

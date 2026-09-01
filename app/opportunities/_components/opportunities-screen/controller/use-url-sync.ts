@@ -1,5 +1,4 @@
 import * as React from "react";
-import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { buildSearchParamsFromFilters } from "./url-filters";
 import type { OpportunityFiltersState } from "@/app/opportunities/_components/opportunities-screen/types";
 
@@ -7,7 +6,6 @@ interface UseUrlSyncParams {
   enabled?: boolean;
   pathname: string;
   currentSearch: string;
-  router: AppRouterInstance;
   filtersForUrl: OpportunityFiltersState;
   preservedParams?: Record<string, string | null | undefined>;
   defaultCountry?: string;
@@ -48,11 +46,14 @@ function serializeSearchParams(
   return params.toString();
 }
 
+export function replaceOpportunityUrl(href: string): void {
+  window.history.replaceState(null, "", href);
+}
+
 export function useUrlSync({
   enabled = true,
   pathname,
   currentSearch,
-  router,
   filtersForUrl,
   preservedParams,
   defaultCountry,
@@ -93,14 +94,13 @@ export function useUrlSync({
     }
 
     pendingReplaceRef.current = { href, currentSearch };
-    router.replace(href, { scroll: false });
+    replaceOpportunityUrl(href);
   }, [
     currentSearch,
     enabled,
     normalizedCurrentSearch,
     normalizedSerializedFilters,
     pathname,
-    router,
     serializedSearch,
   ]);
 }
