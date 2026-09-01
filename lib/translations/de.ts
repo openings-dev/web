@@ -484,6 +484,7 @@ export const deTranslations: TranslationMessages = {
       apiReference: "Referenz der statischen Daten",
       maintainers: "Für Communities",
       github: "GitHub",
+      linkedin: "LinkedIn",
       bluesky: "Bluesky",
       mastodon: "Mastodon",
       threads: "Threads",
@@ -499,6 +500,7 @@ export const deTranslations: TranslationMessages = {
     social: {
       linksAriaLabel: "Links zu Projektprofilen",
       githubAriaLabel: "openings.dev auf GitHub öffnen",
+      linkedinAriaLabel: "openings.dev auf LinkedIn öffnen",
       blueskyAriaLabel: "openings.dev auf Bluesky öffnen",
       mastodonAriaLabel: "openings.dev auf Mastodon öffnen",
       threadsAriaLabel: "openings.dev auf Threads öffnen",

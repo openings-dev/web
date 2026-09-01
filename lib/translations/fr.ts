@@ -485,6 +485,7 @@ export const frTranslations: TranslationMessages = {
       apiReference: "Référence des données statiques",
       maintainers: "Pour les communautés",
       github: "GitHub",
+      linkedin: "LinkedIn",
       bluesky: "Bluesky",
       mastodon: "Mastodon",
       threads: "Threads",
@@ -500,6 +501,7 @@ export const frTranslations: TranslationMessages = {
     social: {
       linksAriaLabel: "Liens sociaux",
       githubAriaLabel: "Ouvrir openings.dev sur GitHub",
+      linkedinAriaLabel: "Ouvrir openings.dev sur LinkedIn",
       blueskyAriaLabel: "Ouvrir openings.dev sur Bluesky",
       mastodonAriaLabel: "Ouvrir openings.dev sur Mastodon",
       threadsAriaLabel: "Ouvrir openings.dev sur Threads",

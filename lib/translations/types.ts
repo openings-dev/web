@@ -540,6 +540,7 @@ export interface TranslationMessages {
       apiReference: string;
       maintainers: string;
       github: string;
+      linkedin: string;
       bluesky: string;
       mastodon: string;
       threads: string;
@@ -555,6 +556,7 @@ export interface TranslationMessages {
     social: {
       linksAriaLabel: string;
       githubAriaLabel: string;
+      linkedinAriaLabel: string;
       blueskyAriaLabel: string;
       mastodonAriaLabel: string;
       threadsAriaLabel: string;
