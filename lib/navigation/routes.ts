@@ -24,6 +24,7 @@ export const LEGACY_ROUTES = {
 
 export const EXTERNAL_ROUTES = {
   githubRepository: "https://github.com/openings-dev/web",
+  linkedin: "https://www.linkedin.com/company/openings-dev/",
   bluesky: "https://bsky.app/profile/openingshq.bsky.social",
   mastodon: "https://mastodon.social/@openingshq",
   threads: "https://www.threads.com/@openingshq",
