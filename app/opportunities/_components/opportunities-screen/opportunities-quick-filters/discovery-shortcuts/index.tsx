@@ -1,4 +1,5 @@
 import { Bookmark, Clock3, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
 import { Button } from "@/components/ui/button";
 import type {
@@ -54,7 +55,7 @@ export function DiscoveryShortcuts({
       {shortcuts.map((shortcut) => (
         curatedLinks ? (
           <Button key={shortcut.id} asChild size="sm" variant="outline">
-            <a href={`/${locale}/discover/${shortcut.slug}`} onClick={() => trackShortcut(shortcut)}>{shortcut.label}</a>
+            <Link href={`/${locale}/discover/${shortcut.slug}`} onClick={() => trackShortcut(shortcut)}>{shortcut.label}</Link>
           </Button>
         ) : (
           <Button key={shortcut.id} type="button" size="sm"

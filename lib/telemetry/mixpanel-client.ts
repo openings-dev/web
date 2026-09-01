@@ -1,5 +1,5 @@
 import { readAnalyticsConsent } from "./consent";
-import { setProductEventHandler } from ".";
+import { clearPendingProductEvents, setProductEventHandler } from ".";
 
 type MixpanelModule = typeof import("mixpanel-browser");
 type MixpanelClient = MixpanelModule["default"];
@@ -12,9 +12,20 @@ let loading: Promise<boolean> | null = null;
 let activeToken: string | null = null;
 let lifecycleVersion = 0;
 
+function deliverProductEvent(
+  instance: MixpanelClient,
+  name: string,
+  properties: Record<string, unknown>,
+) {
+  instance.track(name, properties, {
+    transport: "sendBeacon",
+    send_immediately: true,
+  });
+}
+
 function installEventHandler(instance: MixpanelClient) {
   setProductEventHandler((name, properties) => {
-    instance.track(name, properties);
+    deliverProductEvent(instance, name, properties);
   });
 }
 
@@ -33,6 +44,24 @@ function clearMixpanelIdentityKeys(token: string) {
   }
 }
 
+function clearMixpanelClient(instance: MixpanelClient, token: string) {
+  try {
+    instance.opt_out_tracking({
+      delete_user: false,
+      persistence_type: "localStorage",
+      secure_cookie: true,
+    });
+  } catch {
+    // Continue removing the local identity if the vendor call fails.
+  }
+  try {
+    instance.reset();
+  } catch {
+    // Continue removing the local identity if the vendor call fails.
+  }
+  clearMixpanelIdentityKeys(token);
+}
+
 export async function enableAnalytics(): Promise<boolean> {
   if (readAnalyticsConsent() !== "granted") return false;
   const token = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
@@ -40,12 +69,14 @@ export async function enableAnalytics(): Promise<boolean> {
   if (client) return true;
   if (loading) return loading;
   const requestedVersion = lifecycleVersion;
-  loading = (async () => {
+  let initializedInstance: MixpanelClient | null = null;
+  const loadRequest = (async () => {
     try {
       const sdkModule = await loadMixpanel();
       if (requestedVersion !== lifecycleVersion ||
         readAnalyticsConsent() !== "granted") return false;
       const instance = sdkModule.default;
+      initializedInstance = instance;
       instance.init(token, {
         api_host: process.env.NEXT_PUBLIC_MIXPANEL_API_HOST ??
           "https://api.mixpanel.com",
@@ -63,21 +94,30 @@ export async function enableAnalytics(): Promise<boolean> {
         secure_cookie: true,
         track: () => undefined,
       });
+      installEventHandler(instance);
       client = instance;
       activeToken = token;
-      installEventHandler(instance);
       return true;
     } catch {
+      if (requestedVersion === lifecycleVersion) {
+        if (initializedInstance) clearMixpanelClient(initializedInstance, token);
+        client = null;
+        activeToken = null;
+        clearPendingProductEvents();
+        setProductEventHandler(null);
+      }
       return false;
     } finally {
-      loading = null;
+      if (requestedVersion === lifecycleVersion) loading = null;
     }
   })();
-  return loading;
+  loading = loadRequest;
+  return loadRequest;
 }
 
 export function disableAnalytics() {
   lifecycleVersion += 1;
+  clearPendingProductEvents();
   setProductEventHandler(null);
   const instance = client;
   const token = activeToken;
@@ -85,13 +125,7 @@ export function disableAnalytics() {
   activeToken = null;
   loading = null;
   if (!instance) return;
-  instance.opt_out_tracking({
-    delete_user: false,
-    persistence_type: "localStorage",
-    secure_cookie: true,
-  });
-  instance.reset();
-  if (token) clearMixpanelIdentityKeys(token);
+  if (token) clearMixpanelClient(instance, token);
 }
 
 export function setMixpanelLoaderForTests(loader?: MixpanelLoader) {

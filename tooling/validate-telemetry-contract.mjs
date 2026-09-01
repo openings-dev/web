@@ -167,9 +167,16 @@ for (const locale of ["en", "pt", "es", "it", "fr", "de"]) {
   assert.match(translationSource, /analyticsConsent:/u);
 }
 
+const discoveryShortcutsSource = await readFile(
+  "app/opportunities/_components/opportunities-screen/opportunities-quick-filters/discovery-shortcuts/index.tsx",
+  "utf8",
+);
+assert.match(discoveryShortcutsSource, /import Link from ["']next\/link["']/u);
+assert.match(discoveryShortcutsSource, /<Link\s+href=/u);
+
 const productCallSites = await Promise.all([
   readFile("app/opportunities/_components/opportunities-screen/controller/use-discovery-telemetry.ts", "utf8"),
-  readFile("app/opportunities/_components/opportunities-screen/opportunities-quick-filters/discovery-shortcuts/index.tsx", "utf8"),
+  Promise.resolve(discoveryShortcutsSource),
   readFile("app/opportunities/_components/opportunity-details/index.tsx", "utf8"),
   readFile("app/opportunities/_components/opportunities-screen/comparison-panel/index.tsx", "utf8"),
   readFile("app/communities/[owner]/[name]/_components/community-telemetry.tsx", "utf8"),
@@ -197,14 +204,14 @@ for (const path of await sourceFiles("app")) {
   assert.doesNotMatch(source, /from ["'](?:mixpanel-browser|@sentry\/)/u);
 }
 
-const facadeJavaScript = `
-  let handler = null;
-  export function setProductEventHandler(next) { handler = next; }
-  export function emit(name, properties) { handler?.(name, properties); }
-`;
+const consentUrl = dataModule(consentSource);
+const telemetrySource = await readFile("lib/telemetry/index.ts", "utf8");
+const facadeJavaScript = transpile(telemetrySource)
+  .replaceAll('"./contracts"', `"${contractsUrl}"`)
+  .replace('"./sanitize"', `"${sanitizeUrl}"`)
+  .replace('"./consent"', `"${consentUrl}"`);
 const facadeUrl = `data:text/javascript;base64,${Buffer.from(facadeJavaScript).toString("base64")}`;
 const facade = await import(facadeUrl);
-const consentUrl = dataModule(consentSource);
 const mixpanelJavaScript = transpile(mixpanelSource)
   .replace('"./consent"', `"${consentUrl}"`)
   .replace('"."', `"${facadeUrl}"`);
@@ -225,7 +232,8 @@ globalThis.window = { localStorage: lifecycleStorage };
 process.env.NEXT_PUBLIC_MIXPANEL_TOKEN = "public-token";
 delete process.env.NEXT_PUBLIC_MIXPANEL_API_HOST;
 let loads = 0;
-let tracked = 0;
+const tracked = [];
+let optOuts = 0;
 let initializedConfig;
 const fakeSdk = {
   init: (_token, config) => {
@@ -233,31 +241,101 @@ const fakeSdk = {
     lifecycleValues.set("mp_public-token_mixpanel", "identity");
   },
   opt_in_tracking: () => undefined,
-  opt_out_tracking: () => lifecycleValues.set("__mp_opt_in_out_public-token", "0"),
+  opt_out_tracking: () => {
+    optOuts += 1;
+    lifecycleValues.set("__mp_opt_in_out_public-token", "0");
+  },
   reset: () => lifecycleValues.set("mp_public-token_mixpanel", "new-identity"),
-  track: () => { tracked += 1; },
+  track: (name, properties, options) => {
+    tracked.push({ name, properties, options });
+  },
 };
-mixpanel.setMixpanelLoaderForTests(async () => {
+let resolveMixpanelLoad;
+mixpanel.setMixpanelLoaderForTests(() => {
   loads += 1;
-  return { default: fakeSdk };
+  return new Promise((resolve) => {
+    resolveMixpanelLoad = resolve;
+  });
 });
+facade.trackProductEvent("Discovery Shortcut Opened", { shortcut: "remote" });
 assert.equal(await mixpanel.enableAnalytics(), false);
 assert.equal(loads, 0);
 consent.writeAnalyticsConsent("denied", lifecycleStorage);
 assert.equal(await mixpanel.enableAnalytics(), false);
 assert.equal(loads, 0);
 consent.writeAnalyticsConsent("granted", lifecycleStorage);
-assert.equal(await mixpanel.enableAnalytics(), true);
+facade.trackProductEvent("Status Viewed", { health: "healthy" });
+const enablingAnalytics = mixpanel.enableAnalytics();
+facade.trackProductEvent("Discovery Shortcut Opened", { shortcut: "remote" });
+assert.equal(tracked.length, 0);
+resolveMixpanelLoad({ default: fakeSdk });
+assert.equal(await enablingAnalytics, true);
 assert.equal(loads, 1);
 assert.equal(initializedConfig.autocapture, false);
 assert.equal(initializedConfig.api_host, "https://api.mixpanel.com");
-facade.emit("Status Viewed", { health: "healthy" });
-assert.equal(tracked, 1);
+assert.deepEqual(tracked.map(({ name }) => name), [
+  "Status Viewed",
+  "Discovery Shortcut Opened",
+]);
+for (const event of tracked) assert.deepEqual(event.options, {
+  transport: "sendBeacon",
+  send_immediately: true,
+});
+facade.trackProductEvent("Status Viewed", { health: "healthy" });
+assert.equal(tracked.length, 3);
 consent.writeAnalyticsConsent("denied", lifecycleStorage);
 mixpanel.disableAnalytics();
-facade.emit("Status Viewed", { health: "healthy" });
-assert.equal(tracked, 1);
+facade.trackProductEvent("Status Viewed", { health: "healthy" });
+assert.equal(tracked.length, 3);
 assert.equal(lifecycleValues.has("mp_public-token_mixpanel"), false);
+
+let rejectStaleLoad;
+let resolveCurrentLoad;
+let pendingLoad = 0;
+mixpanel.setMixpanelLoaderForTests(() => {
+  pendingLoad += 1;
+  return new Promise((resolve, reject) => {
+    if (pendingLoad === 1) rejectStaleLoad = reject;
+    else resolveCurrentLoad = resolve;
+  });
+});
+consent.writeAnalyticsConsent("granted", lifecycleStorage);
+const staleEnable = mixpanel.enableAnalytics();
+facade.trackProductEvent("Status Viewed", { health: "stale" });
+consent.writeAnalyticsConsent("denied", lifecycleStorage);
+mixpanel.disableAnalytics();
+consent.writeAnalyticsConsent("granted", lifecycleStorage);
+const currentEnable = mixpanel.enableAnalytics();
+facade.trackProductEvent("Status Viewed", { health: "current" });
+rejectStaleLoad(new Error("stale load failed"));
+assert.equal(await staleEnable, false);
+resolveCurrentLoad({ default: fakeSdk });
+assert.equal(await currentEnable, true);
+assert.equal(tracked.at(-1).properties.health, "current");
+consent.writeAnalyticsConsent("denied", lifecycleStorage);
+mixpanel.disableAnalytics();
+
+consent.writeAnalyticsConsent("granted", lifecycleStorage);
+const throwingSdk = {
+  ...fakeSdk,
+  track: () => { throw new Error("track failed"); },
+};
+const optOutsBeforeFailure = optOuts;
+mixpanel.setMixpanelLoaderForTests(async () => ({ default: throwingSdk }));
+facade.trackProductEvent("Status Viewed", { health: "queued-before-failure" });
+assert.equal(await mixpanel.enableAnalytics(), false);
+consent.writeAnalyticsConsent("denied", lifecycleStorage);
+mixpanel.disableAnalytics();
+assert.equal(lifecycleValues.has("mp_public-token_mixpanel"), false);
+assert.equal(optOuts, optOutsBeforeFailure + 1);
+consent.writeAnalyticsConsent("granted", lifecycleStorage);
+mixpanel.setMixpanelLoaderForTests(async () => ({ default: fakeSdk }));
+facade.trackProductEvent("Status Viewed", { health: "recovered" });
+assert.equal(await mixpanel.enableAnalytics(), true);
+assert.equal(tracked.at(-1).properties.health, "recovered");
+consent.writeAnalyticsConsent("denied", lifecycleStorage);
+mixpanel.disableAnalytics();
+
 consent.writeAnalyticsConsent("granted", lifecycleStorage);
 delete process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 assert.equal(await mixpanel.enableAnalytics(), false);
