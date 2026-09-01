@@ -4,6 +4,19 @@ export const deTranslations: TranslationMessages = {
   accessibility: {
     skipToContent: "Zum Hauptinhalt springen",
   },
+  analyticsConsent: {
+    title: "Optionale Produktanalyse",
+    purpose: "Hilf uns zu verstehen, welche Suchfunktionen nützlich sind. Die Analyse ist optional; Suchanfragen und Stelleninhalte werden nie erfasst.",
+    accept: "Analyse erlauben",
+    decline: "Analyse ablehnen",
+    currentState: "Aktuelle Einstellung",
+    changePreference: "Analyseeinstellung",
+    granted: "Erlaubt",
+    denied: "Abgelehnt",
+    undecided: "Nicht gewählt",
+    saved: "Deine Analyseeinstellung wurde gespeichert.",
+    couldNotSave: "Die Einstellung konnte nicht gespeichert werden. Die Analyse bleibt deaktiviert.",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Tech-Jobs aus öffentlichen GitHub-Communities",
@@ -12,6 +25,7 @@ export const deTranslations: TranslationMessages = {
       communities: "Communities",
       authors: "Autor:innen",
       docs: "Docs",
+      status: "Status",
     },
     mobileNavigation: {
       groups: {
@@ -66,17 +80,6 @@ export const deTranslations: TranslationMessages = {
       originalSource: "Originalquelle bleibt erhalten",
     },
   },
-  sponsorship: {
-    banner: {
-      message: "Halten Sie Openings mit Ihrer Stellenanzeige am Laufen.",
-      detail: "Ihre Stelle wird 30 Tage lang hervorgehoben.",
-      action: "Stelle veröffentlichen",
-    },
-    badge: {
-      label: "Gesponsert",
-      description: "Bezahlte Platzierung vor passenden organischen Stellen.",
-    },
-  },
   notFound: {
     kicker: "404",
     title: "Diese Seite konnten wir nicht finden",
@@ -116,6 +119,11 @@ export const deTranslations: TranslationMessages = {
       sortCount: "Meiste offene Stellen",
       sortRecent: "Zuletzt veröffentlichte Stelle",
       sortName: "Name A–Z",
+      activityLabel: "Community-Aktivität",
+      activeOnly: "Jetzt aktiv ({count})",
+      noOpenings: "Keine offenen Stellen ({count})",
+      withErrors: "Mit Synchronisierungsfehlern ({count})",
+      allSources: "Alle Quellen ({count})",
     },
     list: {
       summaryOne: "1 Community",
@@ -224,6 +232,16 @@ export const deTranslations: TranslationMessages = {
     workspacePublisherScope: "Von {identity} geteilte Stellen",
   },
   opportunities: {
+    discovery: {
+      shortcutsLabel: "Entdecken", remote: "Remote", internship: "Praktika",
+      dataAi: "Daten und KI", withSalary: "Mit Gehalt", lastDays: "Letzte {days} Tage",
+      saved: "Gespeicherte Stellen", newSinceVisit: "Neu seit dem letzten Besuch",
+    },
+    comparison: {
+      title: "Stellen vergleichen", selected: "{count} ausgewählt", clear: "Vergleich löschen",
+      selectMore: "Wähle ein oder zwei weitere Stellen für den Vergleich.", location: "Ort", salary: "Gehalt",
+      stack: "Stack", level: "Level", date: "Veröffentlicht", unknown: "Nicht angegeben",
+    },
     header: {
       kicker: "Jobsuche",
       title: "Tech-Jobs aus öffentlichen GitHub-Communities.",
@@ -292,6 +310,13 @@ export const deTranslations: TranslationMessages = {
       stackSelectedCount: "{count} ausgewählt",
       seniorityLabel: "Erfahrungsstufe",
       seniorityPlaceholder: "Erfahrungsstufe hinzufügen",
+      employmentLabel: "Beschäftigungsart",
+      employmentPlaceholder: "Beschäftigungsart hinzufügen",
+      technologyMatchLabel: "Technologieabgleich",
+      technologyMatchAny: "Eine ausgewählte Technologie",
+      technologyMatchAll: "Alle ausgewählten Technologien",
+      languageLabel: "Sprache",
+      languagePlaceholder: "Sprache hinzufügen",
       otherTagsLabel: "Weitere Tags",
       otherTagsPlaceholder: "Weiteren Tag hinzufügen",
       tagsLabel: "Tags",
@@ -307,6 +332,9 @@ export const deTranslations: TranslationMessages = {
       sortPlaceholder: "Nach Datum sortieren",
       sortRecent: "Neueste zuerst",
       sortOldest: "Älteste zuerst",
+      sortRelevance: "Relevanteste zuerst",
+      sortUpdated: "Kürzlich aktualisiert",
+      sortSalary: "Höchstes Gehalt",
     },
     toolbar: {
       opportunitiesCount: "{count} offene Stellen",
@@ -316,6 +344,20 @@ export const deTranslations: TranslationMessages = {
       sortPlaceholder: "Nach Datum sortieren",
       sortRecent: "Neueste zuerst",
       sortOldest: "Älteste zuerst",
+      sortRelevance: "Relevanteste zuerst",
+      sortUpdated: "Kürzlich aktualisiert",
+      sortSalary: "Höchstes Gehalt",
+      shareDiscovery: "Suche teilen",
+      shareShared: "Suche geteilt.",
+      shareCopied: "Suchlink kopiert.",
+      shareFailed: "Teilen nicht möglich. Kopiere die URL aus dem Browser.",
+    },
+    newForYou: {
+      title: "Neue Stellen für dich",
+      description: "Sieh dir Stellen seit deinem letzten Besuch an, die zu den in diesem Browser gespeicherten Angaben zu Ort, Arbeitsmodell, Technologien und Level passen.",
+      localNote: "Deine Einstellungen und dein Besuchsverlauf bleiben auf diesem Gerät.",
+      action: "Neue Stellen anzeigen",
+      dismiss: "Vorschlag für neue Stellen ausblenden",
     },
     list: {
       totalMatches: "{count} Treffer gesamt",
@@ -326,10 +368,11 @@ export const deTranslations: TranslationMessages = {
       noResultsDescription:
         "Derzeit sind keine offenen Stellen verfügbar.",
       clearFilters: "Filter löschen",
-      scrollToLoadMore: "Scrolle weiter, um mehr Stellen zu laden",
+      scrollToLoadMore: "Lade die nächsten Ergebnisse, wenn du bereit bist",
       allResultsLoaded: "Alle Stellen geladen",
       loading: "Stellen werden geladen…",
       loadingMore: "Weitere Stellen werden geladen…",
+      loadMore: "Weitere Stellen laden",
     },
     viewMode: {
       ariaLabel: "Ansichtsmodus",
@@ -362,7 +405,57 @@ export const deTranslations: TranslationMessages = {
       salaryPeriodHour: "Stunde",
       moreTag: "1 weiterer Tag",
       moreTags: "Weitere Tags: {count}",
+      save: "Stelle speichern", unsave: "Gespeicherte Stelle entfernen",
+      addToComparison: "Zum Vergleich hinzufügen", removeFromComparison: "Aus Vergleich entfernen",
+      newBadge: "Neu", oldBadge: "Ältere Anzeige", sourcesCount: "{count} Quellen",
+      reportProblem: "Problem melden",
+      reportProblemPrompt: "Teile uns mit, ob die Stelle geschlossen oder doppelt ist, einen falschen Ort oder unangemessene Inhalte enthält.",
+      reportCategories: { closed: "Geschlossene Stelle", duplicate: "Doppelte Stelle", location: "Falscher Ort", content: "Unangemessener Inhalt" },
+      allSources: "Veröffentlichungsquellen",
+      dataConfidence: {
+        title: "Datenverlässlichkeit", description: "Zeigt, welche Angaben aus der Ausschreibung stammen, welche abgeleitet wurden und wann die Quellen geprüft wurden.",
+        lastVerified: "Quellen zuletzt geprüft", verificationUnavailable: "Prüfzeitpunkt nicht verfügbar",
+        published: "Ursprünglich veröffentlicht", sources: "Veröffentlichte Quellen",
+        originalAuthority: "Die ursprüngliche Ausschreibung bleibt die maßgebliche Quelle für aktuelle Angaben und Bewerbungsanweisungen.",
+        staleWarning: "Diese Stelle ist älter. Prüfe vor der Bewerbung, ob sie noch offen ist.", incompleteWarning: "Wichtige Angaben fehlen und diese Stelle ist älter.",
+        fields: { location: "Standort", salary: "Gehalt", seniority: "Erfahrungsniveau", workModel: "Arbeitsmodell" },
+        states: { declared: "In der Quelle angegeben", inferred: "Abgeleitet", unknown: "Nicht erkannt" },
+      },
+      similar: { title: "Ähnliche Stellen", description: "Weitere aktuelle Rollen mit gemeinsamer Technologie, Fachrichtung, Standort oder Arbeitsmodell.", viewJob: "Stelle ansehen", locationUnavailable: "Standort nicht erkannt", freshness: { fresh: "Aktuell", aging: "Älter", stale: "Alt", unknown: "Alter nicht verfügbar" } },
     },
+  },
+  statusPage: {
+    kicker: "Datenstatus", title: "Synchronisierungsstatus der Communities",
+    description: "Zeigt die letzte Synchronisierung, offene Stellen und den neuesten Beitrag jeder öffentlichen Quelle.",
+    loadError: "Der Synchronisierungsstatus konnte nicht geladen werden.", communities: "Communities",
+    healthy: "Fehlerfrei", noOpenings: "Keine offenen Stellen", errors: "Synchronisierungsfehler",
+    generatedAt: "Status erstellt", community: "Community", state: "Status",
+    lastSync: "Letzte erfolgreiche Synchronisierung", openJobs: "Offene Stellen",
+    lastPost: "Neuester Beitrag", unavailable: "Nicht verfügbar",
+    searchLabel: "Communities suchen", searchPlaceholder: "Community, Repository oder Land", sortLabel: "Status sortieren",
+    states: { healthy: "Fehlerfrei", "no-openings": "Keine offenen Stellen", error: "Synchronisierungsfehler" },
+    history: {
+      title: "Synchronisierungsverlauf", description: "Öffentliche Zusammenfassung der letzten Erfassungen. Fehlerdetails des Anbieters werden nie veröffentlicht.",
+      last30Days: "Letzte 30 Tage", recentRuns: "Zuletzt veröffentlichte Läufe",
+      healthy: "Fehlerfrei", partial: "Teilweise", duration: "Dauer",
+      synchronized: "Synchronisierte Communities", failedCommunities: "Fehlgeschlagene Communities", openJobs: "Offene Stellen",
+      noHistory: "Für diesen Datenstand ist noch kein Verlauf verfügbar. Der aktuelle Status bleibt unten sichtbar.",
+      isolated: "Die letzte teilweise Synchronisierung scheint ein Einzelfall zu sein.", recurring: "Teilweise Synchronisierungen sind zuletzt wiederholt aufgetreten.",
+      noPartialDays: "Keine Tage mit teilweiser Synchronisierung in diesem Zeitraum.", daysWithPartial: "Tage mit teilweiser Synchronisierung",
+      failuresObserved: "Fehlerereignisse bei Communities", daySummary: "{date}: {partial} von {runs} Läufen teilweise; {failures} Fehlerereignisse bei Communities.",
+    },
+  },
+  updatesPage: {
+    kicker: "Produkttransparenz", title: "Was sich geändert hat, was veröffentlicht wurde und was folgt",
+    description: "Ein sachlicher Verlauf von Verbesserungen, gebündelten Versionen und Ausrichtung. Die Roadmap zeigt Absichten, keine Lieferzusagen.", navigationLabel: "Bereiche der Aktualisierungen",
+    tabs: { changelog: "Änderungen", releases: "Versionen", roadmap: "Roadmap" },
+    sections: {
+      changelog: { title: "Änderungen", description: "Einzelne Verbesserungen, die bereits verfügbar sind.", empty: "Noch keine Änderungen veröffentlicht." },
+      releases: { title: "Versionen", description: "Gemeinsam veröffentlichte, geprüfte Verbesserungen.", empty: "Noch keine Versionen veröffentlicht." },
+      roadmap: { title: "Roadmap", description: "Aktuelle Ausrichtung ohne erfundene Termine.", empty: "Noch keine Roadmap-Einträge." },
+    },
+    categories: { discovery: "Suche", data: "Daten", trust: "Vertrauen", operations: "Betrieb", growth: "Wachstum" },
+    lanes: { now: "Jetzt", next: "Als Nächstes", later: "Später" }, dateLabel: "Veröffentlicht", versionLabel: "Version", learnMore: "Zugehörige Seite öffnen",
   },
   footer: {
     brandTagline: "Tech-Jobs aus öffentlichen GitHub-Communities",
@@ -400,6 +493,8 @@ export const deTranslations: TranslationMessages = {
       privacyPolicy: "Datenschutzerklärung",
       termsOfService: "Nutzungsbedingungen",
       designSystem: "Designsystem",
+      updates: "Aktualisierungen",
+      methodology: "Methodik",
     },
     social: {
       linksAriaLabel: "Links zu Projektprofilen",
@@ -492,6 +587,7 @@ export const deTranslations: TranslationMessages = {
       description:
         "Wie openings.dev lokale Einstellungen, öffentliche GitHub-Daten, Supportnachrichten und externe Links behandelt.",
     },
+    methodology: { title: "Datenmethodik", description: "Wie Openings Quellen auswählt, Stellen synchronisiert, Felder deutet, Duplikate gruppiert und Grenzen erklärt." },
     terms: {
       title: "Nutzungsbedingungen",
       description:

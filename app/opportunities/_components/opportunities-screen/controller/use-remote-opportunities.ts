@@ -3,7 +3,7 @@ import {
   fetchOpportunitiesPage,
   type OpportunityServerFilters,
 } from "@/lib/opportunities/api";
-import { dedupeOpportunities, matchesSearch } from "./filtering";
+import { dedupeOpportunities } from "./filtering";
 import { INITIAL_BATCH_SIZE, LOAD_MORE_BATCH_SIZE } from "./defaults";
 import { canonicalTagValue } from "./tag-normalization";
 import {
@@ -31,13 +31,32 @@ function itemMatchesServerFilters(
 ) {
   const selectedTags = filters.tags.length > 0 ? new Set(filters.tags) : null;
   const selectedAuthors = filters.authors.length > 0 ? new Set(filters.authors) : null;
-  const matchesRepository = filters.repository === "all" || item.repository === filters.repository;
-  const matchesRegion = filters.region === "all" || item.region === filters.region;
-  const matchesCountry = filters.country === "all" || item.country === filters.country;
+  const repositories = item.sources?.map((source) => source.repository) ?? [item.repository];
+  const matchesRepository = filters.repository === "all" || repositories.includes(filters.repository);
+  const matchesRegion = filters.region === "all" || item.jobLocation?.region === filters.region;
+  const matchesCountry = filters.country === "all" || item.jobLocation?.country === filters.country;
   const matchesTags =
     !selectedTags ||
     item.tags.some((tag) => selectedTags.has(canonicalTagValue(tag)));
   const matchesAuthors = !selectedAuthors || selectedAuthors.has(item.author.handle);
+  const taxonomy = item.taxonomy;
+  const matchesStructured = [
+    [filters.workModels, taxonomy?.workModels ?? []],
+    [filters.areas, taxonomy?.areas ?? []],
+    [filters.seniority, taxonomy?.seniority ?? []],
+    [filters.employmentTypes, taxonomy?.employmentTypes ?? []],
+    [filters.languages, taxonomy?.languages ?? []],
+  ].every(([selected, values]) => selected.length === 0 || selected.some((value) => values.includes(value)));
+  const matchesTechnologies = filters.technologies.length === 0 ||
+    (filters.technologyMatch === "all"
+      ? filters.technologies.every((value) => taxonomy?.technologies.includes(value))
+      : filters.technologies.some((value) => taxonomy?.technologies.includes(value)));
+  const matchesFreshness = filters.freshnessDays === "all" ||
+    (item.freshness?.ageDays ?? Number.POSITIVE_INFINITY) <= Number(filters.freshnessDays);
+  const matchesIncluded = !filters.includedIdsActive || filters.includedIds.includes(item.id);
+  const matchesCreatedAfter = !filters.createdAfter ||
+    Date.parse(item.createdAt) > Date.parse(filters.createdAfter);
+  const matchesExcluded = !filters.excludedIds.includes(item.id);
 
   return (
     item.issueState === OpportunityIssueState.Open &&
@@ -45,8 +64,8 @@ function itemMatchesServerFilters(
     matchesRegion &&
     matchesCountry &&
     matchesTags &&
-    matchesAuthors &&
-    matchesSearch(item, filters.searchText)
+    matchesAuthors && matchesStructured && matchesTechnologies && matchesFreshness &&
+    (!filters.salaryOnly || Boolean(item.salary)) && matchesIncluded && matchesCreatedAfter && matchesExcluded
   );
 }
 

@@ -12,6 +12,7 @@ const DOCUMENT_DESTINATIONS: ReadonlyArray<{
   { key: "apiReference", href: PUBLIC_ROUTES.apiReference },
   { key: "maintainers", href: PUBLIC_ROUTES.communityGuide },
   { key: "contributing", href: PUBLIC_ROUTES.contributing },
+  { key: "methodology", href: PUBLIC_ROUTES.methodology },
   { key: "privacy", href: PUBLIC_ROUTES.privacy },
   { key: "terms", href: PUBLIC_ROUTES.terms },
 ];

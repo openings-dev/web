@@ -34,6 +34,7 @@ export function Header({
     { label: messages.header.nav.communities, href: PUBLIC_ROUTES.communities },
     { label: messages.header.nav.authors, href: PUBLIC_ROUTES.authors },
     { label: messages.header.nav.docs, href: PUBLIC_ROUTES.docs },
+    { label: messages.header.nav.status, href: PUBLIC_ROUTES.status },
   ];
   const mobileNavigation = messages.header.mobileNavigation;
   const mobileGroups: MobileNavigationGroup[] = [
@@ -69,7 +70,6 @@ export function Header({
       id: "help",
       label: mobileNavigation.groups.help,
       items: [
-        { label: mobileNavigation.support, href: EXTERNAL_ROUTES.support },
         {
           label: messages.footer.links.reportIssue,
           href: EXTERNAL_ROUTES.reportIssue,

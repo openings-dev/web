@@ -15,15 +15,32 @@ import { useLocationFilters } from "@/app/_components/location-filters/use-locat
 import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
 import { normalizeDirectoryQuery } from "@/lib/opportunities/summary-helpers";
 import { formatTemplate } from "@/lib/utils/format-template";
+import { Button } from "@/components/ui/button";
 import { CommunitiesList } from "./communities-list";
 import type { CommunitiesScreenProps } from "./types";
 
 export function CommunitiesScreen({
   communities,
   sourceUnavailable,
+  status,
 }: CommunitiesScreenProps): React.ReactNode {
   const { locale, messages } = useI18n();
   const copy = messages.communities;
+  const [activity, setActivity] = React.useState<"active" | "no-openings" | "error" | "all">("active");
+  const states = React.useMemo(() => new Map(status?.items.map((item) => [item.repository, item.state])), [status]);
+  const stateFor = React.useCallback((repository: string, opportunitiesCount: number) =>
+    states.get(repository) ?? (opportunitiesCount > 0 ? "healthy" : "no-openings"), [states]);
+  const activeCount = communities.filter((item) => stateFor(item.repository, item.opportunitiesCount) === "healthy").length;
+  const noOpeningsCount = communities.filter((item) => stateFor(item.repository, item.opportunitiesCount) === "no-openings").length;
+  const errorCount = communities.filter((item) => stateFor(item.repository, item.opportunitiesCount) === "error").length;
+  const directoryItems = React.useMemo(
+    () => activity === "all" ? communities : communities.filter((item) => {
+      const state = stateFor(item.repository, item.opportunitiesCount);
+      if (activity === "active") return state === "healthy";
+      return state === activity;
+    }),
+    [activity, communities, stateFor],
+  );
   const {
     filters,
     regionOptions,
@@ -33,7 +50,7 @@ export function CommunitiesScreen({
     handleRegionChange,
     handleCountryChange,
     handleClear,
-  } = useLocationFilters({ items: communities });
+  } = useLocationFilters({ items: directoryItems });
   const [query, setQuery] = React.useState("");
   const [sort, setSort] = React.useState<DirectorySortMode>(
     DirectorySortMode.Count,
@@ -42,12 +59,12 @@ export function CommunitiesScreen({
   const queryMatchedCommunities = React.useMemo(
     () =>
       filterDirectoryItemsByQuery({
-        items: communities,
+        items: directoryItems,
         locale,
         query,
         getSearchValues: (item) => [item.name, item.repository],
       }),
-    [communities, locale, query],
+    [directoryItems, locale, query],
   );
   const visibleCommunities = React.useMemo(
     () =>
@@ -69,7 +86,7 @@ export function CommunitiesScreen({
         });
   const emptyReason = resolveDirectoryEmptyReason({
     sourceUnavailable,
-    sourceCount: communities.length,
+    sourceCount: directoryItems.length,
     visibleCount: visibleCommunities.length,
     queryMatchCount: queryMatchedCommunities.length,
     geographyMatchCount: filteredItems.length,
@@ -79,7 +96,7 @@ export function CommunitiesScreen({
   const handleClearAll = React.useCallback(() => {
     setQuery("");
     handleClear();
-  }, [handleClear]);
+  }, [handleClear, setQuery]);
 
   return (
     <DirectoryScreenLayout
@@ -87,6 +104,21 @@ export function CommunitiesScreen({
       title={copy.header.title}
       description={copy.header.description}
       discovery={(
+        <div className="space-y-3">
+        <div className="flex flex-wrap gap-2" aria-label={copy.filters.activityLabel}>
+          <Button type="button" size="sm" variant={activity === "active" ? "default" : "outline"} aria-pressed={activity === "active"} onClick={() => setActivity("active")}>
+            {formatTemplate(copy.filters.activeOnly, { count: activeCount.toLocaleString(locale) })}
+          </Button>
+          <Button type="button" size="sm" variant={activity === "no-openings" ? "default" : "outline"} aria-pressed={activity === "no-openings"} onClick={() => setActivity("no-openings")}>
+            {formatTemplate(copy.filters.noOpenings, { count: noOpeningsCount.toLocaleString(locale) })}
+          </Button>
+          <Button type="button" size="sm" variant={activity === "error" ? "default" : "outline"} aria-pressed={activity === "error"} onClick={() => setActivity("error")}>
+            {formatTemplate(copy.filters.withErrors, { count: errorCount.toLocaleString(locale) })}
+          </Button>
+          <Button type="button" size="sm" variant={activity === "all" ? "default" : "outline"} aria-pressed={activity === "all"} onClick={() => setActivity("all")}>
+            {formatTemplate(copy.filters.allSources, { count: communities.length.toLocaleString(locale) })}
+          </Button>
+        </div>
         <DirectoryDiscoveryControls
           query={query}
           sort={sort}
@@ -115,6 +147,7 @@ export function CommunitiesScreen({
             />
           )}
         />
+        </div>
       )}
       list={(
         <CommunitiesList

@@ -10,8 +10,10 @@ Browser-safe overrides use `NEXT_PUBLIC_OPENINGS_DATA_BASE_URL` and `NEXT_PUBLIC
 
 ## Dataset boundaries
 
-- `api/manifest.json` describes the generated API and facets.
-- order, lookup, page, job, and search files support opportunity lists and details.
+- `api/manifest.json` describes schema 6, generated files, counts, and structured facets.
+- order, lookup, page, canonical job, alias, and weighted search files support opportunity lists, old links, and details.
+- `api/status.json` carries sanitized per-community health, last successful synchronization, open-job count, and latest posting date.
+- Canonical jobs retain every public source while high-confidence duplicates are displayed once. Unknown job locations stay unknown instead of inheriting repository geography.
 - `index.json` and country shards support static community and author discovery.
 - the remote repository catalog supplies valid repository filters.
 
@@ -32,5 +34,5 @@ Route or feature controller
 - Validate unknown JSON before treating it as a domain object.
 - Keep fetch and parsing functions independent from React.
 - Preserve useful request errors instead of silently manufacturing domain data.
-- Do not add local snapshots, mocks, API routes, credentials, retries, or framework-specific service classes.
+- Do not add frontend-local snapshots, mocks, API routes, credentials, retries, or framework-specific service classes.
 - Split large modules by responsibility only when the resulting API is concrete and reusable.

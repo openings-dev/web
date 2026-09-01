@@ -23,6 +23,9 @@ interface UseDerivedOpportunitiesParams {
   remoteFilteredCount: number | null;
   locale: string;
   rangeMessages: { zeroResults: string; rangeOfTotal: string };
+  savedIds: ReadonlySet<string>;
+  viewedIds: ReadonlySet<string>;
+  previousVisitAt: string | null;
 }
 
 export function useDerivedOpportunities(params: UseDerivedOpportunitiesParams) {
@@ -45,8 +48,12 @@ export function useDerivedOpportunities(params: UseDerivedOpportunitiesParams) {
     [params.filters, params.forcedAuthor, params.forcedRepository, params.registry],
   );
   const filteredOpportunities = React.useMemo(
-    () => getFilteredOpportunities(params.opportunities, normalizedFilters),
-    [normalizedFilters, params.opportunities],
+    () => getFilteredOpportunities(params.opportunities, normalizedFilters, {
+      savedIds: params.savedIds,
+      viewedIds: params.viewedIds,
+      previousVisitAt: params.previousVisitAt,
+    }),
+    [normalizedFilters, params.opportunities, params.previousVisitAt, params.savedIds, params.viewedIds],
   );
   const loadedCount = filteredOpportunities.length;
   const totalCount = params.remoteFilteredCount ?? loadedCount;

@@ -5,13 +5,19 @@ import { OpportunityDetails } from "@/app/opportunities/_components/opportunity-
 import { OpportunityDetailsMode } from "@/app/opportunities/_components/opportunity-details/types";
 import { createOpportunityMetadata } from "@/lib/metadata/opportunity-metadata";
 import { resolvePublicSiteUrl } from "@/lib/metadata/site-metadata";
-import { fetchOpportunityById } from "@/lib/opportunities/api";
+import { fetchOpportunityById, fetchSimilarOpportunities } from "@/lib/opportunities/api";
 import {
   buildCommunityPath,
   buildOpportunityPath,
   buildUserPath,
 } from "@/lib/opportunities/routing";
-import { listStaticOpportunityIds } from "@/lib/opportunities/static-api";
+import { listStaticOpportunityRouteIds } from "@/lib/opportunities/static-api";
+import { getCommunityStatus } from "@/lib/opportunities/status";
+import { buildOpportunityTrustSummary } from "@/lib/opportunities/trust";
+import {
+  buildJobPostingJsonLd,
+  serializeJobPostingJsonLd,
+} from "@/lib/metadata/job-posting";
 
 interface JobPageProps {
   params: Promise<{ id: string }>;
@@ -20,7 +26,7 @@ interface JobPageProps {
 export const dynamicParams = false;
 
 export async function generateStaticParams(): Promise<Array<{ id: string }>> {
-  const ids = await listStaticOpportunityIds();
+  const ids = await listStaticOpportunityRouteIds();
   return ids.map((id) => ({ id }));
 }
 
@@ -43,14 +49,29 @@ export default async function JobPage({
 }: JobPageProps): Promise<React.ReactNode> {
   const item = await resolveOpportunity(params);
   if (!item) notFound();
+  const [status, similarItems] = await Promise.all([
+    getCommunityStatus().catch(() => null),
+    fetchSimilarOpportunities(item).catch(() => []),
+  ]);
+  const jobPosting = buildJobPostingJsonLd(item);
 
   return (
-    <OpportunityDetails
-      item={item}
-      mode={OpportunityDetailsMode.Page}
-      shareUrl={resolvePublicSiteUrl(buildOpportunityPath(item.id))}
-      communityHref={buildCommunityPath(item.repository)}
-      authorHref={buildUserPath(item.author.handle)}
-    />
+    <>
+      {jobPosting ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJobPostingJsonLd(jobPosting) }}
+        />
+      ) : null}
+      <OpportunityDetails
+        item={item}
+        mode={OpportunityDetailsMode.Page}
+        shareUrl={resolvePublicSiteUrl(buildOpportunityPath(item.id))}
+        communityHref={buildCommunityPath(item.repository)}
+        authorHref={buildUserPath(item.author.handle)}
+        trustSummary={buildOpportunityTrustSummary(item, status)}
+        similarItems={similarItems}
+      />
+    </>
   );
 }

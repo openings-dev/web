@@ -4,6 +4,19 @@ export const itTranslations: TranslationMessages = {
   accessibility: {
     skipToContent: "Vai al contenuto principale",
   },
+  analyticsConsent: {
+    title: "Analisi facoltativa del prodotto",
+    purpose: "Aiutaci a capire quali funzioni di scoperta sono utili. Le analisi sono facoltative e non registriamo mai le tue ricerche o il contenuto delle offerte.",
+    accept: "Consenti analisi",
+    decline: "Rifiuta analisi",
+    currentState: "Preferenza attuale",
+    changePreference: "Preferenza per le analisi",
+    granted: "Consentite",
+    denied: "Rifiutate",
+    undecided: "Non scelta",
+    saved: "La preferenza per le analisi è stata salvata.",
+    couldNotSave: "Non è stato possibile salvare la preferenza. Le analisi restano disattivate.",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Offerte tech condivise nelle comunità pubbliche su GitHub",
@@ -12,6 +25,7 @@ export const itTranslations: TranslationMessages = {
       communities: "Comunità",
       authors: "Autori",
       docs: "Docs",
+      status: "Stato",
     },
     mobileNavigation: {
       groups: {
@@ -66,17 +80,6 @@ export const itTranslations: TranslationMessages = {
       originalSource: "Fonte originale preservata",
     },
   },
-  sponsorship: {
-    banner: {
-      message: "Aiuta Openings a restare online pubblicando le tue offerte.",
-      detail: "La tua offerta ottiene 30 giorni in evidenza.",
-      action: "Pubblica un'offerta",
-    },
-    badge: {
-      label: "Sponsorizzata",
-      description: "Posizionamento a pagamento mostrato prima delle offerte organiche pertinenti.",
-    },
-  },
   notFound: {
     kicker: "Errore 404",
     title: "Non troviamo questa pagina",
@@ -116,6 +119,11 @@ export const itTranslations: TranslationMessages = {
       sortCount: "Più offerte aperte",
       sortRecent: "Pubblicazione più recente",
       sortName: "Nome A–Z",
+      activityLabel: "Attività delle comunità",
+      activeOnly: "Attive ora ({count})",
+      noOpenings: "Nessuna offerta aperta ({count})",
+      withErrors: "Con errori di sincronizzazione ({count})",
+      allSources: "Tutte le fonti ({count})",
     },
     list: {
       summaryOne: "1 comunità",
@@ -224,6 +232,16 @@ export const itTranslations: TranslationMessages = {
     workspacePublisherScope: "Offerte condivise da {identity}",
   },
   opportunities: {
+    discovery: {
+      shortcutsLabel: "Scopri", remote: "Da remoto", internship: "Stage",
+      dataAi: "Dati e IA", withSalary: "Con stipendio", lastDays: "Ultimi {days} giorni",
+      saved: "Offerte salvate", newSinceVisit: "Nuove dall’ultima visita",
+    },
+    comparison: {
+      title: "Confronta offerte", selected: "{count} selezionate", clear: "Cancella confronto",
+      selectMore: "Seleziona una o due offerte in più per confrontarle.", location: "Località", salary: "Stipendio",
+      stack: "Stack", level: "Livello", date: "Pubblicata", unknown: "Non specificato",
+    },
     header: {
       kicker: "Ricerca offerte",
       title: "Offerte tech condivise nelle comunità pubbliche su GitHub",
@@ -292,6 +310,13 @@ export const itTranslations: TranslationMessages = {
       stackSelectedCount: "{count} selezionate",
       seniorityLabel: "Livello professionale",
       seniorityPlaceholder: "Aggiungi livello professionale",
+      employmentLabel: "Tipo di contratto",
+      employmentPlaceholder: "Aggiungi tipo di contratto",
+      technologyMatchLabel: "Corrispondenza tecnologie",
+      technologyMatchAny: "Qualsiasi tecnologia selezionata",
+      technologyMatchAll: "Tutte le tecnologie selezionate",
+      languageLabel: "Lingua",
+      languagePlaceholder: "Aggiungi lingua",
       otherTagsLabel: "Altri tag",
       otherTagsPlaceholder: "Aggiungi altro tag",
       tagsLabel: "Tag",
@@ -307,6 +332,9 @@ export const itTranslations: TranslationMessages = {
       sortPlaceholder: "Ordina per data",
       sortRecent: "Più recenti",
       sortOldest: "Meno recenti per prime",
+      sortRelevance: "Più rilevanti",
+      sortUpdated: "Aggiornate di recente",
+      sortSalary: "Retribuzione più alta",
     },
     toolbar: {
       opportunitiesCount: "{count} offerte aperte",
@@ -316,6 +344,20 @@ export const itTranslations: TranslationMessages = {
       sortPlaceholder: "Ordina per data",
       sortRecent: "Più recenti",
       sortOldest: "Meno recenti per prime",
+      sortRelevance: "Più rilevanti",
+      sortUpdated: "Aggiornate di recente",
+      sortSalary: "Retribuzione più alta",
+      shareDiscovery: "Condividi ricerca",
+      shareShared: "Ricerca condivisa.",
+      shareCopied: "Link della ricerca copiato.",
+      shareFailed: "Impossibile condividere. Copia l’URL dal browser.",
+    },
+    newForYou: {
+      title: "Nuove offerte per te",
+      description: "Scopri le offerte pubblicate dalla tua ultima visita che corrispondono a località, modalità, stack e livello salvati in questo browser.",
+      localNote: "Le preferenze e la cronologia delle visite restano su questo dispositivo.",
+      action: "Mostra nuove offerte",
+      dismiss: "Ignora il suggerimento di nuove offerte",
     },
     list: {
       totalMatches: "{count} risultati totali",
@@ -326,10 +368,11 @@ export const itTranslations: TranslationMessages = {
       noResultsDescription:
         "Al momento non ci sono offerte aperte da mostrare.",
       clearFilters: "Cancella filtri",
-      scrollToLoadMore: "Scorri per caricare altro",
+      scrollToLoadMore: "Carica i prossimi risultati quando vuoi",
       allResultsLoaded: "Hai raggiunto la fine dei risultati",
       loading: "Caricamento delle offerte…",
       loadingMore: "Caricamento di altre offerte…",
+      loadMore: "Carica altre offerte",
     },
     viewMode: {
       ariaLabel: "Modalità di visualizzazione",
@@ -361,7 +404,57 @@ export const itTranslations: TranslationMessages = {
       salaryPeriodHour: "ora",
       moreTag: "1 tag in più",
       moreTags: "+{count} tag",
+      save: "Salva offerta", unsave: "Rimuovi dalle offerte salvate",
+      addToComparison: "Aggiungi al confronto", removeFromComparison: "Rimuovi dal confronto",
+      newBadge: "Nuova", oldBadge: "Offerta datata", sourcesCount: "{count} fonti",
+      reportProblem: "Segnala un problema",
+      reportProblemPrompt: "Indica se l’offerta è chiusa, duplicata, ha una località errata o contenuti inappropriati.",
+      reportCategories: { closed: "Offerta chiusa", duplicate: "Offerta duplicata", location: "Località errata", content: "Contenuto inappropriato" },
+      allSources: "Fonti di pubblicazione",
+      dataConfidence: {
+        title: "Affidabilità dei dati", description: "Scopri quali dettagli provengono dall’annuncio, quali sono stati dedotti e quando sono state verificate le fonti.",
+        lastVerified: "Ultima verifica delle fonti", verificationUnavailable: "Data di verifica non disponibile",
+        published: "Pubblicata originariamente", sources: "Fonti pubblicate",
+        originalAuthority: "L’annuncio originale resta la fonte autorevole per i dettagli aggiornati e le istruzioni di candidatura.",
+        staleWarning: "Questa offerta è datata. Verifica che sia ancora aperta prima di candidarti.", incompleteWarning: "Mancano alcuni dettagli importanti e l’offerta è datata.",
+        fields: { location: "Località", salary: "Retribuzione", seniority: "Livello", workModel: "Modalità di lavoro" },
+        states: { declared: "Dichiarato nella fonte", inferred: "Dedotto", unknown: "Non identificato" },
+      },
+      similar: { title: "Offerte simili", description: "Altri ruoli attuali con tecnologia, area, località o modalità in comune.", viewJob: "Vedi offerta", locationUnavailable: "Località non identificata", freshness: { fresh: "Recente", aging: "Meno recente", stale: "Datata", unknown: "Data non disponibile" } },
     },
+  },
+  statusPage: {
+    kicker: "Stato dei dati", title: "Stato di sincronizzazione delle comunità",
+    description: "Consulta l’ultima sincronizzazione, le offerte aperte e il post più recente di ogni fonte pubblica.",
+    loadError: "Impossibile caricare lo stato di sincronizzazione.", communities: "Comunità",
+    healthy: "Regolari", noOpenings: "Nessuna offerta aperta", errors: "Errori di sincronizzazione",
+    generatedAt: "Stato generato", community: "Comunità", state: "Stato",
+    lastSync: "Ultima sincronizzazione riuscita", openJobs: "Offerte aperte",
+    lastPost: "Ultimo post", unavailable: "Non disponibile",
+    searchLabel: "Cerca comunità", searchPlaceholder: "Comunità, repository o paese", sortLabel: "Ordina stato",
+    states: { healthy: "Regolare", "no-openings": "Nessuna offerta", error: "Errore di sincronizzazione" },
+    history: {
+      title: "Cronologia delle sincronizzazioni", description: "Riepilogo pubblico delle raccolte recenti. I dettagli degli errori del provider non vengono mai pubblicati.",
+      last30Days: "Ultimi 30 giorni", recentRuns: "Esecuzioni recenti pubblicate",
+      healthy: "Regolare", partial: "Parziale", duration: "Durata",
+      synchronized: "Comunità sincronizzate", failedCommunities: "Comunità non sincronizzate", openJobs: "Offerte aperte",
+      noHistory: "La cronologia non è ancora disponibile in questo snapshot. Lo stato attuale resta disponibile qui sotto.",
+      isolated: "L’ultima sincronizzazione parziale sembra un caso isolato.", recurring: "Le sincronizzazioni parziali si sono ripetute nelle esecuzioni recenti.",
+      noPartialDays: "Nessun giorno con sincronizzazione parziale nel periodo.", daysWithPartial: "Giorni con sincronizzazione parziale",
+      failuresObserved: "Occorrenze di errori nelle comunità", daySummary: "{date}: {partial} esecuzioni parziali su {runs}; {failures} errori nelle comunità.",
+    },
+  },
+  updatesPage: {
+    kicker: "Trasparenza del prodotto", title: "Cosa è cambiato, cosa è stato pubblicato e cosa seguirà",
+    description: "Un registro concreto di miglioramenti, versioni raggruppate e direzione. La roadmap indica intenzioni, non promesse di consegna.", navigationLabel: "Sezioni degli aggiornamenti",
+    tabs: { changelog: "Modifiche", releases: "Versioni", roadmap: "Roadmap" },
+    sections: {
+      changelog: { title: "Modifiche", description: "Miglioramenti già disponibili nel prodotto.", empty: "Nessuna modifica pubblicata." },
+      releases: { title: "Versioni", description: "Gruppi di miglioramenti verificati e pubblicati insieme.", empty: "Nessuna versione pubblicata." },
+      roadmap: { title: "Roadmap", description: "Direzione attuale senza scadenze inventate.", empty: "Nessun elemento in roadmap." },
+    },
+    categories: { discovery: "Ricerca", data: "Dati", trust: "Affidabilità", operations: "Operazioni", growth: "Crescita" },
+    lanes: { now: "Ora", next: "Poi", later: "In seguito" }, dateLabel: "Pubblicato", versionLabel: "Versione", learnMore: "Apri la pagina correlata",
   },
   footer: {
     brandTagline: "Offerte tech condivise nelle comunità pubbliche su GitHub",
@@ -399,6 +492,8 @@ export const itTranslations: TranslationMessages = {
       privacyPolicy: "Informativa sulla privacy",
       termsOfService: "Termini di servizio",
       designSystem: "Design system",
+      updates: "Aggiornamenti",
+      methodology: "Metodologia",
     },
     social: {
       linksAriaLabel: "Link social",
@@ -491,6 +586,7 @@ export const itTranslations: TranslationMessages = {
       description:
         "Come openings.dev gestisce preferenze locali, dati pubblici di GitHub, messaggi al supporto e link esterni.",
     },
+    methodology: { title: "Metodologia dei dati", description: "Come Openings seleziona le fonti, sincronizza le offerte, interpreta i campi, raggruppa i duplicati e comunica i limiti." },
     terms: {
       title: "Termini di servizio",
       description:

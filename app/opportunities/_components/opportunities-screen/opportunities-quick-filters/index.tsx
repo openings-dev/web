@@ -13,10 +13,6 @@ import { SelectTrigger } from "@/components/ui/select/select-trigger";
 import { SelectValue } from "@/components/ui/select/select-value";
 import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
 import {
-  classifyOpportunityTag,
-  OpportunityTagCategory,
-} from "@/app/opportunities/_components/opportunities-screen/controller/tag-categories";
-import {
   getActiveOpportunityFilters,
   removeActiveOpportunityFilter,
 } from "@/app/opportunities/_components/opportunities-screen/controller/active-filters";
@@ -30,6 +26,7 @@ import { formatTemplate } from "@/lib/utils/format-template";
 import { ActiveFilterList } from "./active-filter-list";
 import { StackMultiSelect } from "./stack-multi-select";
 import { ADVANCED_FILTERS_DIALOG_ID } from "@/app/opportunities/_components/opportunities-screen/opportunities-filters/constants";
+import { DiscoveryShortcuts } from "./discovery-shortcuts";
 
 interface QuickSelectProps {
   locale: string;
@@ -79,6 +76,7 @@ export function OpportunitiesQuickFilters({
   advancedFiltersOpen,
   onOpenAdvancedFilters,
   onFieldChange,
+  onSearchSubmitted,
   onClearFilters,
   forcedScope,
 }: OpportunitiesQuickFiltersProps): React.ReactNode {
@@ -94,11 +92,8 @@ export function OpportunitiesQuickFilters({
     : null;
   const selectedStacks = React.useMemo(
     () =>
-      filters.tags.filter(
-        (tag) =>
-          classifyOpportunityTag(tag).category === OpportunityTagCategory.Stack,
-      ),
-    [filters.tags],
+      filters.technologies,
+    [filters.technologies],
   );
   const activeItems = React.useMemo<ActiveOpportunityFilter[]>(() => {
     const forcedRepository = forcedScope?.kind === ShareableProfileKind.Community
@@ -147,33 +142,35 @@ export function OpportunitiesQuickFilters({
         case "sort":
           return {
             ...item,
-            label: item.value === "oldest"
-              ? filterMessages.sortOldest
-              : filterMessages.sortRecent,
+            label: {
+              relevance: filterMessages.sortRelevance,
+              recent: filterMessages.sortRecent,
+              oldest: filterMessages.sortOldest,
+              updated: filterMessages.sortUpdated,
+              salary: filterMessages.sortSalary,
+            }[item.value] ?? item.label,
           };
-        case "items-per-page":
-          return {
-            ...item,
-            label: formatTemplate(filterMessages.itemsPerPageOption, {
-              count: Number(item.value).toLocaleString(locale),
-            }),
-          };
+        case "work-model":
+        case "area":
+        case "technology":
+        case "technology-match":
+        case "seniority":
+        case "employment":
+        case "language":
+        case "freshness":
+        case "salary":
+        case "saved":
+        case "new":
+          return item;
       }
     });
-  }, [filterMessages.allCountries, filterMessages.itemsPerPageOption, filterMessages.sortOldest, filterMessages.sortRecent, filters, forcedScope, locale, options.authors, options.countries, options.regions, options.repositories, options.tags]);
+  }, [filterMessages.allCountries, filterMessages.sortOldest, filterMessages.sortRecent, filterMessages.sortRelevance, filterMessages.sortSalary, filterMessages.sortUpdated, filters, forcedScope, options.authors, options.countries, options.regions, options.repositories, options.tags]);
 
   const handleStackChange = React.useCallback(
     (values: string[]) => {
-      const tagsWithoutStack = filters.tags.filter(
-        (tag) =>
-          classifyOpportunityTag(tag).category !== OpportunityTagCategory.Stack,
-      );
-      onFieldChange(
-        "tags",
-        [...tagsWithoutStack, ...values],
-      );
+      onFieldChange("technologies", values);
     },
-    [filters.tags, onFieldChange],
+    [onFieldChange],
   );
 
   const handleRemoveFilter = React.useCallback(
@@ -207,6 +204,10 @@ export function OpportunitiesQuickFilters({
             type="search"
             value={filters.searchText}
             onChange={(event) => onFieldChange("searchText", event.target.value)}
+            onBlur={(event) => onSearchSubmitted(event.currentTarget.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") onSearchSubmitted(event.currentTarget.value);
+            }}
             placeholder={filterMessages.searchPlaceholder}
             leadingVisual={<Search />}
           />
@@ -246,8 +247,8 @@ export function OpportunitiesQuickFilters({
                 count: selectedStacks.length.toLocaleString(locale),
               })}
               selectedValues={selectedStacks}
-              options={options.tagCategories.stack}
-              disabled={options.tagCategories.stack.length === 0}
+              options={options.technologies}
+              disabled={options.technologies.length === 0}
               onApply={handleStackChange}
             />
           )}
@@ -272,6 +273,12 @@ export function OpportunitiesQuickFilters({
           ) : null}
         </Button>
       </div>
+
+      <DiscoveryShortcuts
+        filters={filters}
+        onFieldChange={onFieldChange}
+        curatedLinks={!forcedScope}
+      />
 
       {activeFiltersCount > 0 ? (
         <ActiveFilterList

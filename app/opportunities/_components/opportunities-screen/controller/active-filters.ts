@@ -92,6 +92,45 @@ export function getActiveOpportunityFilters(
     }
   }
 
+  for (const [field, kind] of [
+    ["workModels", "work-model"],
+    ["areas", "area"],
+    ["technologies", "technology"],
+    ["seniority", "seniority"],
+    ["employmentTypes", "employment"],
+    ["languages", "language"],
+  ] as const) {
+    for (const value of filters[field]) {
+      items.push({ id: `${field}:${value}`, kind, label: value, value });
+    }
+  }
+  if (filters.technologies.length > 1 && filters.technologyMatch !== DEFAULT_FILTERS.technologyMatch) {
+    items.push({
+      id: "technology-match",
+      kind: "technology-match",
+      label: filters.technologyMatch,
+      value: filters.technologyMatch,
+    });
+  }
+  if (filters.freshnessDays !== ALL_FILTER_VALUE) {
+    items.push({
+      id: `freshness:${filters.freshnessDays}`,
+      kind: "freshness",
+      label: `${filters.freshnessDays} days`,
+      value: filters.freshnessDays,
+      resetValue: ALL_FILTER_VALUE,
+    });
+  }
+  if (filters.salaryOnly) {
+    items.push({ id: "salary", kind: "salary", label: "Salary", value: "true" });
+  }
+  if (filters.savedOnly) {
+    items.push({ id: "saved", kind: "saved", label: "Saved", value: "true" });
+  }
+  if (filters.newOnly) {
+    items.push({ id: "new", kind: "new", label: "New", value: "true" });
+  }
+
   if (filters.sortOrder !== DEFAULT_FILTERS.sortOrder) {
     items.push({
       id: `sort:${filters.sortOrder}`,
@@ -99,16 +138,6 @@ export function getActiveOpportunityFilters(
       label: filters.sortOrder,
       value: filters.sortOrder,
       resetValue: DEFAULT_FILTERS.sortOrder,
-    });
-  }
-
-  if (filters.itemsPerPage !== DEFAULT_FILTERS.itemsPerPage) {
-    items.push({
-      id: `items-per-page:${filters.itemsPerPage}`,
-      kind: "items-per-page",
-      label: String(filters.itemsPerPage),
-      value: String(filters.itemsPerPage),
-      resetValue: String(DEFAULT_FILTERS.itemsPerPage),
     });
   }
 
@@ -161,10 +190,37 @@ export function removeActiveOpportunityFilter(
         (item.resetValue ?? OpportunitySortOrder.Recent) as OpportunitySortOrder,
       );
       return;
-    case "items-per-page":
-      onFieldChange(
-        "itemsPerPage",
-        Number(item.resetValue ?? DEFAULT_FILTERS.itemsPerPage),
-      );
+    case "work-model":
+      onFieldChange("workModels", filters.workModels.filter((value) => value !== item.value));
+      return;
+    case "area":
+      onFieldChange("areas", filters.areas.filter((value) => value !== item.value));
+      return;
+    case "technology":
+      onFieldChange("technologies", filters.technologies.filter((value) => value !== item.value));
+      return;
+    case "technology-match":
+      onFieldChange("technologyMatch", DEFAULT_FILTERS.technologyMatch);
+      return;
+    case "seniority":
+      onFieldChange("seniority", filters.seniority.filter((value) => value !== item.value));
+      return;
+    case "employment":
+      onFieldChange("employmentTypes", filters.employmentTypes.filter((value) => value !== item.value));
+      return;
+    case "language":
+      onFieldChange("languages", filters.languages.filter((value) => value !== item.value));
+      return;
+    case "freshness":
+      onFieldChange("freshnessDays", ALL_FILTER_VALUE);
+      return;
+    case "salary":
+      onFieldChange("salaryOnly", false);
+      return;
+    case "saved":
+      onFieldChange("savedOnly", false);
+      return;
+    case "new":
+      onFieldChange("newOnly", false);
   }
 }

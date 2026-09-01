@@ -60,7 +60,8 @@ export function useSelectedOpportunity(params: {
     (item: OpportunityItem) => {
       if (
         params.forcedRepository &&
-        item.repository !== params.forcedRepository
+        item.repository !== params.forcedRepository &&
+        !item.sources?.some((source) => source.repository === params.forcedRepository)
       ) {
         return false;
       }
@@ -92,15 +93,6 @@ export function useSelectedOpportunity(params: {
             id: selectedId,
             item: null,
             status: OpportunitySelectionStatus.NotFound,
-          });
-          return;
-        }
-
-        if (item.id !== selectedId) {
-          setDirectResolution({
-            id: selectedId,
-            item: null,
-            status: OpportunitySelectionStatus.LoadError,
           });
           return;
         }

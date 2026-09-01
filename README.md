@@ -51,12 +51,18 @@ You spend less time jumping between repositories and get a clearer path to the l
 With Openings, you can:
 
 - search jobs by title, stack, seniority, location, and work model;
+- rank searches by relevance with synonyms and conservative typo tolerance;
+- filter by real job geography, recency, salary disclosure, employment type, language, and structured technology taxonomy;
+- save jobs and preferences in the current browser, see what is new since the previous visit, and compare up to three jobs through a shareable URL;
 - browse dedicated pages for [communities](https://openings.dev/communities) and [GitHub authors](https://openings.dev/authors);
+- inspect public [community synchronization status](https://openings.dev/status), including the latest successful sync and posting date;
 - read each job in a clean, consistent layout;
 - share a direct job or community page;
 - continue to the original public listing for current details and next steps.
 
 Openings is a discovery layer, not another job board asking communities to publish the same role twice.
+
+Saved jobs, viewed state, and preferences stay in the current browser. They do not require an account and do not sync across devices.
 
 ## How it works
 

@@ -7,6 +7,19 @@ export interface TranslationMessages {
   accessibility: {
     skipToContent: string;
   };
+  analyticsConsent: {
+    title: string;
+    purpose: string;
+    accept: string;
+    decline: string;
+    currentState: string;
+    changePreference: string;
+    granted: string;
+    denied: string;
+    undecided: string;
+    saved: string;
+    couldNotSave: string;
+  };
   header: {
     brandName: string;
     brandTagline: string;
@@ -15,6 +28,7 @@ export interface TranslationMessages {
       communities: string;
       authors: string;
       docs: string;
+      status: string;
     };
     mobileNavigation: {
       groups: {
@@ -65,17 +79,6 @@ export interface TranslationMessages {
       originalSource: string;
     };
   };
-  sponsorship: {
-    banner: {
-      message: string;
-      detail: string;
-      action: string;
-    };
-    badge: {
-      label: string;
-      description: string;
-    };
-  };
   notFound: {
     kicker: string;
     title: string;
@@ -113,6 +116,11 @@ export interface TranslationMessages {
       sortCount: string;
       sortRecent: string;
       sortName: string;
+      activityLabel: string;
+      activeOnly: string;
+      noOpenings: string;
+      withErrors: string;
+      allSources: string;
     };
     list: {
       summaryOne: string;
@@ -211,6 +219,28 @@ export interface TranslationMessages {
     workspacePublisherScope: string;
   };
   opportunities: {
+    discovery: {
+      shortcutsLabel: string;
+      remote: string;
+      internship: string;
+      dataAi: string;
+      withSalary: string;
+      lastDays: string;
+      saved: string;
+      newSinceVisit: string;
+    };
+    comparison: {
+      title: string;
+      selected: string;
+      clear: string;
+      selectMore: string;
+      location: string;
+      salary: string;
+      stack: string;
+      level: string;
+      date: string;
+      unknown: string;
+    };
     header: {
       kicker: string;
       title: string;
@@ -274,6 +304,13 @@ export interface TranslationMessages {
       stackSelectedCount: string;
       seniorityLabel: string;
       seniorityPlaceholder: string;
+      employmentLabel: string;
+      employmentPlaceholder: string;
+      technologyMatchLabel: string;
+      technologyMatchAny: string;
+      technologyMatchAll: string;
+      languageLabel: string;
+      languagePlaceholder: string;
       otherTagsLabel: string;
       otherTagsPlaceholder: string;
       tagsLabel: string;
@@ -289,6 +326,9 @@ export interface TranslationMessages {
       sortPlaceholder: string;
       sortRecent: string;
       sortOldest: string;
+      sortRelevance: string;
+      sortUpdated: string;
+      sortSalary: string;
     };
     toolbar: {
       opportunitiesCount: string;
@@ -298,6 +338,20 @@ export interface TranslationMessages {
       sortPlaceholder: string;
       sortRecent: string;
       sortOldest: string;
+      sortRelevance: string;
+      sortUpdated: string;
+      sortSalary: string;
+      shareDiscovery: string;
+      shareShared: string;
+      shareCopied: string;
+      shareFailed: string;
+    };
+    newForYou: {
+      title: string;
+      description: string;
+      localNote: string;
+      action: string;
+      dismiss: string;
     };
     list: {
       totalMatches: string;
@@ -310,6 +364,7 @@ export interface TranslationMessages {
       allResultsLoaded: string;
       loading: string;
       loadingMore: string;
+      loadMore: string;
     };
     viewMode: {
       ariaLabel: string;
@@ -340,7 +395,124 @@ export interface TranslationMessages {
       salaryPeriodHour: string;
       moreTag: string;
       moreTags: string;
+      save: string;
+      unsave: string;
+      addToComparison: string;
+      removeFromComparison: string;
+      newBadge: string;
+      oldBadge: string;
+      sourcesCount: string;
+      reportProblem: string;
+      reportProblemPrompt: string;
+      reportCategories: {
+        closed: string;
+        duplicate: string;
+        location: string;
+        content: string;
+      };
+      allSources: string;
+      dataConfidence: {
+        title: string;
+        description: string;
+        lastVerified: string;
+        verificationUnavailable: string;
+        published: string;
+        sources: string;
+        originalAuthority: string;
+        staleWarning: string;
+        incompleteWarning: string;
+        fields: {
+          location: string;
+          salary: string;
+          seniority: string;
+          workModel: string;
+        };
+        states: {
+          declared: string;
+          inferred: string;
+          unknown: string;
+        };
+      };
+      similar: {
+        title: string;
+        description: string;
+        viewJob: string;
+        locationUnavailable: string;
+        freshness: {
+          fresh: string;
+          aging: string;
+          stale: string;
+          unknown: string;
+        };
+      };
     };
+  };
+  statusPage: {
+    kicker: string;
+    title: string;
+    description: string;
+    loadError: string;
+    communities: string;
+    healthy: string;
+    noOpenings: string;
+    errors: string;
+    generatedAt: string;
+    community: string;
+    state: string;
+    lastSync: string;
+    openJobs: string;
+    lastPost: string;
+    unavailable: string;
+    searchLabel: string;
+    searchPlaceholder: string;
+    sortLabel: string;
+    states: {
+      healthy: string;
+      "no-openings": string;
+      error: string;
+    };
+    history: {
+      title: string;
+      description: string;
+      last30Days: string;
+      recentRuns: string;
+      healthy: string;
+      partial: string;
+      duration: string;
+      synchronized: string;
+      failedCommunities: string;
+      openJobs: string;
+      noHistory: string;
+      isolated: string;
+      recurring: string;
+      noPartialDays: string;
+      daysWithPartial: string;
+      failuresObserved: string;
+      daySummary: string;
+    };
+  };
+  updatesPage: {
+    kicker: string;
+    title: string;
+    description: string;
+    navigationLabel: string;
+    tabs: { changelog: string; releases: string; roadmap: string };
+    sections: {
+      changelog: { title: string; description: string; empty: string };
+      releases: { title: string; description: string; empty: string };
+      roadmap: { title: string; description: string; empty: string };
+    };
+    categories: {
+      discovery: string;
+      data: string;
+      trust: string;
+      operations: string;
+      growth: string;
+    };
+    lanes: { now: string; next: string; later: string };
+    dateLabel: string;
+    versionLabel: string;
+    learnMore: string;
   };
   footer: {
     brandTagline: string;
@@ -377,6 +549,8 @@ export interface TranslationMessages {
       privacyPolicy: string;
       termsOfService: string;
       designSystem: string;
+      updates: string;
+      methodology: string;
     };
     social: {
       linksAriaLabel: string;
@@ -424,6 +598,7 @@ export interface TranslationMessages {
     contributing: DocumentMessages;
     privacy: DocumentMessages;
     terms: DocumentMessages;
+    methodology: DocumentMessages;
   };
   designSystem: {
     eyebrow: string;

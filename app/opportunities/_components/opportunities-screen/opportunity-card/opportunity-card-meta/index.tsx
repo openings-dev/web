@@ -23,6 +23,7 @@ export function OpportunityCardMeta({
   locale,
 }: OpportunityCardMetaProps): React.ReactNode {
   const { workModel } = classifyOpportunityTags(item.tags);
+  const structuredWorkModel = item.taxonomy?.workModels[0];
 
   return (
     <div className={metadataRowStyles}>
@@ -32,7 +33,11 @@ export function OpportunityCardMeta({
           {salaryLabel}
         </span>
       ) : null}
-      {workModel.slice(0, 1).map((tag) => (
+      {structuredWorkModel ? (
+        <Badge tone="positive" size="compact">
+          {canonicalTagLabel(structuredWorkModel, structuredWorkModel, locale)}
+        </Badge>
+      ) : workModel.slice(0, 1).map((tag) => (
         <Badge
           key={`${tag.canonicalValue}-${tag.value}`}
           tone={OPPORTUNITY_TAG_BADGE_TONES[tag.category]}
@@ -41,10 +46,10 @@ export function OpportunityCardMeta({
           {canonicalTagLabel(tag.canonicalValue, tag.value, locale)}
         </Badge>
       ))}
-      {item.country ? (
+      {item.jobLocation?.displayText ? (
         <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
           <MapPin className="size-4" aria-hidden="true" />
-          {item.country}
+          {item.jobLocation.displayText}
         </span>
       ) : null}
     </div>

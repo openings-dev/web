@@ -4,9 +4,11 @@
 
 ## Current model
 
-The application uses React state, URL search parameters, and two cross-cutting providers. It has no global store, query cache, authentication state, or persistent application database.
+The application uses React state, URL search parameters, versioned browser-local candidate state, and two cross-cutting providers. It has no global store, query cache, authentication state, or persistent application database.
 
 `I18nProvider` owns the active locale and typed translations. `ThemeProvider` owns theme selection and synchronization with browser storage, document classes, and system preference. Opportunity and directory features own their transient filters, pagination, fullscreen detail dialog, and loading state locally.
+
+Shareable filters, selected job links, and comparisons live in the URL. Saved jobs, viewed timestamps, the previous visit, and country/work-model/technology/seniority preferences live in the versioned local candidate adapter. They never leave the browser and do not sync across devices. A parameterized URL always takes precedence over stored preferences.
 
 ## Ownership order
 

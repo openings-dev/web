@@ -27,32 +27,25 @@ export function OpportunitiesList({
   onAuthorSelect,
   hideCommunityIdentity,
   hideAuthorIdentity,
+  savedIds,
+  comparisonIds,
+  previousVisitAt,
+  viewedIds,
+  onToggleSaved,
+  onToggleComparison,
 }: OpportunitiesListProps): React.ReactNode {
   const { messages } = useI18n();
   const listMessages = messages.opportunities.list;
-  const sentinelRef = React.useRef<HTMLDivElement | null>(null);
-
-  React.useEffect(() => {
-    const target = sentinelRef.current;
-    if (!target || !hasMore || isLoading || isFetchingMore) return;
-    let cancelled = false;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting || cancelled) return;
-        observer.unobserve(target);
-        void onLoadMore();
-      },
-      { rootMargin: "360px 0px" },
-    );
-
-    observer.observe(target);
-    return () => {
-      cancelled = true;
-      observer.disconnect();
-    };
-  }, [hasMore, isFetchingMore, isLoading, onLoadMore]);
-
+  const handleLoadMore = React.useCallback(async () => {
+    const previousCount = items.length;
+    await onLoadMore();
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        const triggers = document.querySelectorAll<HTMLElement>("[data-opportunity-trigger]");
+        triggers.item(previousCount)?.focus();
+      });
+    });
+  }, [items.length, onLoadMore]);
   return (
     <section
       className="space-y-4"
@@ -103,6 +96,12 @@ export function OpportunitiesList({
           onAuthorSelect={onAuthorSelect}
           hideCommunityIdentity={hideCommunityIdentity}
           hideAuthorIdentity={hideAuthorIdentity}
+          savedIds={savedIds}
+          comparisonIds={comparisonIds}
+          previousVisitAt={previousVisitAt}
+          viewedIds={viewedIds}
+          onToggleSaved={onToggleSaved}
+          onToggleComparison={onToggleComparison}
         />
       )}
 
@@ -118,8 +117,9 @@ export function OpportunitiesList({
             loadingMoreLabel={listMessages.loadingMore}
             partialLoadErrorLabel={messages.opportunities.feedback.partialLoadError}
             skeletonCount={skeletonCount}
+            loadMoreLabel={listMessages.loadMore}
+            onLoadMore={handleLoadMore}
           />
-          <div ref={sentinelRef} className="h-px w-full" aria-hidden />
         </>
       ) : null}
     </section>

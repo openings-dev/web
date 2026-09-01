@@ -6,14 +6,12 @@ import { SelectContent } from "@/components/ui/select/select-content";
 import { SelectItem } from "@/components/ui/select/select-item";
 import { SelectTrigger } from "@/components/ui/select/select-trigger";
 import { SelectValue } from "@/components/ui/select/select-value";
-import {
-  classifyOpportunityTag,
-  OpportunityTagCategory,
-} from "@/app/opportunities/_components/opportunities-screen/controller/tag-categories";
 import type {
+  OnFilterFieldChange,
   OpportunityFilterOptions,
   OpportunityFiltersState,
 } from "@/app/opportunities/_components/opportunities-screen/types";
+import { TechnologyMatchMode } from "@/app/opportunities/_components/opportunities-screen/types";
 import { FilterSection } from "../filter-section";
 import { SelectedChipList } from "../selected-chip-list";
 import { TagCategoryPicker } from "./tag-category-picker";
@@ -28,6 +26,15 @@ interface FilterTaxonomyGroupProps {
     workModePlaceholder: string;
     seniorityLabel: string;
     seniorityPlaceholder: string;
+    employmentLabel: string;
+    employmentPlaceholder: string;
+    technologyLabel: string;
+    technologyPlaceholder: string;
+    technologyMatchLabel: string;
+    technologyMatchAny: string;
+    technologyMatchAll: string;
+    languageLabel: string;
+    languagePlaceholder: string;
     otherTagsLabel: string;
     otherTagsPlaceholder: string;
     noTagsSelected: string;
@@ -38,10 +45,13 @@ interface FilterTaxonomyGroupProps {
   };
   portalContainer?: HTMLElement | null;
   authorsLocked?: boolean;
-  onTagSelected: (tag: string) => void;
-  onToggleTag: (tag: string) => void;
   onAuthorSelected: (author: string) => void;
   onToggleAuthor: (author: string) => void;
+  onFieldChange: OnFilterFieldChange;
+}
+
+function toggled(values: string[], value: string) {
+  return values.includes(value) ? values.filter((entry) => entry !== value) : [...values, value];
 }
 
 export function FilterTaxonomyGroup({
@@ -51,20 +61,10 @@ export function FilterTaxonomyGroup({
   labels,
   portalContainer,
   authorsLocked,
-  onTagSelected,
-  onToggleTag,
   onAuthorSelected,
   onToggleAuthor,
+  onFieldChange,
 }: FilterTaxonomyGroupProps): React.ReactNode {
-  const selectedTags = state.tags
-    .filter(
-      (tag) =>
-        classifyOpportunityTag(tag).category !== OpportunityTagCategory.Stack,
-    )
-    .map((tag) => ({
-      key: tag,
-      label: options.tags.find((option) => option.value === tag)?.label ?? tag,
-    }));
   const selectedAuthors = state.authors.map((author) => ({
     key: author,
     label:
@@ -79,33 +79,91 @@ export function FilterTaxonomyGroup({
           controlId="advanced-work-model-filter"
           label={labels.workModeLabel}
           placeholder={labels.workModePlaceholder}
-          options={options.tagCategories.workModel}
+          options={options.workModels}
           portalContainer={portalContainer}
-          onSelect={onTagSelected}
+          onSelect={(value) => onFieldChange("workModels", toggled(state.workModels, value))}
         />
         <TagCategoryPicker
           locale={locale}
           controlId="advanced-seniority-filter"
           label={labels.seniorityLabel}
           placeholder={labels.seniorityPlaceholder}
-          options={options.tagCategories.seniority}
+          options={options.seniority}
           portalContainer={portalContainer}
-          onSelect={onTagSelected}
+          onSelect={(value) => onFieldChange("seniority", toggled(state.seniority, value))}
         />
         <TagCategoryPicker
           locale={locale}
           controlId="advanced-other-tags-filter"
           label={labels.otherTagsLabel}
           placeholder={labels.otherTagsPlaceholder}
-          options={options.tagCategories.other}
+          options={options.areas}
           portalContainer={portalContainer}
-          onSelect={onTagSelected}
+          onSelect={(value) => onFieldChange("areas", toggled(state.areas, value))}
+        />
+        <TagCategoryPicker
+          locale={locale}
+          controlId="advanced-technology-filter"
+          label={labels.technologyLabel}
+          placeholder={labels.technologyPlaceholder}
+          options={options.technologies}
+          portalContainer={portalContainer}
+          onSelect={(value) => onFieldChange("technologies", toggled(state.technologies, value))}
+        />
+        {state.technologies.length > 1 ? (
+          <Field label={labels.technologyMatchLabel} controlId="advanced-technology-match">
+            {(controlProps) => (
+              <Select value={state.technologyMatch} onValueChange={(value) => onFieldChange("technologyMatch", value as TechnologyMatchMode)}>
+                <SelectTrigger {...controlProps}><SelectValue /></SelectTrigger>
+                <SelectContent portalContainer={portalContainer ?? undefined}>
+                  <SelectItem value={TechnologyMatchMode.Any}>{labels.technologyMatchAny}</SelectItem>
+                  <SelectItem value={TechnologyMatchMode.All}>{labels.technologyMatchAll}</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          </Field>
+        ) : null}
+        <TagCategoryPicker
+          locale={locale}
+          controlId="advanced-employment-filter"
+          label={labels.employmentLabel}
+          placeholder={labels.employmentPlaceholder}
+          options={options.employmentTypes}
+          portalContainer={portalContainer}
+          onSelect={(value) => onFieldChange(
+            "employmentTypes",
+            toggled(state.employmentTypes, value),
+          )}
+        />
+        <TagCategoryPicker
+          locale={locale}
+          controlId="advanced-language-filter"
+          label={labels.languageLabel}
+          placeholder={labels.languagePlaceholder}
+          options={options.languages}
+          portalContainer={portalContainer}
+          onSelect={(value) => onFieldChange("languages", toggled(state.languages, value))}
         />
         <SelectedChipList
-          items={selectedTags}
+          items={[
+            ...state.workModels.map((value) => ({ key: `work:${value}`, label: value })),
+            ...state.seniority.map((value) => ({ key: `seniority:${value}`, label: value })),
+            ...state.areas.map((value) => ({ key: `area:${value}`, label: value })),
+            ...state.technologies.map((value) => ({ key: `technology:${value}`, label: value })),
+            ...state.employmentTypes.map((value) => ({ key: `employment:${value}`, label: value })),
+            ...state.languages.map((value) => ({ key: `language:${value}`, label: value })),
+          ]}
           emptyLabel={labels.noTagsSelected}
           removeLabel={labels.removeFilter}
-          onRemove={onToggleTag}
+          onRemove={(key) => {
+            const [kind, value] = key.split(":", 2);
+            if (kind === "work") onFieldChange("workModels", toggled(state.workModels, value));
+            else if (kind === "seniority") onFieldChange("seniority", toggled(state.seniority, value));
+            else if (kind === "area") onFieldChange("areas", toggled(state.areas, value));
+            else if (kind === "technology") onFieldChange("technologies", toggled(state.technologies, value));
+            else if (kind === "employment") onFieldChange("employmentTypes", toggled(state.employmentTypes, value));
+            else onFieldChange("languages", toggled(state.languages, value));
+          }}
           fallbackFocusId="advanced-work-model-filter"
         />
 

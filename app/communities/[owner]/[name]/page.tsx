@@ -13,6 +13,8 @@ import {
   repositoryFromCommunitySegments,
 } from "@/lib/opportunities/routing";
 import { loadSafely } from "@/lib/utils/load-safely";
+import { getCommunityStatus } from "@/lib/opportunities/status";
+import { CommunityTelemetry } from "./_components/community-telemetry";
 
 interface CommunityRepositoryPageProps {
   params: Promise<{
@@ -66,15 +68,22 @@ export async function generateMetadata({
 export default async function CommunityRepositoryPage({
   params,
 }: CommunityRepositoryPageProps): Promise<React.ReactNode> {
-  const { profile } = await resolveCommunityProfile(params);
+  const { profile, repository } = await resolveCommunityProfile(params);
 
   if (!profile) {
     notFound();
   }
 
+  const status = await getCommunityStatus().catch(() => null);
+  const state = status?.items.find((item) => item.repository === repository)?.state;
+  const activity = state === "error" ? "error" as const
+    : profile.opportunitiesCount > 0 ? "active" as const : "no-openings" as const;
   return (
-    <OpportunitiesPage
-      profile={{ kind: ShareableProfileKind.Community, profile }}
-    />
+    <>
+      <CommunityTelemetry repository={repository} activity={activity} />
+      <OpportunitiesPage
+        profile={{ kind: ShareableProfileKind.Community, profile }}
+      />
+    </>
   );
 }

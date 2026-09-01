@@ -12,13 +12,38 @@ import { DrawerIdentities } from "@/app/opportunities/_components/opportunities-
 import { DrawerMetadata } from "@/app/opportunities/_components/opportunities-screen/opportunity-drawer/drawer-metadata";
 import { DrawerTags } from "@/app/opportunities/_components/opportunities-screen/opportunity-drawer/drawer-tags";
 import { OpportunityMarkdown } from "@/app/opportunities/_components/opportunities-screen/opportunity-drawer/opportunity-markdown";
-import { SponsoredBadge } from "@/app/opportunities/_components/opportunities-screen/sponsored-badge";
 import { formatTemplate } from "@/lib/utils/format-template";
+import { buildOpportunityReportMailto } from "@/lib/opportunities/report-problem";
+import { readCandidateState, updateCandidateState } from "@/lib/opportunities/local-candidate-state";
+import * as React from "react";
 import { cn } from "@/lib/utils/tailwind";
+import { trackProductEvent } from "@/lib/telemetry";
+import { buildOpportunityTrustSummary } from "@/lib/opportunities/trust";
+import { DataConfidence } from "./data-confidence";
+import { SimilarOpportunities } from "./similar-opportunities";
 import {
   OpportunityDetailsMode,
   type OpportunityDetailsProps,
 } from "./types";
+
+const viewedJobs = new Set<string>();
+
+function ageBucket(item: OpportunityDetailsProps["item"]) {
+  const age = item.freshness?.ageDays ?? Math.max(0, Math.floor(
+    (Date.now() - Date.parse(item.createdAt)) / (24 * 60 * 60 * 1000),
+  ));
+  if (age <= 7) return "0-7" as const;
+  if (age <= 30) return "8-30" as const;
+  if (age <= 90) return "31-90" as const;
+  return "91+" as const;
+}
+
+function savedCountBucket(count: number) {
+  if (count === 0) return "0" as const;
+  if (count <= 5) return "1-5" as const;
+  if (count <= 20) return "6-20" as const;
+  return "21+" as const;
+}
 
 export function OpportunityDetails({
   item,
@@ -32,9 +57,64 @@ export function OpportunityDetails({
   communityHref,
   authorHref,
   specimenMode = false,
+  isSaved,
+  onToggleSaved,
+  trustSummary,
+  similarItems = [],
 }: OpportunityDetailsProps): React.ReactNode {
   const { locale, messages } = useI18n();
   const copy = messages.opportunities.card;
+  const [localSaved, setLocalSaved] = React.useState(false);
+  const sourceCount = item.deduplication?.sourceCount ?? item.sources?.length ?? 1;
+  const confidence = trustSummary ?? buildOpportunityTrustSummary(item, null);
+  React.useEffect(() => {
+    if (specimenMode || viewedJobs.has(item.id)) return;
+    viewedJobs.add(item.id);
+    trackProductEvent("Job Viewed", {
+      jobId: item.id,
+      age: ageBucket(item),
+      sourceCount,
+    });
+  }, [item, sourceCount, specimenMode]);
+  React.useEffect(() => {
+    if (isSaved !== undefined) return;
+    let active = true;
+    queueMicrotask(() => {
+      if (active) setLocalSaved(Boolean(readCandidateState().saved[item.id]));
+    });
+    return () => { active = false; };
+  }, [isSaved, item.id]);
+  const saved = isSaved ?? localSaved;
+  const handleToggleSaved = () => {
+    const stored = readCandidateState();
+    const currentlySaved = Boolean(stored.saved[item.id]);
+    const nextSavedCount = Math.max(
+      0,
+      Object.keys(stored.saved).length + (currentlySaved ? -1 : 1),
+    );
+    if (onToggleSaved) {
+      onToggleSaved(item.id);
+    } else {
+      const nextSaved = !localSaved;
+      setLocalSaved(nextSaved);
+      updateCandidateState((state) => {
+        const next = { ...state.saved };
+        if (nextSaved) next[item.id] = new Date().toISOString();
+        else delete next[item.id];
+        return { ...state, saved: next };
+      });
+    }
+    trackProductEvent("Job Saved", {
+      jobId: item.id,
+      savedCount: savedCountBucket(nextSavedCount),
+    });
+  };
+  const handleOpenOriginal = () => {
+    trackProductEvent("Original Listing Opened", {
+      jobId: item.id,
+      sourceCount,
+    });
+  };
   const isDialog = mode === OpportunityDetailsMode.Dialog;
   const Heading = isDialog ? "h2" : "h1";
   const dateFormatter = new Intl.DateTimeFormat(locale, {
@@ -60,6 +140,33 @@ export function OpportunityDetails({
   const updatedAt = formatTemplate(copy.updatedAt, {
     date: dateFormatter.format(new Date(item.updatedAt)),
   });
+  const reportUrl = buildOpportunityReportMailto({
+    title: `${copy.reportProblem}: ${item.title}`,
+    canonicalUrl: shareUrl,
+    primarySourceUrl: item.url,
+    prompt: copy.reportProblemPrompt,
+    categories: [
+      copy.reportCategories.closed,
+      copy.reportCategories.duplicate,
+      copy.reportCategories.location,
+      copy.reportCategories.content,
+    ],
+  });
+  const sourceList = (item.sources?.length ?? 0) > 1 ? (
+    <div className="border-t border-line pt-5">
+      <h3 className="text-xs font-semibold text-foreground">{copy.allSources}</h3>
+      <ul className="mt-2 space-y-2 text-xs">
+        {item.sources?.map((source) => (
+          <li key={source.id}>
+            <a href={source.url} target="_blank" rel="noreferrer"
+              className="text-primary-deep underline-offset-4 hover:underline">
+              {source.repository}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ) : null;
   const action = (
     <DrawerAction
       openOriginalLabel={copy.openOriginal}
@@ -70,6 +177,12 @@ export function OpportunityDetails({
       shareUrl={shareUrl}
       url={item.url}
       inert={specimenMode}
+      reportLabel={copy.reportProblem}
+      reportUrl={reportUrl}
+      saveLabel={saved ? copy.unsave : copy.save}
+      isSaved={saved}
+      onToggleSaved={handleToggleSaved}
+      onOpenOriginal={handleOpenOriginal}
     />
   );
 
@@ -110,12 +223,9 @@ export function OpportunityDetails({
       <div className={cn("min-h-0 flex-1", isDialog && "overflow-y-auto overscroll-contain")}>
         <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-7 sm:px-6 sm:py-9 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,22rem)] lg:gap-12 lg:px-8 lg:py-12">
           <main className="min-w-0">
-            <div className="mb-4 flex flex-wrap items-center gap-2">
-              <p className="text-label font-semibold text-primary-deep">
-                {copy.detailsTitle}
-              </p>
-              <SponsoredBadge promotion={item.promotion} />
-            </div>
+            <p className="mb-4 text-label font-semibold text-primary-deep">
+              {copy.detailsTitle}
+            </p>
             <DrawerIdentities
               item={item}
               hideCommunityIdentity={hideCommunityIdentity}
@@ -136,12 +246,18 @@ export function OpportunityDetails({
             </Heading>
             <div className="mt-6 border-y border-line py-4">
               <DrawerMetadata
-                country={item.country}
+                country={item.jobLocation?.displayText}
                 salaryLabel={salaryLabel}
                 tags={item.tags}
                 locale={locale}
               />
             </div>
+            <DataConfidence
+              item={item}
+              summary={confidence}
+              locale={locale}
+              copy={copy.dataConfidence}
+            />
             <div className="mt-8 max-w-[74ch]">
               <OpportunityMarkdown
                 body={item.description}
@@ -150,6 +266,7 @@ export function OpportunityDetails({
             </div>
             <div className="mt-8 border-t border-line pt-6 lg:hidden">
               <DrawerTags tags={item.tags} locale={locale} />
+              {sourceList}
             </div>
           </main>
 
@@ -162,11 +279,14 @@ export function OpportunityDetails({
                 locale={locale}
               />
               <DrawerTags tags={item.tags} locale={locale} />
+              {sourceList}
               <div className="border-t border-line pt-5">{action}</div>
             </div>
           </aside>
         </div>
       </div>
+
+      {!isDialog ? <SimilarOpportunities items={similarItems} copy={copy.similar} /> : null}
 
       <footer className="z-20 shrink-0 border-t border-line bg-surface-elevated/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:px-6 lg:hidden">
         {action}

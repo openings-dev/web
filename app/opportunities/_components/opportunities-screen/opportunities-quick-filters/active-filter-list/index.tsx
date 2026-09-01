@@ -29,7 +29,17 @@ const FILTER_TONES = {
   "advanced-tag": "primary",
   author: "neutral",
   sort: "informational",
-  "items-per-page": "neutral",
+  "work-model": "positive",
+  area: "informational",
+  technology: "informational",
+  "technology-match": "informational",
+  seniority: "primary",
+  employment: "neutral",
+  language: "neutral",
+  freshness: "positive",
+  salary: "positive",
+  saved: "primary",
+  new: "primary",
 } as const satisfies Record<
   ActiveOpportunityFilterKind,
   "neutral" | "positive" | "informational" | "primary"

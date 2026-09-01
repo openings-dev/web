@@ -3,10 +3,6 @@ export enum OpportunityIssueState {
   Closed = "closed",
 }
 
-export enum OpportunityPromotionType {
-  Sponsored = "sponsored",
-}
-
 export enum OpportunitySalaryPeriod {
   Month = "month",
   Year = "year",
@@ -14,8 +10,16 @@ export enum OpportunitySalaryPeriod {
 }
 
 export enum OpportunitySortOrder {
+  Relevance = "relevance",
   Recent = "recent",
   Oldest = "oldest",
+  Updated = "updated",
+  Salary = "salary",
+}
+
+export enum TechnologyMatchMode {
+  Any = "any",
+  All = "all",
 }
 
 export enum OpportunitySourceType {

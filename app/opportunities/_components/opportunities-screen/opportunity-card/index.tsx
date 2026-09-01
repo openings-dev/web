@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { Building2 } from "lucide-react";
+import { Bookmark, Building2, Columns3 } from "lucide-react";
 import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
 import { Avatar } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { formatSalary } from "@/app/opportunities/_components/opportunities-screen/shared/format-salary";
 import { cn } from "@/lib/utils/tailwind";
 import { formatTemplate } from "@/lib/utils/format-template";
@@ -17,7 +18,6 @@ import { OpportunityCardHeader } from "./opportunity-card-header";
 import { OpportunityCardMeta } from "./opportunity-card-meta";
 import { OpportunityCardTags } from "./opportunity-card-tags";
 import { getOpportunityDetailsElementIds } from "./trigger-contract";
-import { SponsoredBadge } from "../sponsored-badge";
 
 export function OpportunityCard({
   item,
@@ -28,6 +28,12 @@ export function OpportunityCard({
   onAuthorSelect,
   hideCommunityIdentity,
   hideAuthorIdentity,
+  savedIds,
+  comparisonIds,
+  previousVisitAt,
+  viewedIds,
+  onToggleSaved,
+  onToggleComparison,
 }: OpportunityCardProps): React.ReactNode {
   const { locale, messages } = useI18n();
   const cardMessages = messages.opportunities.card;
@@ -51,6 +57,10 @@ export function OpportunityCard({
   const isList = viewMode === OpportunityViewMode.List;
   const titleId = React.useId();
   const detailsElementIds = getOpportunityDetailsElementIds(item.id);
+  const isSaved = savedIds.has(item.id);
+  const isCompared = comparisonIds.has(item.id);
+  const isNew = Boolean(previousVisitAt && !viewedIds.has(item.id) &&
+    Date.parse(item.createdAt) > Date.parse(previousVisitAt));
   const handleCommunityClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     event.preventDefault();
@@ -74,6 +84,18 @@ export function OpportunityCard({
         onClick={() => onSelectOpportunity(item)}
       />
       <div className="pointer-events-none relative flex h-full flex-col gap-4">
+        <div className="pointer-events-auto absolute right-0 top-0 z-20 flex gap-1">
+          <button type="button" className="inline-flex size-11 items-center justify-center rounded-control text-muted-foreground hover:bg-surface-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label={isSaved ? cardMessages.unsave : cardMessages.save}
+            aria-pressed={isSaved} onClick={() => onToggleSaved(item.id)}>
+            <Bookmark className="size-4" fill={isSaved ? "currentColor" : "none"} aria-hidden="true" />
+          </button>
+          <button type="button" className="inline-flex size-11 items-center justify-center rounded-control text-muted-foreground hover:bg-surface-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label={isCompared ? cardMessages.removeFromComparison : cardMessages.addToComparison}
+            aria-pressed={isCompared} onClick={() => onToggleComparison(item)}>
+            <Columns3 className="size-4" aria-hidden="true" />
+          </button>
+        </div>
         <div
           className={cn(
             "min-w-0 gap-4",
@@ -112,7 +134,17 @@ export function OpportunityCard({
                 ) : null}
               </div>
             ) : null}
-            <SponsoredBadge promotion={item.promotion} />
+            <div className="flex flex-wrap items-center gap-2 pr-20">
+              {isNew ? <Badge tone="positive" size="compact">{cardMessages.newBadge}</Badge> : null}
+              {item.freshness?.status === "stale" ? (
+                <Badge tone="neutral" size="compact">{cardMessages.oldBadge}</Badge>
+              ) : null}
+              {(item.sources?.length ?? 0) > 1 ? (
+                <Badge tone="informational" size="compact">
+                  {formatTemplate(cardMessages.sourcesCount, { count: item.sources?.length ?? 1 })}
+                </Badge>
+              ) : null}
+            </div>
             <OpportunityCardHeader
               title={item.title}
               excerpt={item.excerpt}

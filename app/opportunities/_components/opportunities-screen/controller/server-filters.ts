@@ -22,10 +22,20 @@ export function buildServerFilters(
     | "searchText"
     | "tags"
     | "authors"
+    | "workModels"
+    | "areas"
+    | "technologies"
+    | "technologyMatch"
+    | "seniority"
+    | "employmentTypes"
+    | "languages"
+    | "freshnessDays"
+    | "salaryOnly"
   >,
   forcedRepository: string | null,
   forcedAuthor: string | null,
   registry: RepositoryFilterRegistry | null,
+  local: { includedIds?: string[]; includedIdsActive?: boolean; excludedIds?: string[]; createdAfter?: string | null } = {},
 ): OpportunityServerFilters {
   return normalizeFilterDependencies({
     repository: forcedRepository ??
@@ -49,6 +59,19 @@ export function buildServerFilters(
     searchText: filters.searchText.trim(),
     tags: [...new Set(filters.tags.map((tag) => canonicalTagValue(tag)).filter(Boolean))],
     authors: forcedAuthor ? [forcedAuthor] : uniqueValues(filters.authors),
+    workModels: uniqueValues(filters.workModels),
+    areas: uniqueValues(filters.areas),
+    technologies: uniqueValues(filters.technologies),
+    technologyMatch: filters.technologyMatch,
+    seniority: uniqueValues(filters.seniority),
+    employmentTypes: uniqueValues(filters.employmentTypes),
+    languages: uniqueValues(filters.languages),
+    freshnessDays: filters.freshnessDays,
+    salaryOnly: filters.salaryOnly,
+    includedIds: local.includedIds ?? [],
+    includedIdsActive: local.includedIdsActive ?? false,
+    excludedIds: local.excludedIds ?? [],
+    createdAfter: local.createdAfter ?? null,
   }, registry, {
     allowLocationWithRepository: Boolean(forcedRepository),
   });

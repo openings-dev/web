@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ExternalLink, Share2 } from "lucide-react";
+import { Bookmark, CircleAlert, ExternalLink, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/tailwind";
@@ -14,6 +14,12 @@ interface DrawerActionProps {
   shareUrl?: string;
   className?: string;
   inert?: boolean;
+  reportLabel?: string;
+  reportUrl?: string;
+  saveLabel?: string;
+  isSaved?: boolean;
+  onToggleSaved?: () => void;
+  onOpenOriginal?: () => void;
 }
 
 export function DrawerAction({
@@ -26,6 +32,12 @@ export function DrawerAction({
   shareUrl,
   className,
   inert = false,
+  reportLabel,
+  reportUrl,
+  saveLabel,
+  isSaved = false,
+  onToggleSaved,
+  onOpenOriginal,
 }: DrawerActionProps): React.ReactNode {
   const [inlineAnnouncement, setInlineAnnouncement] = React.useState("");
   const shareButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -77,7 +89,7 @@ export function DrawerAction({
         </Button>
       ) : (
         <Button asChild className="w-full">
-          <a href={url} target="_blank" rel="noreferrer">
+          <a href={url} target="_blank" rel="noreferrer" onClick={onOpenOriginal}>
             <ExternalLink className="size-4" aria-hidden="true" />
             {openOriginalLabel}
           </a>
@@ -94,6 +106,20 @@ export function DrawerAction({
         >
           <Share2 className="size-4" aria-hidden="true" />
           {shareLabel}
+        </Button>
+      ) : null}
+      {saveLabel && onToggleSaved ? (
+        <Button type="button" variant="outline" className="w-full" disabled={inert} aria-pressed={isSaved} onClick={onToggleSaved}>
+          <Bookmark className="size-4" fill={isSaved ? "currentColor" : "none"} aria-hidden="true" />
+          {saveLabel}
+        </Button>
+      ) : null}
+      {reportLabel && reportUrl && !inert ? (
+        <Button asChild variant="ghost" className="w-full sm:col-span-2">
+          <a href={reportUrl}>
+            <CircleAlert className="size-4" aria-hidden="true" />
+            {reportLabel}
+          </a>
         </Button>
       ) : null}
       <p className="sr-only" aria-live="polite" aria-atomic="true">

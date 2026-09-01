@@ -2,6 +2,7 @@ import { LoaderCircle } from "lucide-react";
 import { resultsGridStyles } from "@/app/opportunities/_components/opportunities-screen/styles";
 import type { OpportunityViewMode } from "@/app/opportunities/_components/opportunities-screen/types";
 import { OpportunitySkeleton } from "../opportunity-skeleton";
+import { Button } from "@/components/ui/button";
 
 interface ListFooterProps {
   viewMode: OpportunityViewMode;
@@ -13,6 +14,8 @@ interface ListFooterProps {
   loadingMoreLabel: string;
   partialLoadErrorLabel: string;
   skeletonCount: number;
+  loadMoreLabel: string;
+  onLoadMore: () => void;
 }
 
 export function ListFooter({
@@ -25,10 +28,17 @@ export function ListFooter({
   loadingMoreLabel,
   partialLoadErrorLabel,
   skeletonCount,
+  loadMoreLabel,
+  onLoadMore,
 }: ListFooterProps): React.ReactNode {
   return (
     <div className="space-y-4 border-t border-line pt-5">
-      <div className="flex justify-end">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        {hasMore && !hasLoadMoreError ? (
+          <Button type="button" variant="outline" disabled={isFetchingMore} onClick={onLoadMore}>
+            {isFetchingMore ? loadingMoreLabel : loadMoreLabel}
+          </Button>
+        ) : <span />}
         <p
           className="max-w-xl text-xs leading-5 text-muted-foreground text-right"
           role={hasLoadMoreError ? "alert" : undefined}

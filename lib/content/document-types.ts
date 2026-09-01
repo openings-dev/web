@@ -7,6 +7,7 @@ export enum ProjectDocumentKey {
   Contributing = "contributing",
   Privacy = "privacy",
   Terms = "terms",
+  Methodology = "methodology",
 }
 
 export interface ProjectDocumentBundle {

@@ -1,7 +1,6 @@
 import type { PropsWithChildren, ReactNode } from "react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { SponsoredOpportunitiesBanner } from "@/components/sponsored-opportunities-banner";
 import { SkipLink } from "./skip-link";
 
 export function AppShell({ children }: PropsWithChildren): ReactNode {
@@ -9,7 +8,6 @@ export function AppShell({ children }: PropsWithChildren): ReactNode {
     <div className="flex min-h-screen flex-col bg-canvas">
       <SkipLink />
       <Header />
-      <SponsoredOpportunitiesBanner />
       <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
         {children}
       </main>

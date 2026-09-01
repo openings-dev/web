@@ -64,6 +64,15 @@ export function applyFilterFieldChange<TField extends keyof OpportunityFiltersSt
 
   const next = { ...previous, [field]: value } as OpportunityFiltersState;
 
+  if (field === "searchText") {
+    const hasSearch = String(value).trim().length > 0;
+    if (hasSearch && !previous.searchText.trim() && previous.sortOrder === "recent") {
+      next.sortOrder = "relevance" as OpportunityFiltersState["sortOrder"];
+    } else if (!hasSearch && previous.sortOrder === "relevance") {
+      next.sortOrder = "recent" as OpportunityFiltersState["sortOrder"];
+    }
+  }
+
   if (field === "repository") {
     next.region = ALL_FILTER_VALUE;
     next.country = ALL_FILTER_VALUE;

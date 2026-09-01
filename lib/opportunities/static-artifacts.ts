@@ -3,7 +3,15 @@ import type {
   StaticFacetIndex,
   StaticManifest,
   StaticSearchIndex,
+  StaticCommunityStatus,
+  StaticCommunityStatusHistory,
+  StaticOpportunityAliases,
 } from "./api-types";
+import {
+  parseStaticCommunityStatus,
+  parseStaticCommunityStatusHistory,
+  parseStaticOpportunityAliases,
+} from "./discovery-artifact-validation";
 import { parseStaticCommunities } from "./community-artifact-validation";
 import {
   parseStaticOpportunityBucket,
@@ -13,7 +21,6 @@ import {
   parseStaticOpportunityOrder,
   parseStaticOpportunityPage,
   parseStaticOpportunityPageLookup,
-  parseStaticOpportunityPromotions,
   parseStaticOpportunitySearchIndex,
   type StaticOpportunityBucket,
   type StaticOpportunityOrder,
@@ -27,6 +34,7 @@ import {
   isStaticArtifactOutsideView,
   versionStaticArtifactPath,
 } from "./static-artifact-versioning";
+import { captureTechnicalException } from "@/lib/telemetry";
 
 type StaticArtifactParser<T> = (value: unknown, path: string) => T;
 
@@ -59,9 +67,11 @@ const MANIFEST_PATH = "api/manifest.json";
 // fetch, parse, or generation mismatch invalidates that view atomically.
 const FACET_INDEX_CACHE = new Map<string, Promise<StaticFacetIndex>>();
 const COMMUNITIES_CACHE = new Map<string, Promise<StaticCommunities>>();
+const STATUS_CACHE = new Map<string, Promise<StaticCommunityStatus>>();
+const STATUS_HISTORY_CACHE = new Map<string, Promise<StaticCommunityStatusHistory>>();
+const ALIASES_CACHE = new Map<string, Promise<StaticOpportunityAliases>>();
 const SEARCH_INDEX_CACHE = new Map<string, Promise<StaticSearchIndex>>();
 const ORDER_CACHE = new Map<string, Promise<StaticOpportunityOrder>>();
-const PROMOTIONS_CACHE = new Map<string, Promise<StaticOpportunityOrder>>();
 const JOB_IDS_CACHE = new Map<string, Promise<StaticOpportunityOrder>>();
 const PAGE_LOOKUP_CACHE = new Map<string, Promise<StaticOpportunityPageLookup>>();
 const PAGE_CACHE = new Map<string, Promise<StaticOpportunityPage>>();
@@ -77,9 +87,11 @@ let staticArtifactViewSequence = 0;
 function clearStaticArtifactCaches() {
   FACET_INDEX_CACHE.clear();
   COMMUNITIES_CACHE.clear();
+  STATUS_CACHE.clear();
+  STATUS_HISTORY_CACHE.clear();
+  ALIASES_CACHE.clear();
   SEARCH_INDEX_CACHE.clear();
   ORDER_CACHE.clear();
-  PROMOTIONS_CACHE.clear();
   JOB_IDS_CACHE.clear();
   PAGE_LOOKUP_CACHE.clear();
   PAGE_CACHE.clear();
@@ -276,10 +288,14 @@ export async function withStaticArtifactRecovery<T>(
     } catch (error) {
       if (!(error instanceof StaticArtifactViewChangedError)) throw error;
       if (attempt === MAX_STATIC_ARTIFACT_RECOVERY_ATTEMPTS) {
-        throw new Error(
+        const exhaustedError = new Error(
           "Static opportunity artifact view could not be stabilized",
           { cause: error },
         );
+        captureTechnicalException(exhaustedError, {
+          category: "static-artifact-unavailable",
+        });
+        throw exhaustedError;
       }
     }
   }
@@ -297,6 +313,50 @@ export function loadOpportunityCommunities(manifest: StaticManifest) {
     manifest,
     parseStaticCommunities,
     COMMUNITIES_CACHE,
+  );
+}
+
+export function loadCommunityStatus(manifest: StaticManifest) {
+  return loadVersionedStaticArtifact(
+    manifest.files.status,
+    manifest,
+    parseStaticCommunityStatus,
+    STATUS_CACHE,
+  );
+}
+
+export async function loadCommunityStatusHistory(
+  manifest: StaticManifest,
+): Promise<StaticCommunityStatusHistory | null> {
+  const path = manifest.files.statusHistory;
+  if (!path) return null;
+
+  const view = viewForManifest(manifest);
+  const versionedPath = versionStaticArtifactPath(path, view.token);
+  try {
+    assertStaticArtifactViewIsActive(view, versionedPath);
+    const artifact = await loadStaticArtifact(
+      versionedPath,
+      parseStaticCommunityStatusHistory,
+      STATUS_HISTORY_CACHE,
+    );
+    assertStaticArtifactViewIsActive(view, versionedPath);
+    if (isStaticArtifactOutsideView({
+      artifactGeneratedAt: artifact.generatedAt,
+      viewGeneratedAt: view.generatedAt,
+    })) return null;
+    return artifact;
+  } catch {
+    return null;
+  }
+}
+
+export function loadOpportunityAliases(manifest: StaticManifest) {
+  return loadVersionedStaticArtifact(
+    manifest.files.aliases,
+    manifest,
+    parseStaticOpportunityAliases,
+    ALIASES_CACHE,
   );
 }
 
@@ -330,18 +390,6 @@ export async function loadOpportunityOrder(
     manifest,
     parseStaticOpportunityOrder,
     ORDER_CACHE,
-  );
-  return payload.ids;
-}
-
-export async function loadOpportunityPromotions(
-  manifest: StaticManifest,
-) {
-  const payload = await loadVersionedStaticArtifact(
-    manifest.files.promotions,
-    manifest,
-    parseStaticOpportunityPromotions,
-    PROMOTIONS_CACHE,
   );
   return payload.ids;
 }
@@ -384,29 +432,20 @@ export async function assertStaticOpportunityIndexConsistency(
       parseStaticOpportunityPageLookup,
       PAGE_LOOKUP_CACHE,
     ),
-    loadVersionedStaticArtifact(
-      manifest.files.promotions,
-      manifest,
-      parseStaticOpportunityPromotions,
-      PROMOTIONS_CACHE,
-    ),
-  ]).then(([order, jobIds, pageLookup, promotions]) => {
+  ]).then(([order, jobIds, pageLookup]) => {
     const orderIds = new Set(order.ids);
     const jobIdSet = new Set(jobIds.ids);
     const lookupIds = new Set(Object.keys(pageLookup.pageLookup));
     const expectedCount = manifest.totals.openOpportunities;
-    const sponsoredCount = manifest.totals.sponsoredOpportunities;
     const setsMatch = orderIds.size === expectedCount &&
       jobIdSet.size === expectedCount &&
       lookupIds.size === expectedCount &&
-      promotions.ids.length === sponsoredCount &&
-      order.ids.every((id) => jobIdSet.has(id) && lookupIds.has(id)) &&
-      promotions.ids.every((id) => orderIds.has(id));
+      order.ids.every((id) => jobIdSet.has(id) && lookupIds.has(id));
 
     if (!setsMatch) {
       retryStaticArtifactView(
         view,
-        "Static opportunity order, promotions, job IDs, page lookup, and manifest totals do not match",
+        "Static opportunity order, job IDs, page lookup, and manifest total do not match",
       );
     }
   });
@@ -469,10 +508,12 @@ export async function loadOpportunityItems(
 export async function loadOpportunityById(id: string) {
   const manifest = await loadOpportunityManifest();
   await assertStaticOpportunityIndexConsistency(manifest);
+  const aliases = await loadOpportunityAliases(manifest);
+  const canonicalId = aliases.ids[id] ?? id;
   const jobIds = await loadOpportunityJobIds(manifest);
-  if (!jobIds.includes(id)) return null;
+  if (!jobIds.includes(canonicalId)) return null;
 
-  const bucket = id.replace(/^gh_/, "").slice(0, 2) || "unknown";
+  const bucket = canonicalId.replace(/^gh_/, "").slice(0, 2) || "unknown";
   const path = `api/jobs/${encodeURIComponent(bucket)}.json`;
   const payload = await loadVersionedStaticArtifact(
     path,
@@ -480,11 +521,11 @@ export async function loadOpportunityById(id: string) {
     parseStaticOpportunityBucket,
     BUCKET_CACHE,
   );
-  const item = payload.items[id];
+  const item = payload.items[canonicalId];
   if (!item) {
     retryStaticArtifactView(
       viewForManifest(manifest),
-      `Invalid static opportunity bucket at ${path}: missing ${id}`,
+      `Invalid static opportunity bucket at ${path}: missing ${canonicalId}`,
     );
   }
   return item;

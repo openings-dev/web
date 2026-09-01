@@ -13,9 +13,7 @@ export function FilterFields({
   labels,
   portalContainer,
   onFieldChange,
-  onToggleTag,
   onToggleAuthor,
-  onTagSelected,
   onAuthorSelected,
   forcedScope,
 }: FilterFieldsProps) {
@@ -58,6 +56,15 @@ export function FilterFields({
           workModePlaceholder: labels.workModePlaceholder,
           seniorityLabel: labels.seniorityLabel,
           seniorityPlaceholder: labels.seniorityPlaceholder,
+          employmentLabel: labels.employmentLabel,
+          employmentPlaceholder: labels.employmentPlaceholder,
+          technologyLabel: labels.technologyLabel,
+          technologyPlaceholder: labels.technologyPlaceholder,
+          technologyMatchLabel: labels.technologyMatchLabel,
+          technologyMatchAny: labels.technologyMatchAny,
+          technologyMatchAll: labels.technologyMatchAll,
+          languageLabel: labels.languageLabel,
+          languagePlaceholder: labels.languagePlaceholder,
           otherTagsLabel: labels.otherTagsLabel,
           otherTagsPlaceholder: labels.otherTagsPlaceholder,
           noTagsSelected: labels.noTagsSelected,
@@ -68,27 +75,23 @@ export function FilterFields({
         }}
         portalContainer={portalContainer}
         authorsLocked={forcedScope?.kind === ShareableProfileKind.Publisher}
-        onTagSelected={onTagSelected}
-        onToggleTag={onToggleTag}
         onAuthorSelected={onAuthorSelected}
         onToggleAuthor={onToggleAuthor}
+        onFieldChange={onFieldChange}
       />
       <FilterDisplayGroup
-        locale={locale}
         state={state}
-        options={options}
         labels={{
           section: labels.displaySectionLabel,
-          itemsPerPage: labels.itemsPerPageLabel,
-          itemsPerPagePlaceholder: labels.itemsPerPagePlaceholder,
-          itemsPerPageOption: labels.itemsPerPageOption,
           sort: labels.sortLabel,
           sortPlaceholder: labels.sortPlaceholder,
           sortRecent: labels.sortRecent,
           sortOldest: labels.sortOldest,
+          sortRelevance: labels.sortRelevance,
+          sortUpdated: labels.sortUpdated,
+          sortSalary: labels.sortSalary,
         }}
         portalContainer={portalContainer}
-        onItemsPerPageChange={(value) => onFieldChange("itemsPerPage", value)}
         onSortOrderChange={(value) =>
           onFieldChange("sortOrder", value as OpportunitySortOrder)
         }

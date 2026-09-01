@@ -6,7 +6,8 @@ export type DocumentPageKey =
   | "maintainers"
   | "contributing"
   | "privacy"
-  | "terms";
+  | "terms"
+  | "methodology";
 
 export interface DocumentPageProps {
   documentKey: DocumentPageKey;

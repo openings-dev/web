@@ -1,6 +1,5 @@
 import {
   OpportunityIssueState,
-  OpportunityPromotionType,
   OpportunitySalaryPeriod,
   OpportunitySourceType,
 } from "./enums";
@@ -12,10 +11,15 @@ import type {
 } from "./api-types";
 import type {
   OpportunityCommunity,
+  OpportunityDataProvenance,
   OpportunityFilterFacets,
+  OpportunityFreshness,
   OpportunityItem,
+  OpportunityLocation,
   OpportunityPerson,
   OpportunitySalary,
+  OpportunitySource,
+  OpportunityTaxonomy,
 } from "./types";
 
 export interface StaticOpportunityOrder {
@@ -41,7 +45,7 @@ export interface StaticOpportunityBucket {
 type UnknownRecord = Record<string, unknown>;
 type ArtifactValidator<T extends object> = (value: unknown) => value is T;
 
-const STATIC_OPPORTUNITY_SCHEMA_VERSION = 5;
+const STATIC_OPPORTUNITY_SCHEMA_VERSION = 6;
 const ISO_CURRENCY_PATTERN = /^[A-Za-z]{3}$/;
 const DATA_HASH_PATTERN = /^[a-f\d]{64}$/i;
 
@@ -49,7 +53,6 @@ const MANIFEST_CACHE = new WeakMap<object, StaticManifest>();
 const FACET_INDEX_CACHE = new WeakMap<object, StaticFacetIndex>();
 const SEARCH_INDEX_CACHE = new WeakMap<object, StaticSearchIndex>();
 const ORDER_CACHE = new WeakMap<object, StaticOpportunityOrder>();
-const PROMOTIONS_CACHE = new WeakMap<object, StaticOpportunityOrder>();
 const JOB_IDS_CACHE = new WeakMap<object, StaticOpportunityOrder>();
 const PAGE_LOOKUP_CACHE = new WeakMap<object, StaticOpportunityPageLookup>();
 const PAGE_CACHE = new WeakMap<object, StaticOpportunityPage>();
@@ -148,7 +151,17 @@ function isOpportunityFilterFacets(
     isCountRecord(value.countries) &&
     isCountRecord(value.tags) &&
     isCountRecord(value.authors) &&
-    isStringRecord(value.authorLabels);
+    isStringRecord(value.authorLabels) &&
+    isCountRecord(value.jobCountries) &&
+    isCountRecord(value.jobRegions) &&
+    isCountRecord(value.workModels) &&
+    isCountRecord(value.areas) &&
+    isCountRecord(value.technologies) &&
+    isCountRecord(value.seniority) &&
+    isCountRecord(value.employmentTypes) &&
+    isCountRecord(value.languages) &&
+    isCountRecord(value.freshness) &&
+    isCountRecord(value.salaryDisclosed);
 }
 
 function isOpportunityFacetIndexDimensions(
@@ -160,7 +173,17 @@ function isOpportunityFacetIndexDimensions(
     isIdentifierArrayRecord(value.regions) &&
     isIdentifierArrayRecord(value.countries) &&
     isIdentifierArrayRecord(value.tags) &&
-    isIdentifierArrayRecord(value.authors);
+    isIdentifierArrayRecord(value.authors) &&
+    isIdentifierArrayRecord(value.jobCountries) &&
+    isIdentifierArrayRecord(value.jobRegions) &&
+    isIdentifierArrayRecord(value.workModels) &&
+    isIdentifierArrayRecord(value.areas) &&
+    isIdentifierArrayRecord(value.technologies) &&
+    isIdentifierArrayRecord(value.seniority) &&
+    isIdentifierArrayRecord(value.employmentTypes) &&
+    isIdentifierArrayRecord(value.languages) &&
+    isIdentifierArrayRecord(value.freshness) &&
+    isIdentifierArrayRecord(value.salaryDisclosed);
 }
 
 function isOpportunityPerson(value: unknown): value is OpportunityPerson {
@@ -205,8 +228,45 @@ function isOpportunitySalary(value: unknown): value is OpportunitySalary {
       value.period === OpportunitySalaryPeriod.Hour);
 }
 
-function isOpportunityPromotion(value: unknown): boolean {
-  return isRecord(value) && value.type === OpportunityPromotionType.Sponsored;
+function isOpportunityLocation(value: unknown): value is OpportunityLocation {
+  if (!isRecord(value)) return false;
+  return (value.confidence === "explicit" || value.confidence === "unknown") &&
+    ["country", "countryCode", "region", "subdivision", "city", "workModel",
+      "remoteScope", "displayText"].every((key) => isOptionalString(value[key]));
+}
+
+function isSourceLocation(value: unknown): boolean {
+  return isRecord(value) && isString(value.country) &&
+    isOptionalString(value.countryCode) && isString(value.region);
+}
+
+function isOpportunityTaxonomy(value: unknown): value is OpportunityTaxonomy {
+  if (!isRecord(value)) return false;
+  return ["areas", "technologies", "seniority", "employmentTypes", "workModels",
+    "languages"].every((key) => isStringArray(value[key]));
+}
+
+function isOpportunityFreshness(value: unknown): value is OpportunityFreshness {
+  return isRecord(value) && isNonNegativeInteger(value.ageDays) &&
+    isTimestamp(value.publishedAt) &&
+    (value.status === "fresh" || value.status === "aging" || value.status === "stale");
+}
+
+function isOpportunityDataProvenance(
+  value: unknown,
+): value is OpportunityDataProvenance {
+  if (!isRecord(value)) return false;
+  const states = new Set(["declared", "inferred", "unknown"]);
+  return ["location", "salary", "seniority", "workModel"]
+    .every((key) => states.has(String(value[key])));
+}
+
+function isOpportunitySource(value: unknown): value is OpportunitySource {
+  if (!isRecord(value)) return false;
+  return isNonEmptyString(value.id) && isOptionalString(value.sourceId) &&
+    isNonEmptyString(value.repository) && isHttpUrl(value.repositoryUrl) &&
+    isHttpUrl(value.url) && isTimestamp(value.createdAt) && isTimestamp(value.updatedAt) &&
+    isOpportunityCommunity(value.community);
 }
 
 function isOpportunityItem(value: unknown): value is OpportunityItem {
@@ -224,11 +284,21 @@ function isOpportunityItem(value: unknown): value is OpportunityItem {
     isString(value.region) &&
     isString(value.country) &&
     isStringArray(value.tags) &&
+    (value.sourceTags === undefined || isStringArray(value.sourceTags)) &&
+    (value.sourceLocation === undefined || isSourceLocation(value.sourceLocation)) &&
+    (value.jobLocation === undefined || isOpportunityLocation(value.jobLocation)) &&
+    (value.taxonomy === undefined || isOpportunityTaxonomy(value.taxonomy)) &&
+    (value.freshness === undefined || isOpportunityFreshness(value.freshness)) &&
+    (value.dataProvenance === undefined ||
+      isOpportunityDataProvenance(value.dataProvenance)) &&
+    (value.sources === undefined || (Array.isArray(value.sources) && value.sources.length > 0 &&
+      value.sources.every(isOpportunitySource))) &&
+    (value.deduplication === undefined || (isRecord(value.deduplication) &&
+      isPositiveInteger(value.deduplication.sourceCount))) &&
     isOpportunityPerson(value.author) &&
     isOpportunityCommunity(value.community) &&
     isOptionalString(value.companyName) &&
     (value.salary === undefined || isOpportunitySalary(value.salary)) &&
-    (value.promotion === undefined || isOpportunityPromotion(value.promotion)) &&
     isTimestamp(value.createdAt) &&
     isTimestamp(value.updatedAt) &&
     isHttpUrl(value.url) &&
@@ -239,6 +309,17 @@ function isOpportunityItem(value: unknown): value is OpportunityItem {
 
 export function isValidOpportunityItem(value: unknown): value is OpportunityItem {
   return isOpportunityItem(value);
+}
+
+function isStructuredOpportunityItem(value: unknown): value is OpportunityItem {
+  return isOpportunityItem(value) && isRecord(value) &&
+    isStringArray(value.sourceTags) && isSourceLocation(value.sourceLocation) &&
+    isOpportunityLocation(value.jobLocation) && isOpportunityTaxonomy(value.taxonomy) &&
+    isOpportunityFreshness(value.freshness) &&
+    (value.dataProvenance === undefined ||
+      isOpportunityDataProvenance(value.dataProvenance)) && Array.isArray(value.sources) &&
+    value.sources.length > 0 && value.sources.every(isOpportunitySource) &&
+    isRecord(value.deduplication) && isPositiveInteger(value.deduplication.sourceCount);
 }
 
 function isStaticManifest(value: unknown): value is StaticManifest {
@@ -254,7 +335,6 @@ function isStaticManifest(value: unknown): value is StaticManifest {
     isPositiveInteger(value.pageSize) &&
     isRecord(totals) &&
     isNonNegativeInteger(totals.openOpportunities) &&
-    isNonNegativeInteger(totals.sponsoredOpportunities) &&
     isNonNegativeInteger(totals.pages) &&
     isNonNegativeInteger(totals.repositories) &&
     isNonNegativeInteger(totals.countries) &&
@@ -266,8 +346,10 @@ function isStaticManifest(value: unknown): value is StaticManifest {
     isNonEmptyString(files.search) &&
     isNonEmptyString(files.jobIds) &&
     isNonEmptyString(files.order) &&
-    isNonEmptyString(files.promotions) &&
     isNonEmptyString(files.communities) &&
+    isNonEmptyString(files.aliases) &&
+    isNonEmptyString(files.status) &&
+    (files.statusHistory === undefined || isNonEmptyString(files.statusHistory)) &&
     isOpportunityFilterFacets(value.facets) &&
     Array.isArray(value.pages) &&
     value.pages.every((page) =>
@@ -292,8 +374,10 @@ function isStaticManifest(value: unknown): value is StaticManifest {
     files.search,
     files.jobIds,
     files.order,
-    files.promotions,
     files.communities,
+    files.aliases,
+    files.status,
+    ...(files.statusHistory === undefined ? [] : [files.statusHistory]),
     ...pageFiles,
   ] as string[];
   const pageCount = value.pages.reduce(
@@ -321,9 +405,13 @@ function isStaticFacetIndex(value: unknown): value is StaticFacetIndex {
 function isStaticSearchIndex(value: unknown): value is StaticSearchIndex {
   if (!isRecord(value) || !Array.isArray(value.items)) return false;
 
-  return isTimestamp(value.generatedAt) && value.items.every((item) =>
-    isRecord(item) && isNonEmptyString(item.id) && isString(item.text)
-  );
+  return isTimestamp(value.generatedAt) && value.items.every((item) => {
+    const fields = isRecord(item) && isRecord(item.fields) ? item.fields : null;
+    return isRecord(item) && isNonEmptyString(item.id) && isTimestamp(item.createdAt) && isString(item.text) &&
+    fields !== null &&
+    ["title", "company", "taxonomy", "location", "excerpt", "source"]
+      .every((key) => isString(fields[key]));
+  });
 }
 
 function isStaticOpportunityOrder(
@@ -359,7 +447,7 @@ function isStaticOpportunityPage(
 
   const ids = new Set<string>();
   for (const item of value.items) {
-    if (!isOpportunityItem(item) || ids.has(item.id)) return false;
+    if (!isStructuredOpportunityItem(item) || ids.has(item.id)) return false;
     ids.add(item.id);
   }
 
@@ -376,7 +464,7 @@ function isStaticOpportunityBucket(
   ) return false;
 
   return Object.entries(value.items).every(
-    ([id, item]) => isNonEmptyString(id) && isOpportunityItem(item) && item.id === id,
+    ([id, item]) => isNonEmptyString(id) && isStructuredOpportunityItem(item) && item.id === id,
   );
 }
 
@@ -450,19 +538,6 @@ export function parseStaticOpportunityOrder(
     path,
     name: "order index",
     cache: ORDER_CACHE,
-    validate: isStaticOpportunityOrder,
-  });
-}
-
-export function parseStaticOpportunityPromotions(
-  value: unknown,
-  path: string,
-): StaticOpportunityOrder {
-  return parseArtifact({
-    value,
-    path,
-    name: "promotions index",
-    cache: PROMOTIONS_CACHE,
     validate: isStaticOpportunityOrder,
   });
 }

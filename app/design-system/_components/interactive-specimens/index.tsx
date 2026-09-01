@@ -13,6 +13,7 @@ import {
   OpportunityIssueState,
   OpportunitySortOrder,
   OpportunitySourceType,
+  TechnologyMatchMode,
   OpportunityViewMode,
   type OnFilterFieldChange,
   type OpportunityFilterOptions,
@@ -35,6 +36,17 @@ const DEFAULT_FILTERS: OpportunityFiltersState = Object.freeze({
   country: "all",
   tags: [],
   authors: [],
+  workModels: [],
+  areas: [],
+  technologies: [],
+  technologyMatch: TechnologyMatchMode.Any,
+  seniority: [],
+  employmentTypes: [],
+  languages: [],
+  freshnessDays: "all",
+  salaryOnly: false,
+  savedOnly: false,
+  newOnly: false,
   searchText: "",
   sortOrder: OpportunitySortOrder.Recent,
   itemsPerPage: 12,
@@ -102,7 +114,12 @@ export function InteractiveSpecimens(): React.ReactNode {
       other: [{ value: "Open source", label: messages.footer.groups.openSource, count: 5 }],
     },
     authors: [{ value: "specimen-author", label: "specimen-author", count: 8 }],
-    itemsPerPage: [12, 24, 48],
+    workModels: [{ value: "remote", label: copy.specimens.values.remote, count: 20 }],
+    areas: [],
+    technologies: [{ value: "typescript", label: "TypeScript", count: 14 }],
+    seniority: [{ value: "senior", label: copy.specimens.values.seniority, count: 9 }],
+    employmentTypes: [],
+    languages: [],
   }), [copy.specimens.values, messages.footer.groups.openSource]);
   const localizedOpportunity = React.useMemo<OpportunityItem>(() => ({
     ...SPECIMEN_OPPORTUNITY,
@@ -259,6 +276,12 @@ export function InteractiveSpecimens(): React.ReactNode {
           }}
           hideCommunityIdentity={false}
           hideAuthorIdentity={false}
+          savedIds={new Set()}
+          comparisonIds={new Set()}
+          previousVisitAt={null}
+          viewedIds={new Set()}
+          onToggleSaved={() => undefined}
+          onToggleComparison={() => undefined}
         />
       </div>
 

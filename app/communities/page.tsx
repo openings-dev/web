@@ -3,6 +3,7 @@ import { CommunitiesScreen } from "@/app/community/_components/communities-scree
 import { PUBLIC_ROUTES } from "@/lib/navigation/routes";
 import { createPageMetadata } from "@/lib/metadata/site-metadata";
 import { listSnapshotCommunities } from "@/lib/opportunities/communities";
+import { getCommunityStatus } from "@/lib/opportunities/status";
 import { LoadResultStatus, loadWithStatus } from "@/lib/utils/load-safely";
 
 export const metadata: Metadata = createPageMetadata({
@@ -13,14 +14,16 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default async function CommunitiesIndexPage(): Promise<React.ReactNode> {
-  const result = await loadWithStatus({
-    load: () => listSnapshotCommunities(),
-  });
+  const [result, statusResult] = await Promise.all([
+    loadWithStatus({ load: () => listSnapshotCommunities() }),
+    loadWithStatus({ load: () => getCommunityStatus() }),
+  ]);
 
   return (
     <CommunitiesScreen
       communities={result.status === LoadResultStatus.Success ? result.data : []}
       sourceUnavailable={result.status === LoadResultStatus.Failure}
+      status={statusResult.status === LoadResultStatus.Success ? statusResult.data : null}
     />
   );
 }

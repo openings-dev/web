@@ -46,5 +46,11 @@ export function normalizeFilters(
     ...locationFilters,
     tags: normalizedTags,
     authors: forcedAuthor ? [forcedAuthor] : uniqueValues(filters.authors),
+    workModels: uniqueValues(filters.workModels),
+    areas: uniqueValues(filters.areas),
+    technologies: uniqueValues(filters.technologies),
+    seniority: uniqueValues(filters.seniority),
+    employmentTypes: uniqueValues(filters.employmentTypes),
+    languages: uniqueValues(filters.languages),
   };
 }

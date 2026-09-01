@@ -19,6 +19,7 @@ import {
   type OpportunitiesToolbarProps,
 } from "@/app/opportunities/_components/opportunities-screen/types";
 import { ViewModeToggle } from "@/app/opportunities/_components/opportunities-screen/view-mode-toggle";
+import { ShareDiscovery } from "@/app/opportunities/_components/opportunities-screen/share-discovery";
 
 export function OpportunitiesToolbar({
   rangeLabel,
@@ -27,7 +28,9 @@ export function OpportunitiesToolbar({
   isLoading,
   hasLoadError,
   sortOrder,
+  searchActive,
   viewMode,
+  shareableDiscovery,
   onSortOrderChange,
   onViewModeChange,
 }: OpportunitiesToolbarProps): React.ReactNode {
@@ -101,6 +104,7 @@ export function OpportunitiesToolbar({
 
       {!isLoading ? (
         <div className="flex min-w-0 flex-wrap items-center gap-2 sm:justify-end">
+          {shareableDiscovery ? <ShareDiscovery /> : null}
           <div className="flex min-w-0 items-center gap-1.5 text-muted-foreground">
             <ArrowDownUp className="size-3.5 shrink-0" aria-hidden="true" />
             <Select
@@ -119,8 +123,11 @@ export function OpportunitiesToolbar({
                 <SelectValue placeholder={toolbarMessages.sortPlaceholder} />
               </SelectTrigger>
               <SelectContent>
+                {searchActive ? <SelectItem value={OpportunitySortOrder.Relevance}>{toolbarMessages.sortRelevance}</SelectItem> : null}
                 <SelectItem value={OpportunitySortOrder.Recent}>{toolbarMessages.sortRecent}</SelectItem>
                 <SelectItem value={OpportunitySortOrder.Oldest}>{toolbarMessages.sortOldest}</SelectItem>
+                <SelectItem value={OpportunitySortOrder.Updated}>{toolbarMessages.sortUpdated}</SelectItem>
+                <SelectItem value={OpportunitySortOrder.Salary}>{toolbarMessages.sortSalary}</SelectItem>
               </SelectContent>
             </Select>
           </div>

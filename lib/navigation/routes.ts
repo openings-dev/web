@@ -10,6 +10,9 @@ export const PUBLIC_ROUTES = {
   contributing: "/docs/contributing",
   privacy: "/privacy",
   terms: "/terms",
+  status: "/status",
+  updates: "/updates",
+  methodology: "/methodology",
 } as const;
 
 export const LEGACY_ROUTES = {
@@ -25,9 +28,6 @@ export const EXTERNAL_ROUTES = {
   mastodon: "https://mastodon.social/@openingshq",
   threads: "https://www.threads.com/@openingshq",
   instagram: "https://www.instagram.com/openingshq/",
-  sponsoredJobRequest:
-    "https://github.com/openings-dev/jobs/issues/new?template=sponsored-job.yml",
-  reportIssue:
-    "https://github.com/openings-dev/web/issues/new/choose",
+  reportIssue: "mailto:support@openings.dev",
   support: "mailto:support@openings.dev",
 } as const;

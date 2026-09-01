@@ -5,6 +5,7 @@ import {
   WORDMARK_VIEW_BOX,
 } from "@/components/brand/geometry";
 import type { SocialCardPresentation } from "./social-card-types";
+import { sanitizeSocialText } from "./sanitize-social-text";
 
 export const SOCIAL_CARD_SIZE = { width: 1200, height: 630 } as const;
 export const SOCIAL_CARD_CONTENT_TYPE = "image/png";
@@ -272,5 +273,18 @@ function SocialCard({
 export function createSocialCardImage(
   presentation: SocialCardPresentation,
 ): ImageResponse {
-  return new ImageResponse(<SocialCard {...presentation} />, SOCIAL_CARD_SIZE);
+  const sanitized: SocialCardPresentation = {
+    eyebrow: sanitizeSocialText(presentation.eyebrow),
+    title: sanitizeSocialText(presentation.title),
+    description: presentation.description
+      ? sanitizeSocialText(presentation.description)
+      : undefined,
+    facts: presentation.facts?.map(({ label, value }) => ({
+      label: sanitizeSocialText(label),
+      value: sanitizeSocialText(value),
+    })),
+    tags: presentation.tags?.map(sanitizeSocialText).filter(Boolean),
+    actionLabel: sanitizeSocialText(presentation.actionLabel),
+  };
+  return new ImageResponse(<SocialCard {...sanitized} />, SOCIAL_CARD_SIZE);
 }

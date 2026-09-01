@@ -28,6 +28,8 @@ export function OpportunityDrawer({
   onCommunitySelect,
   onAuthorSelect,
   specimenMode = false,
+  savedIds,
+  onToggleSaved,
 }: OpportunityDrawerProps): React.ReactNode {
   const { messages } = useI18n();
   const copy = messages.opportunities.card;
@@ -64,6 +66,8 @@ export function OpportunityDrawer({
           onCommunitySelect={onCommunitySelect}
           onAuthorSelect={onAuthorSelect}
           specimenMode={specimenMode}
+          isSaved={savedIds?.has(item.id)}
+          onToggleSaved={onToggleSaved}
         />
       ) : (
         <div className="flex h-full min-h-0 flex-col bg-surface-elevated">

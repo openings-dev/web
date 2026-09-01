@@ -15,6 +15,7 @@ const DOCUMENT_FILES: Record<ProjectDocumentKey, DocumentFileConfig> = {
   [ProjectDocumentKey.Contributing]: { rootFile: "CONTRIBUTING.md", localizedDirectory: "contributing", localizedStem: "CONTRIBUTING" },
   [ProjectDocumentKey.Privacy]: { rootFile: "PRIVACY.md", localizedDirectory: "privacy", localizedStem: "PRIVACY" },
   [ProjectDocumentKey.Terms]: { rootFile: "TERMS.md", localizedDirectory: "terms", localizedStem: "TERMS" },
+  [ProjectDocumentKey.Methodology]: { rootFile: "METHODOLOGY.md", localizedDirectory: "methodology", localizedStem: "METHODOLOGY" },
 };
 
 export interface DocumentTarget {

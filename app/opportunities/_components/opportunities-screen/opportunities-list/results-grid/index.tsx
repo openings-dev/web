@@ -14,6 +14,12 @@ interface ResultsGridProps {
   onAuthorSelect: (authorHandle: string) => void;
   hideCommunityIdentity: boolean;
   hideAuthorIdentity: boolean;
+  savedIds: ReadonlySet<string>;
+  comparisonIds: ReadonlySet<string>;
+  previousVisitAt: string | null;
+  viewedIds: ReadonlySet<string>;
+  onToggleSaved: (id: string) => void;
+  onToggleComparison: (item: OpportunityItem) => void;
 }
 
 export function ResultsGrid({
@@ -25,6 +31,12 @@ export function ResultsGrid({
   onAuthorSelect,
   hideCommunityIdentity,
   hideAuthorIdentity,
+  savedIds,
+  comparisonIds,
+  previousVisitAt,
+  viewedIds,
+  onToggleSaved,
+  onToggleComparison,
 }: ResultsGridProps): React.ReactNode {
   return (
     <ul className={resultsGridStyles({ viewMode })}>
@@ -39,6 +51,12 @@ export function ResultsGrid({
             onAuthorSelect={onAuthorSelect}
             hideCommunityIdentity={hideCommunityIdentity}
             hideAuthorIdentity={hideAuthorIdentity}
+            savedIds={savedIds}
+            comparisonIds={comparisonIds}
+            previousVisitAt={previousVisitAt}
+            viewedIds={viewedIds}
+            onToggleSaved={onToggleSaved}
+            onToggleComparison={onToggleComparison}
           />
         </li>
       ))}

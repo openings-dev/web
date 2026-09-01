@@ -1,4 +1,5 @@
 import type { OpportunityItem } from "@/lib/opportunities/types";
+import type { OpportunityTrustSummary } from "@/lib/opportunities/trust";
 
 export enum OpportunityDetailsMode {
   Dialog = "dialog",
@@ -18,4 +19,8 @@ export interface OpportunityDetailsProps {
   authorHref?: string;
   returnHref?: string;
   specimenMode?: boolean;
+  isSaved?: boolean;
+  onToggleSaved?: (id: string) => void;
+  trustSummary?: OpportunityTrustSummary;
+  similarItems?: OpportunityItem[];
 }

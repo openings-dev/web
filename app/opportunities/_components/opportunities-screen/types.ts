@@ -5,6 +5,7 @@ import type {
   OpportunityViewMode,
   UserProfileSummary,
 } from "@/lib/opportunities/types";
+import type { TechnologyMatchMode } from "@/lib/opportunities/types";
 
 export {
   OpportunityIssueState,
@@ -12,6 +13,7 @@ export {
   OpportunitySortOrder,
   OpportunitySourceType,
   OpportunityViewMode,
+  TechnologyMatchMode,
 } from "@/lib/opportunities/types";
 export type {
   CommunityProfileSummary,
@@ -29,6 +31,17 @@ export interface OpportunityFiltersState {
   country: string;
   tags: string[];
   authors: string[];
+  workModels: string[];
+  areas: string[];
+  technologies: string[];
+  technologyMatch: TechnologyMatchMode;
+  seniority: string[];
+  employmentTypes: string[];
+  languages: string[];
+  freshnessDays: string;
+  salaryOnly: boolean;
+  savedOnly: boolean;
+  newOnly: boolean;
   searchText: string;
   sortOrder: OpportunitySortOrder;
   itemsPerPage: number;
@@ -50,7 +63,12 @@ export interface OpportunityFilterOptions {
   tags: FilterOption[];
   tagCategories: OpportunityTagCategoryOptions;
   authors: FilterOption[];
-  itemsPerPage: number[];
+  workModels: FilterOption[];
+  areas: FilterOption[];
+  technologies: FilterOption[];
+  seniority: FilterOption[];
+  employmentTypes: FilterOption[];
+  languages: FilterOption[];
 }
 export type OnFilterFieldChange = <TField extends keyof OpportunityFiltersState>(
   field: TField,
@@ -66,7 +84,17 @@ export type ActiveOpportunityFilterKind =
   | "advanced-tag"
   | "author"
   | "sort"
-  | "items-per-page";
+  | "work-model"
+  | "area"
+  | "technology"
+  | "technology-match"
+  | "seniority"
+  | "employment"
+  | "language"
+  | "freshness"
+  | "salary"
+  | "saved"
+  | "new";
 
 export interface ActiveOpportunityFilter {
   id: string;
@@ -83,6 +111,7 @@ export interface OpportunitiesQuickFiltersProps {
   advancedFiltersOpen: boolean;
   onOpenAdvancedFilters: () => void;
   onFieldChange: OnFilterFieldChange;
+  onSearchSubmitted: (searchText: string) => void;
   onClearFilters: () => void;
   forcedScope?: ShareableProfileScope | null;
 }
@@ -110,7 +139,9 @@ export interface OpportunitiesToolbarProps {
   isLoading: boolean;
   hasLoadError: boolean;
   sortOrder: OpportunitySortOrder;
+  searchActive: boolean;
   viewMode: OpportunityViewMode;
+  shareableDiscovery: boolean;
   onSortOrderChange: (value: OpportunitySortOrder) => void;
   onViewModeChange: (value: OpportunityViewMode) => void;
 }
@@ -125,17 +156,24 @@ export interface OpportunitiesListProps {
   hasMore: boolean;
   hasActiveFilters: boolean;
   skeletonCount: number;
-  onLoadMore: () => void;
+  onLoadMore: () => void | Promise<void>;
   onClearFilters: () => void;
   onSelectOpportunity: (item: OpportunityItem) => void;
   onCommunitySelect: (repository: string) => void;
   onAuthorSelect: (authorHandle: string) => void;
   hideCommunityIdentity: boolean;
   hideAuthorIdentity: boolean;
+  savedIds: ReadonlySet<string>;
+  comparisonIds: ReadonlySet<string>;
+  previousVisitAt: string | null;
+  viewedIds: ReadonlySet<string>;
+  onToggleSaved: (id: string) => void;
+  onToggleComparison: (item: OpportunityItem) => void;
 }
 export interface OpportunityCardProps extends Pick<OpportunitiesListProps,
   "viewMode" | "onSelectOpportunity" | "onCommunitySelect" | "onAuthorSelect" |
-  "hideCommunityIdentity" | "hideAuthorIdentity"> {
+  "hideCommunityIdentity" | "hideAuthorIdentity" | "savedIds" | "comparisonIds" |
+  "previousVisitAt" | "viewedIds" | "onToggleSaved" | "onToggleComparison"> {
   item: OpportunityItem;
   isSelected: boolean;
 }
@@ -216,4 +254,6 @@ export interface OpportunityDrawerProps {
   specimenMode?: boolean;
   selectedOpportunityId?: string | null;
   selectionStatus?: OpportunitySelectionStatus;
+  savedIds?: ReadonlySet<string>;
+  onToggleSaved?: (id: string) => void;
 }

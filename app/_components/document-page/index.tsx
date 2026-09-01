@@ -35,6 +35,7 @@ export function DocumentPage({
     contributing: messages.documents.contributing.title,
     privacy: messages.documents.privacy.title,
     terms: messages.documents.terms.title,
+    methodology: messages.documents.methodology.title,
   };
 
   React.useEffect(() => {

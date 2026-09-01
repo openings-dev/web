@@ -4,6 +4,19 @@ export const frTranslations: TranslationMessages = {
   accessibility: {
     skipToContent: "Aller au contenu principal",
   },
+  analyticsConsent: {
+    title: "Analyse produit facultative",
+    purpose: "Aidez-nous à comprendre quelles fonctions de découverte sont utiles. L’analyse est facultative et nous n’enregistrons jamais vos recherches ni le contenu des offres.",
+    accept: "Autoriser l’analyse",
+    decline: "Refuser l’analyse",
+    currentState: "Préférence actuelle",
+    changePreference: "Préférence d’analyse",
+    granted: "Autorisée",
+    denied: "Refusée",
+    undecided: "Non choisie",
+    saved: "Votre préférence d’analyse a été enregistrée.",
+    couldNotSave: "Impossible d’enregistrer cette préférence. L’analyse reste désactivée.",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Offres tech partagées par des communautés GitHub publiques",
@@ -12,6 +25,7 @@ export const frTranslations: TranslationMessages = {
       communities: "Communautés",
       authors: "Auteurs",
       docs: "Docs",
+      status: "État",
     },
     mobileNavigation: {
       groups: {
@@ -67,17 +81,6 @@ export const frTranslations: TranslationMessages = {
       originalSource: "Source d’origine conservée",
     },
   },
-  sponsorship: {
-    banner: {
-      message: "Aidez Openings à rester en ligne en publiant vos offres.",
-      detail: "Votre offre bénéficie de 30 jours de mise en avant.",
-      action: "Publier une offre",
-    },
-    badge: {
-      label: "Sponsorisée",
-      description: "Placement payant affiché avant les offres organiques correspondantes.",
-    },
-  },
   notFound: {
     kicker: "404",
     title: "Cette page est introuvable",
@@ -117,6 +120,11 @@ export const frTranslations: TranslationMessages = {
       sortCount: "Plus d’offres en cours",
       sortRecent: "Offre la plus récente",
       sortName: "Nom A–Z",
+      activityLabel: "Activité des communautés",
+      activeOnly: "Actives maintenant ({count})",
+      noOpenings: "Aucune offre ouverte ({count})",
+      withErrors: "Avec erreurs de synchronisation ({count})",
+      allSources: "Toutes les sources ({count})",
     },
     list: {
       summaryOne: "1 communauté",
@@ -225,6 +233,16 @@ export const frTranslations: TranslationMessages = {
     workspacePublisherScope: "Postes partagés par {identity}",
   },
   opportunities: {
+    discovery: {
+      shortcutsLabel: "Découvrir", remote: "À distance", internship: "Stages",
+      dataAi: "Données et IA", withSalary: "Avec salaire", lastDays: "{days} derniers jours",
+      saved: "Offres enregistrées", newSinceVisit: "Nouvelles depuis la dernière visite",
+    },
+    comparison: {
+      title: "Comparer les offres", selected: "{count} sélectionnées", clear: "Effacer la comparaison",
+      selectMore: "Sélectionnez une ou deux offres supplémentaires pour les comparer.", location: "Lieu", salary: "Salaire",
+      stack: "Stack", level: "Niveau", date: "Publication", unknown: "Non précisé",
+    },
     header: {
       kicker: "Recherche d’offres",
       title: "Des offres tech partagées par des communautés GitHub publiques.",
@@ -293,6 +311,13 @@ export const frTranslations: TranslationMessages = {
       stackSelectedCount: "{count} sélectionnées",
       seniorityLabel: "Séniorité",
       seniorityPlaceholder: "Ajouter une séniorité",
+      employmentLabel: "Type de contrat",
+      employmentPlaceholder: "Ajouter un type de contrat",
+      technologyMatchLabel: "Correspondance des technologies",
+      technologyMatchAny: "Au moins une technologie sélectionnée",
+      technologyMatchAll: "Toutes les technologies sélectionnées",
+      languageLabel: "Langue",
+      languagePlaceholder: "Ajouter une langue",
       otherTagsLabel: "Autres tags",
       otherTagsPlaceholder: "Ajouter un autre tag",
       tagsLabel: "Tags",
@@ -308,6 +333,9 @@ export const frTranslations: TranslationMessages = {
       sortPlaceholder: "Trier par date",
       sortRecent: "Plus récentes",
       sortOldest: "Plus anciennes d'abord",
+      sortRelevance: "Plus pertinentes",
+      sortUpdated: "Récemment mises à jour",
+      sortSalary: "Salaire le plus élevé",
     },
     toolbar: {
       opportunitiesCount: "{count} offres en cours",
@@ -317,6 +345,20 @@ export const frTranslations: TranslationMessages = {
       sortPlaceholder: "Trier par date",
       sortRecent: "Plus récentes",
       sortOldest: "Plus anciennes d'abord",
+      sortRelevance: "Plus pertinentes",
+      sortUpdated: "Récemment mises à jour",
+      sortSalary: "Salaire le plus élevé",
+      shareDiscovery: "Partager la recherche",
+      shareShared: "Recherche partagée.",
+      shareCopied: "Lien de recherche copié.",
+      shareFailed: "Impossible de partager. Copiez l’URL du navigateur.",
+    },
+    newForYou: {
+      title: "Nouvelles offres pour vous",
+      description: "Découvrez les offres publiées depuis votre dernière visite qui correspondent au lieu, au mode de travail, aux technologies et au niveau enregistrés dans ce navigateur.",
+      localNote: "Vos préférences et votre historique de visite restent sur cet appareil.",
+      action: "Voir les nouvelles offres",
+      dismiss: "Ignorer la suggestion de nouvelles offres",
     },
     list: {
       totalMatches: "{count} résultats au total",
@@ -327,10 +369,11 @@ export const frTranslations: TranslationMessages = {
       noResultsDescription:
         "Aucune offre en cours n’est disponible pour le moment.",
       clearFilters: "Effacer les filtres",
-      scrollToLoadMore: "Faites défiler pour charger plus d’offres",
+      scrollToLoadMore: "Chargez les résultats suivants quand vous le souhaitez",
       allResultsLoaded: "Toutes les offres sont chargées",
       loading: "Chargement des offres…",
       loadingMore: "Chargement d’autres offres…",
+      loadMore: "Charger plus d’offres",
     },
     viewMode: {
       ariaLabel: "Mode d'affichage",
@@ -363,7 +406,57 @@ export const frTranslations: TranslationMessages = {
       salaryPeriodHour: "heure",
       moreTag: "1 tag supplémentaire",
       moreTags: "Tags supplémentaires : {count}",
+      save: "Enregistrer l’offre", unsave: "Retirer des offres enregistrées",
+      addToComparison: "Ajouter à la comparaison", removeFromComparison: "Retirer de la comparaison",
+      newBadge: "Nouvelle", oldBadge: "Offre ancienne", sourcesCount: "{count} sources",
+      reportProblem: "Signaler un problème",
+      reportProblemPrompt: "Indiquez si l’offre est fermée, dupliquée, mal localisée ou contient un contenu inapproprié.",
+      reportCategories: { closed: "Offre fermée", duplicate: "Offre dupliquée", location: "Localisation incorrecte", content: "Contenu inapproprié" },
+      allSources: "Sources de publication",
+      dataConfidence: {
+        title: "Fiabilité des données", description: "Identifiez les détails issus de l’annonce, ceux qui ont été déduits et la date de vérification des sources.",
+        lastVerified: "Dernière vérification des sources", verificationUnavailable: "Date de vérification indisponible",
+        published: "Publication initiale", sources: "Sources publiées",
+        originalAuthority: "L’annonce d’origine reste la source de référence pour les informations actuelles et les modalités de candidature.",
+        staleWarning: "Cette offre est ancienne. Vérifiez qu’elle est toujours ouverte avant de postuler.", incompleteWarning: "Des informations importantes manquent et cette offre est ancienne.",
+        fields: { location: "Localisation", salary: "Salaire", seniority: "Niveau", workModel: "Mode de travail" },
+        states: { declared: "Déclaré dans la source", inferred: "Déduit", unknown: "Non identifié" },
+      },
+      similar: { title: "Offres similaires", description: "Autres postes actuels partageant technologie, domaine, localisation ou mode de travail.", viewJob: "Voir l’offre", locationUnavailable: "Localisation non identifiée", freshness: { fresh: "Récente", aging: "Moins récente", stale: "Ancienne", unknown: "Ancienneté indisponible" } },
     },
+  },
+  statusPage: {
+    kicker: "État des données", title: "État de synchronisation des communautés",
+    description: "Consultez la dernière synchronisation, les offres ouvertes et la publication la plus récente de chaque source publique.",
+    loadError: "Impossible de charger l’état de synchronisation.", communities: "Communautés",
+    healthy: "Opérationnelles", noOpenings: "Aucune offre ouverte", errors: "Erreurs de synchronisation",
+    generatedAt: "État généré", community: "Communauté", state: "État",
+    lastSync: "Dernière synchronisation réussie", openJobs: "Offres ouvertes",
+    lastPost: "Dernière publication", unavailable: "Indisponible",
+    searchLabel: "Rechercher des communautés", searchPlaceholder: "Communauté, dépôt ou pays", sortLabel: "Trier l’état",
+    states: { healthy: "Opérationnelle", "no-openings": "Aucune offre", error: "Erreur de synchronisation" },
+    history: {
+      title: "Historique des synchronisations", description: "Résumé public des collectes récentes. Les détails d’erreur du fournisseur ne sont jamais publiés.",
+      last30Days: "30 derniers jours", recentRuns: "Exécutions récentes publiées",
+      healthy: "Opérationnelle", partial: "Partielle", duration: "Durée",
+      synchronized: "Communautés synchronisées", failedCommunities: "Communautés en échec", openJobs: "Offres ouvertes",
+      noHistory: "L’historique n’est pas encore disponible dans cet instantané. L’état actuel reste disponible ci-dessous.",
+      isolated: "La dernière synchronisation partielle semble isolée.", recurring: "Les synchronisations partielles se sont répétées récemment.",
+      noPartialDays: "Aucun jour de synchronisation partielle sur cette période.", daysWithPartial: "Jours avec synchronisation partielle",
+      failuresObserved: "Occurrences d’échec de communautés", daySummary: "{date} : {partial} exécutions partielles sur {runs} ; {failures} occurrences d’échec de communautés.",
+    },
+  },
+  updatesPage: {
+    kicker: "Transparence du produit", title: "Ce qui a changé, ce qui est livré et la suite",
+    description: "Un historique factuel des améliorations, des versions regroupées et de l’orientation. La feuille de route exprime des intentions, pas des promesses de livraison.", navigationLabel: "Sections des mises à jour",
+    tabs: { changelog: "Modifications", releases: "Versions", roadmap: "Feuille de route" },
+    sections: {
+      changelog: { title: "Modifications", description: "Améliorations individuelles déjà disponibles.", empty: "Aucune modification publiée." },
+      releases: { title: "Versions", description: "Ensembles d’améliorations vérifiées et publiées ensemble.", empty: "Aucune version publiée." },
+      roadmap: { title: "Feuille de route", description: "Orientation actuelle sans échéances inventées.", empty: "Aucun élément prévu." },
+    },
+    categories: { discovery: "Découverte", data: "Données", trust: "Confiance", operations: "Opérations", growth: "Croissance" },
+    lanes: { now: "Maintenant", next: "Ensuite", later: "Plus tard" }, dateLabel: "Publié", versionLabel: "Version", learnMore: "Ouvrir la page associée",
   },
   footer: {
     brandTagline: "Offres tech partagées par des communautés GitHub publiques",
@@ -401,6 +494,8 @@ export const frTranslations: TranslationMessages = {
       privacyPolicy: "Politique de confidentialité",
       termsOfService: "Conditions d'utilisation",
       designSystem: "Système de design",
+      updates: "Mises à jour",
+      methodology: "Méthodologie",
     },
     social: {
       linksAriaLabel: "Liens sociaux",
@@ -493,6 +588,7 @@ export const frTranslations: TranslationMessages = {
       description:
         "Comment openings.dev gère les préférences locales, les données publiques de GitHub, les messages au support et les liens externes.",
     },
+    methodology: { title: "Méthodologie des données", description: "Comment Openings sélectionne les sources, synchronise les offres, interprète les champs, regroupe les doublons et expose ses limites." },
     terms: {
       title: "Conditions d'utilisation",
       description:

@@ -15,6 +15,15 @@ export interface FilterFieldsLabels {
   workModePlaceholder: string;
   seniorityLabel: string;
   seniorityPlaceholder: string;
+  employmentLabel: string;
+  employmentPlaceholder: string;
+  technologyLabel: string;
+  technologyPlaceholder: string;
+  technologyMatchLabel: string;
+  technologyMatchAny: string;
+  technologyMatchAll: string;
+  languageLabel: string;
+  languagePlaceholder: string;
   otherTagsLabel: string;
   otherTagsPlaceholder: string;
   noTagsSelected: string;
@@ -22,13 +31,13 @@ export interface FilterFieldsLabels {
   authorPlaceholder: string;
   noAuthorsSelected: string;
   removeFilter: string;
-  itemsPerPageLabel: string;
-  itemsPerPagePlaceholder: string;
-  itemsPerPageOption: string;
   sortLabel: string;
   sortPlaceholder: string;
   sortRecent: string;
   sortOldest: string;
+  sortRelevance: string;
+  sortUpdated: string;
+  sortSalary: string;
 }
 
 export interface FilterFieldsProps extends OpportunitiesFiltersProps {

@@ -11,6 +11,10 @@ import {
   parseFiltersFromSearchParams,
 } from "./url-filters";
 import type { OpportunityFiltersState } from "@/app/opportunities/_components/opportunities-screen/types";
+import {
+  readCandidatePreferences,
+  writeCandidatePreferences,
+} from "@/lib/opportunities/local-candidate-state";
 
 interface UseFiltersStateParams {
   searchParamsValue: string;
@@ -20,9 +24,36 @@ interface UseFiltersStateParams {
   resetSuccessMessage: string;
 }
 
-function resolveFiltersFromParams(params: UseFiltersStateParams) {
+const FILTER_QUERY_KEYS = Object.values(OPPORTUNITY_QUERY_KEYS)
+  .filter((key) => key !== OPPORTUNITY_QUERY_KEYS.selectedOpportunity);
+
+function persistedPreferences() {
+  if (typeof window === "undefined") return null;
+  try {
+    const value = readCandidatePreferences();
+    return value && typeof value === "object" ? value as Partial<OpportunityFiltersState> : null;
+  } catch {
+    return null;
+  }
+}
+
+function resolveFiltersFromParams(params: UseFiltersStateParams, includePreferences = true) {
   const searchParams = new URLSearchParams(params.searchParamsValue);
   const parsed = parseFiltersFromSearchParams(searchParams);
+  const hasExplicitFilters = FILTER_QUERY_KEYS.some((key) => searchParams.has(key));
+  const preferences = includePreferences && !hasExplicitFilters
+    ? persistedPreferences()
+    : null;
+  if (preferences) {
+    if (!searchParams.has(OPPORTUNITY_QUERY_KEYS.country) && typeof preferences.country === "string") {
+      parsed.country = preferences.country;
+    }
+    for (const key of ["workModels", "technologies", "seniority"] as const) {
+      if (!searchParams.has(OPPORTUNITY_QUERY_KEYS[key]) && Array.isArray(preferences[key])) {
+        parsed[key] = preferences[key] as string[];
+      }
+    }
+  }
   if (params.forcedRepository) parsed.repository = params.forcedRepository;
   if (params.forcedAuthor) {
     parsed.authors = [params.forcedAuthor];
@@ -52,6 +83,17 @@ function filtersAreEqual(left: OpportunityFiltersState, right: OpportunityFilter
     left.tags.every((tag, index) => tag === right.tags[index]) &&
     left.authors.length === right.authors.length &&
     left.authors.every((author, index) => author === right.authors[index])
+    && left.workModels.join("\0") === right.workModels.join("\0")
+    && left.areas.join("\0") === right.areas.join("\0")
+    && left.technologies.join("\0") === right.technologies.join("\0")
+    && left.technologyMatch === right.technologyMatch
+    && left.seniority.join("\0") === right.seniority.join("\0")
+    && left.employmentTypes.join("\0") === right.employmentTypes.join("\0")
+    && left.languages.join("\0") === right.languages.join("\0")
+    && left.freshnessDays === right.freshnessDays
+    && left.salaryOnly === right.salaryOnly
+    && left.savedOnly === right.savedOnly
+    && left.newOnly === right.newOnly
   );
 }
 
@@ -64,8 +106,9 @@ export function useFiltersState(params: UseFiltersStateParams) {
     resetSuccessMessage,
   } = params;
   const [filters, setFilters] = React.useState<OpportunityFiltersState>(() =>
-    resolveFiltersFromParams(params),
+    resolveFiltersFromParams(params, false),
   );
+  const [preferencesHydrated, setPreferencesHydrated] = React.useState(false);
   const [appliedSearchParamsValue, setAppliedSearchParamsValue] =
     React.useState(searchParamsValue);
   const isApplyingUrlFilters =
@@ -85,12 +128,27 @@ export function useFiltersState(params: UseFiltersStateParams) {
       if (!isCurrent) return;
       setAppliedSearchParamsValue(searchParamsValue);
       setFilters((previous) => (filtersAreEqual(previous, next) ? previous : next));
+      setPreferencesHydrated(true);
     });
 
     return () => {
       isCurrent = false;
     };
   }, [forcedAuthor, forcedRepository, registry, resetSuccessMessage, searchParamsValue]);
+
+  React.useEffect(() => {
+    if (!preferencesHydrated) return;
+    try {
+      writeCandidatePreferences({
+        country: filters.country,
+        workModels: filters.workModels,
+        technologies: filters.technologies,
+        seniority: filters.seniority,
+      });
+    } catch {
+      // Filtering remains available when storage is blocked or full.
+    }
+  }, [filters.country, filters.seniority, filters.technologies, filters.workModels, preferencesHydrated]);
 
   const handleFieldChange = React.useMemo(
     () =>

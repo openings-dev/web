@@ -1,45 +1,36 @@
 import type { OpportunityItem } from "./types";
-
-export type OpportunityDateSortOrder = "recent" | "oldest";
+import type { OpportunitySortOrder } from "./enums";
 
 type SortableOpportunity = Pick<
   OpportunityItem,
-  "id" | "createdAt" | "promotion"
+  "id" | "createdAt" | "updatedAt" | "salary"
 >;
-
-function isSponsored(opportunity: SortableOpportunity): boolean {
-  return opportunity.promotion?.type === "sponsored";
-}
 
 export function compareOpportunities(
   left: SortableOpportunity,
   right: SortableOpportunity,
-  sortOrder: OpportunityDateSortOrder,
+  sortOrder: OpportunitySortOrder,
 ): number {
-  const promotionComparison = Number(isSponsored(right)) - Number(isSponsored(left));
-  if (promotionComparison !== 0) return promotionComparison;
+  if (sortOrder === "relevance") return 0;
 
-  const leftDate = new Date(left.createdAt).getTime();
-  const rightDate = new Date(right.createdAt).getTime();
+  if (sortOrder === "salary") {
+    const annualized = (item: SortableOpportunity) => {
+      const amount = item.salary?.max ?? item.salary?.min;
+      if (amount === undefined) return Number.NEGATIVE_INFINITY;
+      if (item.salary?.period === "month") return amount * 12;
+      if (item.salary?.period === "hour") return amount * 2_080;
+      return amount;
+    };
+    const salaryComparison = annualized(right) - annualized(left);
+    if (salaryComparison !== 0) return salaryComparison;
+  }
+
+  const dateField = sortOrder === "updated" ? "updatedAt" : "createdAt";
+  const leftDate = new Date(left[dateField]).getTime();
+  const rightDate = new Date(right[dateField]).getTime();
   const dateComparison = sortOrder === "oldest"
     ? leftDate - rightDate
     : rightDate - leftDate;
 
   return dateComparison || left.id.localeCompare(right.id);
-}
-
-export function sortOpportunityIdsByPromotion(
-  ids: string[],
-  sponsoredIds: ReadonlySet<string>,
-  sortOrder: OpportunityDateSortOrder,
-): string[] {
-  const sponsored = ids.filter((id) => sponsoredIds.has(id));
-  const organic = ids.filter((id) => !sponsoredIds.has(id));
-
-  if (sortOrder === "oldest") {
-    sponsored.reverse();
-    organic.reverse();
-  }
-
-  return [...sponsored, ...organic];
 }

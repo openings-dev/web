@@ -7,9 +7,7 @@ import { normalizeFilterDependencies } from "./filter-dependencies";
 import { normalizeForcedAuthor } from "./normalize-forced-author";
 import { useRepositoryFilterRegistry } from "./repository-filter-registry";
 import { useDerivedOpportunities } from "./use-derived-opportunities";
-import { useEnsurePageLoaded } from "./use-ensure-page-loaded";
 import { useFiltersState } from "./use-filters-state";
-import { useForcedAuthorAutoload } from "./use-forced-author-autoload";
 import { useLoadMoreHandler } from "./use-load-more-handler";
 import { useRemoteOpportunities } from "./use-remote-opportunities";
 import { useUrlSync } from "./use-url-sync";
@@ -23,6 +21,9 @@ import {
   profileScopeFromScreenProps,
 } from "./profile-summary";
 import { focusOpportunityResults } from "@/app/opportunities/_components/opportunities-screen/opportunity-card/trigger-contract";
+import { useLocalDiscovery } from "./use-local-discovery";
+import { useDiscoveryTelemetry } from "./use-discovery-telemetry";
+import type { OpportunityFiltersState } from "../types";
 
 export function useOpportunitiesScreenController({
   forcedRepository,
@@ -33,6 +34,8 @@ export function useOpportunitiesScreenController({
   const searchParams = useSearchParams();
   const { locale, messages } = useI18n();
   const opportunitiesMessages = messages.opportunities;
+  const localDiscovery = useLocalDiscovery();
+  const { markViewed } = localDiscovery;
   const normalizedForcedRepository = forcedRepository?.trim() || null;
   const normalizedForcedAuthor = normalizeForcedAuthor(forcedAuthor);
   const selectedOpportunityIdFromUrl = normalizeSelectedOpportunityId(searchParams.get("job"));
@@ -64,21 +67,50 @@ export function useOpportunitiesScreenController({
           searchText: filters.searchText,
           tags: filters.tags,
           authors: filters.authors,
+          workModels: filters.workModels,
+          areas: filters.areas,
+          technologies: filters.technologies,
+          technologyMatch: filters.technologyMatch,
+          seniority: filters.seniority,
+          employmentTypes: filters.employmentTypes,
+          languages: filters.languages,
+          freshnessDays: filters.freshnessDays,
+          salaryOnly: filters.salaryOnly,
         },
         normalizedForcedRepository,
         normalizedForcedAuthor,
         repositoryRegistry.registry,
+        {
+          includedIds: filters.savedOnly ? [...localDiscovery.savedIds] : [],
+          includedIdsActive: filters.savedOnly,
+          excludedIds: filters.newOnly ? [...localDiscovery.viewedIds] : [],
+          createdAfter: filters.newOnly ? localDiscovery.previousVisitAt : null,
+        },
       ),
     [
       filters.authors,
+      filters.areas,
       filters.country,
+      filters.employmentTypes,
+      filters.freshnessDays,
       filters.region,
       filters.repository,
+      filters.salaryOnly,
+      filters.seniority,
       filters.searchText,
       filters.sortOrder,
       filters.tags,
+      filters.technologies,
+      filters.technologyMatch,
+      filters.languages,
+      filters.workModels,
       normalizedForcedAuthor,
       normalizedForcedRepository,
+      localDiscovery.previousVisitAt,
+      localDiscovery.savedIds,
+      localDiscovery.viewedIds,
+      filters.newOnly,
+      filters.savedOnly,
       repositoryRegistry.registry,
     ],
   );
@@ -118,7 +150,26 @@ export function useOpportunitiesScreenController({
     remoteFilteredCount: remote.filteredCount,
     locale,
     rangeMessages: opportunitiesMessages.range,
+    savedIds: localDiscovery.savedIds,
+    viewedIds: localDiscovery.viewedIds,
+    previousVisitAt: localDiscovery.previousVisitAt,
   });
+  const discoveryTelemetry = useDiscoveryTelemetry({
+    filters: derived.normalizedFilters,
+    locale,
+    resultCount: derived.totalCount,
+    activeFilterCount: derived.activeFiltersCount,
+  });
+  const handleTelemetryFieldChange = React.useCallback(
+    <Field extends keyof OpportunityFiltersState>(
+      field: Field,
+      value: OpportunityFiltersState[Field],
+    ) => {
+      discoveryTelemetry.trackFilter(field, value);
+      handleFieldChange(field, value);
+    },
+    [discoveryTelemetry, handleFieldChange],
+  );
   const {
     selectedOpportunity,
     selectionStatus,
@@ -128,6 +179,9 @@ export function useOpportunitiesScreenController({
     forcedRepository: normalizedForcedRepository,
     forcedAuthor: normalizedForcedAuthor,
   });
+  React.useEffect(() => {
+    if (selectedOpportunity) markViewed(selectedOpportunity.id);
+  }, [markViewed, selectedOpportunity]);
   const forcedScope = React.useMemo(
     () => profileScopeFromScreenProps(
       normalizedForcedRepository,
@@ -178,17 +232,6 @@ export function useOpportunitiesScreenController({
   });
   const hasMore = !remote.hasLoadMoreError &&
     (derived.currentPage < derived.totalPages || remote.hasMoreRemote);
-  useEnsurePageLoaded({
-    currentPage: derived.currentPage,
-    itemsPerPage: derived.normalizedFilters.itemsPerPage,
-    loadedCount: derived.loadedCount,
-    totalCount: derived.totalCount,
-    isLoading: remote.isLoading,
-    isFetchingMore: remote.isFetchingMore,
-    hasMoreRemote: remote.hasMoreRemote,
-    nextCursor: remote.nextCursor,
-    loadMoreFromApi: remote.loadMoreFromApi,
-  });
   const handleLoadMore = useLoadMoreHandler({
     currentPage: derived.currentPage,
     totalPages: derived.totalPages,
@@ -202,15 +245,6 @@ export function useOpportunitiesScreenController({
     setFilters,
     loadMoreFromApi: remote.loadMoreFromApi,
   });
-  useForcedAuthorAutoload({
-    forcedAuthor: normalizedForcedAuthor,
-    isLoading: remote.isLoading,
-    isFetchingMore: remote.isFetchingMore,
-    hasMoreRemote: remote.hasMoreRemote,
-    nextCursor: remote.nextCursor,
-    filteredCount: derived.filteredOpportunities.length,
-    onLoadMore: handleLoadMore,
-  });
   return {
     opportunitiesMessages,
     headerKicker: opportunitiesMessages.header.kicker,
@@ -222,7 +256,8 @@ export function useOpportunitiesScreenController({
     lastUpdatedAt: remote.lastUpdatedAt ?? remote.snapshotGeneratedAt,
     filtersModalOpen,
     setFiltersModalOpen,
-    handleFieldChange,
+    handleFieldChange: handleTelemetryFieldChange,
+    handleSearchSubmitted: discoveryTelemetry.trackSearch,
     handleToggleTag,
     handleToggleAuthor,
     handleClearFilters,
@@ -245,8 +280,10 @@ export function useOpportunitiesScreenController({
     isLoading: remote.isLoading,
     hasLoadError: remote.hasLoadError,
     isFetchingMore: remote.isFetchingMore,
+    ...localDiscovery,
     setSelectedOpportunityId,
     closeSelectedOpportunity,
+    comparisonItems: localDiscovery.comparisonItems,
     onCommunitySelect: (repository: string) => {
       if (
         normalizedForcedRepository &&

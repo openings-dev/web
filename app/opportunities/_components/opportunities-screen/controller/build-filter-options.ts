@@ -18,10 +18,10 @@ export function buildFilterOptions(
 ) {
   const repositoryCounts = facets?.repositories ??
     countBy(openOpportunities, (item) => item.repository);
-  const regionCounts = facets?.regions ??
-    countBy(openOpportunities, (item) => item.region);
-  const countryCounts = facets?.countries ??
-    countBy(openOpportunities, (item) => item.country);
+  const regionCounts = facets?.jobRegions ??
+    countBy(openOpportunities, (item) => item.jobLocation?.region ?? "");
+  const countryCounts = facets?.jobCountries ??
+    countBy(openOpportunities, (item) => item.jobLocation?.country ?? "");
   const rawTagCounts = facets?.tags ??
     countBy(openOpportunities.flatMap((item) => item.tags), (tag) => tag);
   const authorCounts = facets?.authors ??
@@ -41,6 +41,11 @@ export function buildFilterOptions(
     tags: tagOptions,
     tagCategories: groupTagOptionsByCategory(tagOptions),
     authors: nonZeroOptions(sortOptions(authorCounts, authorLabels)),
-    itemsPerPage: [10, 20, 30, 50],
+    workModels: nonZeroOptions(sortOptions(facets?.workModels ?? {})),
+    areas: nonZeroOptions(sortOptions(facets?.areas ?? {})),
+    technologies: nonZeroOptions(sortOptions(facets?.technologies ?? {})),
+    seniority: nonZeroOptions(sortOptions(facets?.seniority ?? {})),
+    employmentTypes: nonZeroOptions(sortOptions(facets?.employmentTypes ?? {})),
+    languages: nonZeroOptions(sortOptions(facets?.languages ?? {})),
   } satisfies OpportunityFilterOptions;
 }

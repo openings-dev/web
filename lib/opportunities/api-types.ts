@@ -8,6 +8,19 @@ export interface OpportunityServerFilters {
   tags: string[];
   authors: string[];
   searchText: string;
+  workModels: string[];
+  areas: string[];
+  technologies: string[];
+  technologyMatch: "any" | "all";
+  seniority: string[];
+  employmentTypes: string[];
+  languages: string[];
+  freshnessDays: string;
+  salaryOnly: boolean;
+  includedIds: string[];
+  includedIdsActive: boolean;
+  excludedIds: string[];
+  createdAfter: string | null;
   sortOrder: OpportunitySortOrder;
 }
 
@@ -16,7 +29,18 @@ export type OpportunityDimensionKey =
   | "regions"
   | "countries"
   | "tags"
-  | "authors";
+  | "authors"
+  | "jobCountries"
+  | "jobRegions"
+  | "workModels"
+  | "areas"
+  | "technologies"
+  | "seniority"
+  | "employmentTypes"
+  | "languages"
+  | "freshness"
+  | "salaryDisclosed";
+
 
 export type OpportunityFacetIndexDimensions = Record<
   OpportunityDimensionKey,
@@ -31,7 +55,6 @@ export interface StaticManifestPage {
 
 export interface StaticManifestTotals {
   openOpportunities: number;
-  sponsoredOpportunities: number;
   pages: number;
   repositories: number;
   countries: number;
@@ -40,7 +63,7 @@ export interface StaticManifestTotals {
 }
 
 export interface StaticManifest {
-  schemaVersion: 5;
+  schemaVersion: 6;
   generatedAt: string;
   dataHash: string;
   pageSize: number;
@@ -51,8 +74,10 @@ export interface StaticManifest {
     search: string;
     jobIds: string;
     order: string;
-    promotions: string;
     communities: string;
+    aliases: string;
+    status: string;
+    statusHistory?: string;
   };
   facets: OpportunityFilterFacets;
   pages: StaticManifestPage[];
@@ -85,7 +110,63 @@ export interface StaticFacetIndex {
 
 export interface StaticSearchIndex {
   generatedAt: string;
-  items: Array<{ id: string; text: string }>;
+  items: Array<{
+    id: string;
+    createdAt: string;
+    text: string;
+    fields: Record<"title" | "company" | "taxonomy" | "location" | "excerpt" | "source", string>;
+  }>;
+}
+
+export interface StaticOpportunityAliases {
+  generatedAt: string;
+  ids: Record<string, string>;
+}
+
+export interface StaticCommunityStatusItem {
+  repository: string;
+  repositoryUrl: string;
+  name: string;
+  country: string;
+  countryCode: string;
+  region: string;
+  state: "healthy" | "no-openings" | "error";
+  openOpportunities: number;
+  lastSuccessfulSyncAt: string | null;
+  lastPostedAt: string | null;
+}
+
+export interface StaticCommunityStatus {
+  generatedAt: string;
+  totals: { communities: number; healthy: number; noOpenings: number; errors: number };
+  items: StaticCommunityStatusItem[];
+}
+
+export interface StaticCommunityStatusHistoryRun {
+  startedAt: string;
+  completedAt: string;
+  durationMs: number;
+  outcome: "healthy" | "partial";
+  communities: number;
+  successful: number;
+  failed: number;
+  noOpenings: number;
+  openOpportunities: number;
+}
+
+export interface StaticCommunityStatusHistoryDay {
+  date: string;
+  runs: number;
+  partialRuns: number;
+  failedCommunityRuns: number;
+  latestOpenOpportunities: number;
+}
+
+export interface StaticCommunityStatusHistory {
+  generatedAt: string;
+  retentionDays: 30;
+  runs: StaticCommunityStatusHistoryRun[];
+  days: StaticCommunityStatusHistoryDay[];
 }
 
 export interface OpportunitiesApiMeta {
