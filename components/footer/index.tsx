@@ -4,6 +4,7 @@ import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
 import { BlueskyIcon } from "@/components/icons/bluesky";
 import { GithubIcon } from "@/components/icons/github";
 import { InstagramIcon } from "@/components/icons/instagram";
+import { LinkedinIcon } from "@/components/icons/linkedin";
 import { MastodonIcon } from "@/components/icons/mastodon";
 import { ThreadsIcon } from "@/components/icons/threads";
 import { EXTERNAL_ROUTES, PUBLIC_ROUTES } from "@/lib/navigation/routes";
@@ -108,6 +109,13 @@ export function Footer({
       icon: GithubIcon,
       external: true,
       ariaLabel: footerMessages.social.githubAriaLabel,
+    },
+    {
+      label: footerMessages.links.linkedin,
+      href: EXTERNAL_ROUTES.linkedin,
+      icon: LinkedinIcon,
+      external: true,
+      ariaLabel: footerMessages.social.linkedinAriaLabel,
     },
     {
       label: footerMessages.links.bluesky,
