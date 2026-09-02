@@ -184,6 +184,7 @@ export function Footer({
             brandName={brandName}
             brandTagline={resolvedBrandTagline}
             description={resolvedDescription}
+            appDownloads={messages.appDownloads}
             socialLinks={resolvedSocialLinks}
             socialLinksAriaLabel={footerMessages.social.linksAriaLabel}
           />

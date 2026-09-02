@@ -7,6 +7,13 @@ export interface TranslationMessages {
   accessibility: {
     skipToContent: string;
   };
+  appDownloads: {
+    title: string;
+    iosAction: string;
+    androidAction: string;
+    iosAriaLabel: string;
+    androidAriaLabel: string;
+  };
   analyticsConsent: {
     title: string;
     purpose: string;

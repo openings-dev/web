@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AppDownloadLinks } from "@/components/app-download-links";
 import { Wordmark } from "@/components/brand/wordmark";
 import { WordmarkSize } from "@/components/brand/wordmark/types";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ export function FooterBrand({
   brandName,
   brandTagline,
   description,
+  appDownloads,
   socialLinks,
   socialLinksAriaLabel,
 }: FooterBrandProps): React.ReactNode {
@@ -36,6 +38,8 @@ export function FooterBrand({
           {description}
         </p>
       </div>
+
+      <AppDownloadLinks messages={appDownloads} tone="inverse" />
 
       <ul className="flex items-center gap-2" aria-label={socialLinksAriaLabel}>
         {socialLinks.map((socialLink) => {

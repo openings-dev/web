@@ -139,6 +139,7 @@ export function Header({
           </Button>
           <MobileNavigation
             groups={mobileGroups}
+            appDownloads={messages.appDownloads}
             githubStar={{
               ...mobileNavigation.githubStar,
               href: EXTERNAL_ROUTES.githubRepository,

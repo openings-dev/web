@@ -4,6 +4,13 @@ export const enTranslations: TranslationMessages = {
   accessibility: {
     skipToContent: "Skip to main content",
   },
+  appDownloads: {
+    title: "Get the Openings app",
+    iosAction: "Download for iOS",
+    androidAction: "Download for Android",
+    iosAriaLabel: "Open the Openings download page for iOS",
+    androidAriaLabel: "Open the Openings download page for Android",
+  },
   analyticsConsent: {
     title: "Optional product analytics",
     purpose: "Help us understand which discovery features are useful. Analytics are optional, and we never record your searches or job content.",

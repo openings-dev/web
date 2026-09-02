@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ExternalLink, Menu, Star, X } from "lucide-react";
 import { Wordmark } from "@/components/brand/wordmark";
+import { AppDownloadLinks } from "@/components/app-download-links";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/tailwind";
 import type { MobileNavigationItem, MobileNavigationProps } from "./types";
@@ -75,6 +76,7 @@ function MobileNavigationLink({
 
 export function MobileNavigation({
   groups,
+  appDownloads,
   githubStar,
   ariaLabel,
   openMenuAriaLabel,
@@ -193,6 +195,7 @@ export function MobileNavigation({
                 </section>
               );
             })}
+            <AppDownloadLinks messages={appDownloads} layout="stacked" />
           </nav>
           <footer className="space-y-3 border-t border-line bg-surface p-4">
             <section className="rounded-card border border-primary/40 bg-primary-soft p-4">

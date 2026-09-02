@@ -1,4 +1,5 @@
 import type { ComponentType, SVGProps } from "react";
+import type { AppDownloadMessages } from "@/components/app-download-links";
 
 type FooterIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -50,6 +51,7 @@ export interface FooterBrandProps {
   brandName: string;
   brandTagline: string;
   description: string;
+  appDownloads: AppDownloadMessages;
   /** @deprecated FooterBrand now renders the canonical wordmark. */
   lightLogoSrc?: string;
   /** @deprecated FooterBrand now renders the canonical wordmark. */

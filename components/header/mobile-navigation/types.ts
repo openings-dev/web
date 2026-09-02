@@ -1,4 +1,5 @@
 import type React from "react";
+import type { AppDownloadMessages } from "@/components/app-download-links";
 import type { HeaderNavItem } from "../header-nav/types";
 
 export interface MobileNavigationItem extends HeaderNavItem {
@@ -21,6 +22,7 @@ export interface GitHubStarCallToAction {
 
 export interface MobileNavigationProps {
   groups: MobileNavigationGroup[];
+  appDownloads: AppDownloadMessages;
   githubStar: GitHubStarCallToAction;
   ariaLabel: string;
   openMenuAriaLabel: string;

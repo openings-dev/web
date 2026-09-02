@@ -4,6 +4,13 @@ export const esTranslations: TranslationMessages = {
   accessibility: {
     skipToContent: "Ir al contenido principal",
   },
+  appDownloads: {
+    title: "Descarga la app de Openings",
+    iosAction: "Descargar para iOS",
+    androidAction: "Descargar para Android",
+    iosAriaLabel: "Abrir la página de descarga de Openings para iOS",
+    androidAriaLabel: "Abrir la página de descarga de Openings para Android",
+  },
   analyticsConsent: {
     title: "Analítica opcional del producto",
     purpose: "Ayúdanos a entender qué funciones de descubrimiento son útiles. La analítica es opcional y nunca registramos tus búsquedas ni el contenido de las vacantes.",
