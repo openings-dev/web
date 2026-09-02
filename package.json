@@ -20,7 +20,8 @@
     "test:telemetry": "node tooling/validate-telemetry-contract.mjs",
     "test:trust": "node tooling/validate-trust-surfaces.mjs",
     "test:growth": "node tooling/validate-growth-surfaces.mjs",
-    "test:footer": "node tooling/validate-footer-social-links.mjs"
+    "test:footer": "node tooling/validate-footer-social-links.mjs",
+    "test:repository-discovery": "node tooling/validate-repository-discovery.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

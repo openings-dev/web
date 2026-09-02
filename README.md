@@ -21,9 +21,17 @@
   ·
   <a href="https://openings.dev/communities">Browse communities</a>
   ·
-  <a href="https://openings.dev/docs/overview">Read the overview</a>
+  <a href="https://github.com/openings-dev/web/issues/new?template=source_repository.yml">Add your community</a>
   ·
-  <a href="https://github.com/openings-dev/web">Star on GitHub</a>
+  <a href="https://github.com/openings-dev/web/stargazers">Star on GitHub</a>
+</p>
+
+<p align="center"><strong>Current public index</strong></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fopenings-dev%2Fdata-pipeline%2Fmain%2Fsnapshots%2Fopportunities%2Fapi%2Fmanifest.json&amp;query=%24.totals.openOpportunities&amp;label=open%20jobs&amp;color=315d35" alt="Open jobs in the public Openings index" />
+  <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fopenings-dev%2Fdata-pipeline%2Fmain%2Fsnapshots%2Fopportunities%2Fapi%2Fmanifest.json&amp;query=%24.totals.communities&amp;label=communities&amp;color=315d35" alt="Communities in the public Openings index" />
+  <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fopenings-dev%2Fdata-pipeline%2Fmain%2Fsnapshots%2Fopportunities%2Fapi%2Fmanifest.json&amp;query=%24.totals.countries&amp;label=countries&amp;color=315d35" alt="Countries represented in the public Openings index" />
 </p>
 
 <p align="center">
@@ -36,6 +44,14 @@
   <a href="https://openings.dev/#opportunity-results">
     <img src="https://openings.dev/opengraph-image.png" alt="Openings makes technology jobs shared through public GitHub communities easier to search and review" width="100%" />
   </a>
+</p>
+
+<p align="center">
+  <a href="https://openings.dev/docs/overview">How Openings works</a>
+  ·
+  <a href="./CONTRIBUTING.md">Contribute</a>
+  ·
+  <a href="https://github.com/openings-dev/web/discussions">Join the discussion</a>
 </p>
 
 ## The jobs are already out there
