@@ -9,7 +9,6 @@ Openings is a statically exported Next.js application for discovering technology
 ## Documentation map
 
 - [Project overview](project_overview.md) — product scope, stack, routes, and constraints
-- [Product growth system](product_growth.md) — public repository, community acquisition, reports, releases, and distribution
 - [Architecture overview](architecture/overview.md) — runtime and source ownership
 - [Remote data flow](architecture/remote_data_flow.md) — static API, snapshots, and configuration
 - [State management](architecture/state_management.md) — URL, local, provider, and server-owned state
