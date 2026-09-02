@@ -4,54 +4,54 @@
   color-scheme: light;
 
   /* Reading surfaces and tonal hierarchy. */
-  --canvas: #f5f3ef;
-  --paper: #fffefa;
-  --surface: #ffffff;
-  --surface-muted: #eceae4;
-  --surface-elevated: #ffffff;
-  --surface-inverse: #21302e;
-  --night: #172624;
-  --night-foreground: #f2f4f1;
-  --night-muted-foreground: #b7bfbb;
-  --overlay: rgba(13, 18, 17, 0.48);
+  --canvas: var(--openings-color-canvas);
+  --paper: var(--openings-color-paper);
+  --surface: var(--openings-color-surface);
+  --surface-muted: var(--openings-color-surface-muted);
+  --surface-elevated: var(--openings-color-surface-elevated);
+  --surface-inverse: var(--openings-color-surface-inverse);
+  --night: var(--openings-color-night);
+  --night-foreground: var(--openings-color-night-foreground);
+  --night-muted-foreground: var(--openings-color-night-muted-foreground);
+  --overlay: var(--openings-color-overlay);
 
   /* Community Ink and quiet boundary roles. */
-  --ink: #21302e;
-  --ink-inverse: #f2f4f1;
-  --muted-ink: #5e6663;
-  --subtle-ink: #5e6663;
-  --line: #ddd9d2;
-  --line-strong: #cac5bd;
-  --control-border: #918c84;
+  --ink: var(--openings-color-foreground);
+  --ink-inverse: var(--openings-color-foreground-inverse);
+  --muted-ink: var(--openings-color-muted-foreground);
+  --subtle-ink: var(--openings-color-subtle-foreground);
+  --line: var(--openings-color-line);
+  --line-strong: var(--openings-color-line-strong);
+  --control-border: var(--openings-color-control);
 
   /* Brand Mint interaction and selection roles. */
-  --brand-mint: #b0ec9c;
-  --brand-mint-hover: #9bd887;
-  --brand-mint-soft: #eaf9e4;
-  --brand-mint-foreground: #21302e;
-  --brand-mint-deep: #2f6b3a;
+  --brand-mint: var(--openings-color-primary);
+  --brand-mint-hover: var(--openings-color-primary-hover);
+  --brand-mint-soft: var(--openings-color-primary-soft);
+  --brand-mint-foreground: var(--openings-color-primary-foreground);
+  --brand-mint-deep: var(--openings-color-primary-deep);
   --brand-mint-selection: rgba(176, 236, 156, 0.42);
-  --brand-mint-focus: #2f6b3a;
+  --brand-mint-focus: var(--openings-color-ring);
 
   /* Editorial support fields. */
-  --lavender-mist: #eee8f8;
-  --lavender-mist-foreground: #56378c;
-  --fresh-mint: #d9f4cc;
-  --fresh-mint-foreground: #315e38;
-  --warm-peach: #ffe2d7;
-  --warm-peach-foreground: #764133;
+  --lavender-mist: var(--openings-color-lavender);
+  --lavender-mist-foreground: var(--openings-color-lavender-foreground);
+  --fresh-mint: var(--openings-color-mint);
+  --fresh-mint-foreground: var(--openings-color-mint-foreground);
+  --warm-peach: var(--openings-color-peach);
+  --warm-peach-foreground: var(--openings-color-peach-foreground);
 
   /* Product semantics: open, needs review, closed/error, and source context. */
-  --positive: #d9f4cc;
-  --positive-foreground: #315e38;
-  --warning: #f6e6b2;
-  --warning-foreground: #66500d;
-  --destructive-soft: #f6dde2;
-  --destructive-soft-foreground: #7a3340;
-  --info: #ddebf7;
-  --info-foreground: #2f5878;
-  --destructive: #b33a48;
-  --destructive-foreground: #ffffff;
+  --positive: var(--openings-color-positive);
+  --positive-foreground: var(--openings-color-positive-foreground);
+  --warning: var(--openings-color-warning);
+  --warning-foreground: var(--openings-color-warning-foreground);
+  --destructive-soft: var(--openings-color-destructive-soft);
+  --destructive-soft-foreground: var(--openings-color-destructive-soft-foreground);
+  --info: var(--openings-color-info);
+  --info-foreground: var(--openings-color-info-foreground);
+  --destructive: var(--openings-color-destructive);
+  --destructive-foreground: var(--openings-color-destructive-foreground);
 
   /* Compatibility roles consumed by the current application. */
   --background: var(--canvas);
@@ -72,14 +72,14 @@
   --accent-foreground: var(--lavender-mist-foreground);
 
   /* Calm shape scale: controls, cards, editorial panels, floating layers, pills. */
-  --shape-control-sm: 0.625rem;
-  --shape-control: 0.75rem;
-  --shape-control-lg: 0.875rem;
-  --shape-card: 1rem;
-  --shape-floating: 1.125rem;
-  --shape-panel: 1.25rem;
-  --shape-editorial: 1.5rem;
-  --shape-pill: 9999px;
+  --shape-control-sm: var(--openings-radius-control-sm);
+  --shape-control: var(--openings-radius-control);
+  --shape-control-lg: var(--openings-radius-control-lg);
+  --shape-card: var(--openings-radius-card);
+  --shape-floating: var(--openings-radius-floating);
+  --shape-panel: var(--openings-radius-panel);
+  --shape-editorial: var(--openings-radius-editorial);
+  --shape-pill: var(--openings-radius-pill);
 
   /* Diffuse elevation is reserved for actual floating layers. */
   --elevation-sm:
@@ -95,51 +95,7 @@
 
 .dark {
   color-scheme: dark;
-
-  --canvas: #0d1211;
-  --paper: #121817;
-  --surface: #171e1c;
-  --surface-muted: #202825;
-  --surface-elevated: #1c2422;
-  --surface-inverse: #f2f4f1;
-  --night: #172624;
-  --night-foreground: #f2f4f1;
-  --night-muted-foreground: #b7bfbb;
-  --overlay: rgba(0, 0, 0, 0.64);
-
-  --ink: #f2f4f1;
-  --ink-inverse: #21302e;
-  --muted-ink: #a6afab;
-  --subtle-ink: #a6afab;
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.18);
-  --control-border: #68716d;
-
-  --brand-mint: #b0ec9c;
-  --brand-mint-hover: #c0f2af;
-  --brand-mint-soft: #213625;
-  --brand-mint-foreground: #0d1211;
-  --brand-mint-deep: #b0ec9c;
   --brand-mint-selection: rgba(176, 236, 156, 0.28);
-  --brand-mint-focus: #b0ec9c;
-
-  --lavender-mist: #2a2237;
-  --lavender-mist-foreground: #d4c3f0;
-  --fresh-mint: #213625;
-  --fresh-mint-foreground: #beeab1;
-  --warm-peach: #39251f;
-  --warm-peach-foreground: #f5c5b4;
-
-  --positive: #213625;
-  --positive-foreground: #beeab1;
-  --warning: #3a311e;
-  --warning-foreground: #f3db8b;
-  --destructive-soft: #3b252a;
-  --destructive-soft-foreground: #f2bac3;
-  --info: #1d313d;
-  --info-foreground: #a7d1ea;
-  --destructive: #e0838e;
-  --destructive-foreground: #1a0a0d;
 
   --elevation-sm:
     0 1px 2px rgba(0, 0, 0, 0.22),

@@ -26,6 +26,11 @@ const [
   quickFiltersSource,
   discoveryShortcutsSource,
   filtersDialogSource,
+  packageSource,
+  localesSource,
+  rootLayoutSource,
+  designTokenStylesSource,
+  globalStylesSource,
 ] = await Promise.all([
   source("lib/opportunities/index-operations.ts"),
   source("app/opportunities/_components/opportunities-screen/controller/use-local-discovery.ts"),
@@ -44,6 +49,11 @@ const [
   source("app/opportunities/_components/opportunities-screen/opportunities-quick-filters/index.tsx"),
   source("app/opportunities/_components/opportunities-screen/opportunities-quick-filters/discovery-shortcuts/index.tsx"),
   source("app/opportunities/_components/opportunities-screen/opportunities-filters/index.tsx"),
+  source("package.json"),
+  source("lib/constants/locales.ts"),
+  source("app/layout.tsx"),
+  source("components/providers/design-token-styles/index.tsx").catch(() => ""),
+  source("app/globals.css"),
 ]);
 
 const indexOperationsJavaScript = ts.transpileModule(indexOperationsSource, {
@@ -196,6 +206,48 @@ assert.match(
   discoveryShortcutsSource,
   /variant\?: "quick" \| "modal"/u,
   "Discovery shortcuts must expose explicit quick and modal presentations",
+);
+
+const packageJson = JSON.parse(packageSource);
+assert.equal(
+  packageJson.dependencies["@openingshq/core"],
+  "0.1.0",
+  "Web must consume the published core package",
+);
+assert.equal(
+  packageJson.dependencies["@openingshq/design-tokens"],
+  "0.1.0",
+  "Web must consume the published design-token package",
+);
+assert.match(
+  localesSource,
+  /from "@openingshq\/core"/u,
+  "Web locale validation must use the shared core contract",
+);
+assert.match(
+  localesSource,
+  /Portuguese: "pt"/u,
+  "Existing Portuguese web routes must remain stable",
+);
+assert.match(
+  localesSource,
+  /pt: "pt-BR"/u,
+  "The web Portuguese route must map to the canonical shared locale",
+);
+assert.match(
+  rootLayoutSource,
+  /<DesignTokenStyles \/>/u,
+  "The root layout must publish shared design tokens before application content",
+);
+assert.match(
+  designTokenStylesSource,
+  /from "@openingshq\/design-tokens"/u,
+  "Web theme variables must be generated from the public design-token package",
+);
+assert.doesNotMatch(
+  globalStylesSource,
+  /--canvas:\s*#f5f3ef/iu,
+  "Web globals must not duplicate shared foundation colors",
 );
 
 console.log("Discovery platform contract is valid.");

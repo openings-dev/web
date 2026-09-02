@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree, Geist_Mono, Newsreader } from "next/font/google";
 import { AppShell } from "@/app/_components/app-shell";
 import { I18nProvider } from "@/components/providers/i18n-provider";
+import { DesignTokenStyles } from "@/components/providers/design-token-styles";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TelemetryProvider } from "@/components/providers/telemetry-provider";
 import { AnalyticsConsentBanner } from "@/components/privacy/analytics-consent-banner";
@@ -93,6 +94,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${figtree.variable} ${newsreader.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <DesignTokenStyles />
       <ThemeScript />
       <body className="min-h-full bg-background text-foreground">
         <ThemeProvider defaultTheme={Theme.System} enableSystem>
