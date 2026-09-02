@@ -274,11 +274,13 @@ export function OpportunitiesQuickFilters({
         </Button>
       </div>
 
-      <DiscoveryShortcuts
-        filters={filters}
-        onFieldChange={onFieldChange}
-        curatedLinks={!forcedScope}
-      />
+      <div className="hidden md:block">
+        <DiscoveryShortcuts
+          filters={filters}
+          onFieldChange={onFieldChange}
+          curatedLinks={!forcedScope}
+        />
+      </div>
 
       {activeFiltersCount > 0 ? (
         <ActiveFilterList

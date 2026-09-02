@@ -12,6 +12,7 @@ interface DiscoveryShortcutsProps {
   filters: OpportunityFiltersState;
   onFieldChange: OnFilterFieldChange;
   curatedLinks?: boolean;
+  variant?: "quick" | "modal";
 }
 
 function toggled(values: string[], value: string) {
@@ -24,6 +25,7 @@ export function DiscoveryShortcuts({
   filters,
   onFieldChange,
   curatedLinks = false,
+  variant = "quick",
 }: DiscoveryShortcutsProps): React.ReactNode {
   const { locale, messages } = useI18n();
   const copy = messages.opportunities.discovery;
@@ -47,7 +49,11 @@ export function DiscoveryShortcuts({
   };
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-4">
+    <div
+      className={variant === "modal"
+        ? "flex flex-wrap items-center gap-2 border-b border-line pb-5"
+        : "mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-4"}
+    >
       <span className="mr-1 inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden="true" />
         {copy.shortcutsLabel}

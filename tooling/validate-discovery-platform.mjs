@@ -23,6 +23,9 @@ const [
   statusPageSource,
   statusScreenSource,
   communitiesSource,
+  quickFiltersSource,
+  discoveryShortcutsSource,
+  filtersDialogSource,
 ] = await Promise.all([
   source("lib/opportunities/index-operations.ts"),
   source("app/opportunities/_components/opportunities-screen/controller/use-local-discovery.ts"),
@@ -38,6 +41,9 @@ const [
   source("app/status/page.tsx"),
   source("app/status/_components/status-screen/index.tsx"),
   source("app/community/_components/communities-screen/index.tsx"),
+  source("app/opportunities/_components/opportunities-screen/opportunities-quick-filters/index.tsx"),
+  source("app/opportunities/_components/opportunities-screen/opportunities-quick-filters/discovery-shortcuts/index.tsx"),
+  source("app/opportunities/_components/opportunities-screen/opportunities-filters/index.tsx"),
 ]);
 
 const indexOperationsJavaScript = ts.transpileModule(indexOperationsSource, {
@@ -171,5 +177,25 @@ assert.match(opportunityDetailsSource, /item\.sources/u, "Details must expose ev
 assert.match(statusPageSource, /getCommunityStatus/u, "The status page must use the synchronization artifact");
 assert.match(statusScreenSource, /lastSuccessfulSyncAt/u, "The status table must show the last successful sync");
 assert.match(communitiesSource, /opportunitiesCount > 0/u, "Communities must distinguish active sources");
+assert.match(
+  quickFiltersSource,
+  /className="hidden md:block"[\s\S]*?<DiscoveryShortcuts/u,
+  "Discovery shortcuts must collapse into More below the medium breakpoint",
+);
+assert.match(
+  filtersDialogSource,
+  /className="mb-5 md:hidden"[\s\S]*?<DiscoveryShortcuts/u,
+  "The More dialog must expose Discovery shortcuts on narrow screens",
+);
+assert.match(
+  filtersDialogSource,
+  /<DiscoveryShortcuts[\s\S]*?curatedLinks=\{false\}[\s\S]*?variant="modal"/u,
+  "Dialog shortcuts must update the live filters instead of navigating away",
+);
+assert.match(
+  discoveryShortcutsSource,
+  /variant\?: "quick" \| "modal"/u,
+  "Discovery shortcuts must expose explicit quick and modal presentations",
+);
 
 console.log("Discovery platform contract is valid.");

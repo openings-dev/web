@@ -8,6 +8,7 @@ import { formatTemplate } from "@/lib/utils/format-template";
 import type { OpportunitiesFiltersProps } from "@/app/opportunities/_components/opportunities-screen/types";
 import { ADVANCED_FILTERS_DIALOG_ID } from "./constants";
 import { FilterFields } from "./filter-fields";
+import { DiscoveryShortcuts } from "../opportunities-quick-filters/discovery-shortcuts";
 
 export function OpportunitiesFilters(props: OpportunitiesFiltersProps): React.ReactNode {
   const { locale, messages } = useI18n();
@@ -90,6 +91,14 @@ export function OpportunitiesFilters(props: OpportunitiesFiltersProps): React.Re
         </header>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-7 sm:py-6">
+          <div className="mb-5 md:hidden">
+            <DiscoveryShortcuts
+              filters={props.state}
+              onFieldChange={props.onFieldChange}
+              curatedLinks={false}
+              variant="modal"
+            />
+          </div>
           <FilterFields
             {...props}
             locale={locale}
