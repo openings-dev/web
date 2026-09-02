@@ -1,0 +1,72 @@
+name: Collect GitHub traffic
+
+on:
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-traffic-history
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check traffic token
+        id: token
+        env:
+          TRAFFIC_TOKEN: ${{ secrets.OPENINGS_TRAFFIC_TOKEN }}
+        run: |
+          if [ -n "$TRAFFIC_TOKEN" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::OPENINGS_TRAFFIC_TOKEN is not configured; collection was skipped."
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Collect aggregate traffic
+        if: steps.token.outputs.available == 'true'
+        env:
+          TRAFFIC_TOKEN: ${{ secrets.OPENINGS_TRAFFIC_TOKEN }}
+        run: node tooling/github-traffic/collect.mjs "$RUNNER_TEMP/current-traffic.json"
+
+      - name: Preserve collection tools
+        if: steps.token.outputs.available == 'true'
+        run: cp -R tooling/github-traffic "$RUNNER_TEMP/github-traffic"
+
+      - name: Update growth-metrics branch
+        if: steps.token.outputs.available == 'true'
+        env:
+          SNAPSHOT_PATH: ${{ runner.temp }}/current-traffic.json
+        run: |
+          if git ls-remote --exit-code --heads origin growth-metrics >/dev/null 2>&1; then
+            git fetch origin growth-metrics
+            git switch --force-create growth-metrics origin/growth-metrics
+          else
+            git switch --orphan growth-metrics
+          fi
+          mkdir -p traffic
+          node "$RUNNER_TEMP/github-traffic/merge-history.mjs" "$SNAPSHOT_PATH" traffic/history.json
+          git add traffic/history.json
+          if git diff --cached --quiet; then
+            echo "Traffic history is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: update GitHub traffic history"
+          git push origin growth-metrics
