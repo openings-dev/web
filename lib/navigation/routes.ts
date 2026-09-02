@@ -29,6 +29,8 @@ export const EXTERNAL_ROUTES = {
   mastodon: "https://mastodon.social/@openingshq",
   threads: "https://www.threads.com/@openingshq",
   instagram: "https://www.instagram.com/openingshq/",
+  iosApp: "https://apps.apple.com/app/openings-dev/id0000000000",
+  androidApp: "https://play.google.com/store/apps/details?id=dev.openings.mobile",
   reportIssue: "mailto:support@openings.dev",
   support: "mailto:support@openings.dev",
 } as const;

@@ -471,6 +471,14 @@ export const esTranslations: TranslationMessages = {
     supportEmailCopyError: "No se pudo copiar el correo de soporte.",
     copyrightTemplate: "© {year} colaboradores de {brand} · MIT",
     signature: "Un proyecto de",
+    promotion: {
+      title: "Ayuda a más personas a encontrar empleos publicados por comunidades.",
+      description:
+        "Destaca Openings en GitHub, sigue el trabajo público o lleva la búsqueda contigo en el móvil.",
+      githubAction: "Dar una estrella en GitHub",
+      iosAction: "Descargar para iOS",
+      androidAction: "Descargar para Android",
+    },
     groups: {
       project: "Openings",
       openSource: "Código y contribución",

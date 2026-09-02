@@ -523,6 +523,13 @@ export interface TranslationMessages {
     supportEmailCopyError: string;
     copyrightTemplate: string;
     signature: string;
+    promotion: {
+      title: string;
+      description: string;
+      githubAction: string;
+      iosAction: string;
+      androidAction: string;
+    };
     groups: {
       project: string;
       openSource: string;

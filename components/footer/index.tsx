@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils/tailwind";
 import { FooterBottom } from "./footer-bottom";
 import { FooterBrand } from "./footer-brand";
 import { FooterLinks } from "./footer-links";
+import { FooterPromotion } from "./footer-promotion";
 import type { FooterLinkGroup, FooterProps, FooterSocialLink } from "./types";
 
 export function Footer({
@@ -189,6 +190,13 @@ export function Footer({
           />
           <FooterLinks className="lg:col-span-7" groups={resolvedLinkGroups} />
         </div>
+
+        <FooterPromotion
+          {...footerMessages.promotion}
+          githubHref={EXTERNAL_ROUTES.githubRepository}
+          iosHref={EXTERNAL_ROUTES.iosApp}
+          androidHref={EXTERNAL_ROUTES.androidApp}
+        />
 
         <FooterBottom
           supportEmail={supportEmail}

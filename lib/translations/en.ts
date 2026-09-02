@@ -504,6 +504,14 @@ export const enTranslations: TranslationMessages = {
     supportEmailCopyError: "Could not copy support email.",
     copyrightTemplate: "© {year} {brand} contributors · MIT",
     signature: "A project by",
+    promotion: {
+      title: "Help more people find jobs shared by communities.",
+      description:
+        "Star Openings on GitHub, follow the public work, or take the search experience with you on mobile.",
+      githubAction: "Star on GitHub",
+      iosAction: "Download for iOS",
+      androidAction: "Get it for Android",
+    },
     groups: {
       project: "Openings",
       openSource: "Source and contribution",

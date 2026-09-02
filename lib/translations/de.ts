@@ -467,6 +467,14 @@ export const deTranslations: TranslationMessages = {
     supportEmailCopyError: "Support-E-Mail konnte nicht kopiert werden.",
     copyrightTemplate: "© {year} Mitwirkende von {brand} · MIT",
     signature: "Ein Projekt von",
+    promotion: {
+      title: "Hilf mehr Menschen, Stellen aus Communities zu finden.",
+      description:
+        "Gib Openings einen Stern auf GitHub, verfolge die öffentliche Arbeit oder nutze die Suche mobil.",
+      githubAction: "Stern auf GitHub geben",
+      iosAction: "Für iOS laden",
+      androidAction: "Für Android laden",
+    },
     groups: {
       project: "Openings",
       openSource: "Code und Mitwirkung",
