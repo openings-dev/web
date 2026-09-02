@@ -104,7 +104,7 @@ Openings reduces the work of monitoring separate repositories. You can narrow th
 
 Each supported community gets a shareable page for its open jobs. That page can live in a README, website, or social profile while the original GitHub issue remains the destination for complete details.
 
-[Find your community](https://openings.dev/communities) or read the [community listing guide](https://openings.dev/docs/maintainers).
+[Find your community](https://openings.dev/communities), read the [community listing guide](https://openings.dev/docs/maintainers), or copy a badge from the [community kit](./COMMUNITY_KIT.md).
 
 ## The original listing remains the source of truth
 

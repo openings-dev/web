@@ -2,6 +2,8 @@
 
 openings.dev makes public job listings from supported GitHub community repositories easier to search and share. It does not replace your repository, edit listings, accept applications, or access private GitHub repositories or application data.
 
+For copy-ready README snippets and a suggested announcement, use the [Openings community kit](https://github.com/openings-dev/web/blob/main/COMMUNITY_KIT.md).
+
 Use the repository URL pattern below and replace `OWNER/REPO` with your GitHub repository name:
 
 ```txt
