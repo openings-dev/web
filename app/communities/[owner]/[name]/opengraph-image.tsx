@@ -4,7 +4,10 @@ import {
   SOCIAL_CARD_CONTENT_TYPE,
   SOCIAL_CARD_SIZE,
 } from "@/lib/metadata/social-card";
-import { createCommunitySocialCard } from "@/lib/metadata/social-card-presentations";
+import {
+  createCommunitySocialCard,
+  createUnavailableSocialCard,
+} from "@/lib/metadata/social-card-presentations";
 import { listCommunitySocialCardParams } from "@/lib/metadata/social-card-static-params";
 import { getSnapshotCommunityByRepository } from "@/lib/opportunities/communities";
 import { repositoryFromCommunitySegments } from "@/lib/opportunities/routing";
@@ -31,18 +34,16 @@ async function resolveCommunity(params: CommunitySocialImageProps["params"]) {
   const repository = repositoryFromCommunitySegments([owner, name]);
   const community = await getCommunity(repository);
 
-  if (!community) {
-    throw new Error(
-      `Cannot generate a social card for unknown community ${repository}.`,
-    );
-  }
-
-  return community;
+  return { community, repository };
 }
 
 export default async function CommunitySocialImage({
   params,
 }: CommunitySocialImageProps): Promise<ReturnType<typeof createSocialCardImage>> {
-  const community = await resolveCommunity(params);
-  return createSocialCardImage(createCommunitySocialCard(community));
+  const { community, repository } = await resolveCommunity(params);
+  const presentation = community
+    ? createCommunitySocialCard(community)
+    : createUnavailableSocialCard("Community profile", repository);
+
+  return createSocialCardImage(presentation);
 }

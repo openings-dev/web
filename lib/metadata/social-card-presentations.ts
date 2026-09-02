@@ -183,3 +183,20 @@ export function createAuthorSocialCard(
     actionLabel: "View author profile",
   };
 }
+
+export function createUnavailableSocialCard(
+  eyebrow: string,
+  title: string,
+): SocialCardPresentation {
+  return {
+    eyebrow,
+    title,
+    description:
+      "This public listing changed while openings.dev was preparing its current catalog.",
+    facts: [
+      { label: "Status", value: "No longer in the current catalog" },
+      { label: "Next step", value: "Browse current openings" },
+    ],
+    actionLabel: "Browse current jobs",
+  };
+}

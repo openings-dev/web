@@ -4,7 +4,10 @@ import {
   SOCIAL_CARD_CONTENT_TYPE,
   SOCIAL_CARD_SIZE,
 } from "@/lib/metadata/social-card";
-import { createOpportunitySocialCard } from "@/lib/metadata/social-card-presentations";
+import {
+  createOpportunitySocialCard,
+  createUnavailableSocialCard,
+} from "@/lib/metadata/social-card-presentations";
 import { listJobSocialCardParams } from "@/lib/metadata/social-card-static-params";
 import { fetchOpportunityById } from "@/lib/opportunities/api";
 
@@ -28,16 +31,16 @@ async function resolveOpportunity(params: JobSocialImageProps["params"]) {
   const id = decodeURIComponent(encodedId);
   const opportunity = await getOpportunity(id);
 
-  if (!opportunity) {
-    throw new Error(`Cannot generate a social card for unknown job ${id}.`);
-  }
-
-  return opportunity;
+  return { id, opportunity };
 }
 
 export default async function JobSocialImage({
   params,
 }: JobSocialImageProps): Promise<ReturnType<typeof createSocialCardImage>> {
-  const opportunity = await resolveOpportunity(params);
-  return createSocialCardImage(createOpportunitySocialCard(opportunity));
+  const { id, opportunity } = await resolveOpportunity(params);
+  const presentation = opportunity
+    ? createOpportunitySocialCard(opportunity)
+    : createUnavailableSocialCard("Open job", `Job ${id}`);
+
+  return createSocialCardImage(presentation);
 }

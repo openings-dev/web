@@ -4,7 +4,10 @@ import {
   SOCIAL_CARD_CONTENT_TYPE,
   SOCIAL_CARD_SIZE,
 } from "@/lib/metadata/social-card";
-import { createAuthorSocialCard } from "@/lib/metadata/social-card-presentations";
+import {
+  createAuthorSocialCard,
+  createUnavailableSocialCard,
+} from "@/lib/metadata/social-card-presentations";
 import { listAuthorSocialCardParams } from "@/lib/metadata/social-card-static-params";
 import { authorHandleFromRoute } from "@/lib/opportunities/routing";
 import { getSnapshotUserByHandle } from "@/lib/opportunities/users";
@@ -29,18 +32,19 @@ async function resolveAuthor(params: AuthorSocialImageProps["params"]) {
   const handle = authorHandleFromRoute(routeHandle);
   const author = await getAuthor(handle);
 
-  if (!author) {
-    throw new Error(
-      `Cannot generate a social card for unknown GitHub author ${handle}.`,
-    );
-  }
-
-  return author;
+  return { author, handle };
 }
 
 export default async function AuthorSocialImage({
   params,
 }: AuthorSocialImageProps): Promise<ReturnType<typeof createSocialCardImage>> {
-  const author = await resolveAuthor(params);
-  return createSocialCardImage(createAuthorSocialCard(author));
+  const { author, handle } = await resolveAuthor(params);
+  const presentation = author
+    ? createAuthorSocialCard(author)
+    : createUnavailableSocialCard(
+        "GitHub author profile",
+        `@${handle}`,
+      );
+
+  return createSocialCardImage(presentation);
 }
