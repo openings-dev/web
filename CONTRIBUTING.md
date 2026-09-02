@@ -19,6 +19,14 @@ Use [`openings-dev/data-pipeline`](https://github.com/openings-dev/data-pipeline
 - GitHub ingestion and normalization logic.
 - Snapshot generation and static API files.
 
+## Choose a contribution
+
+- Browse [`good first issue`](https://github.com/openings-dev/web/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22good%20first%20issue%22) tasks for focused changes with a defined outcome.
+- Open a [Source repository request](https://github.com/openings-dev/web/issues/new?template=source_repository.yml) when a public GitHub community regularly publishes job listings.
+- Use the [content correction form](https://github.com/openings-dev/web/issues/new?template=content_correction.yml) for inaccurate or removable indexed content.
+- Start in [GitHub Discussions](https://github.com/openings-dev/web/discussions) when the idea still needs exploration.
+- Review the [public roadmap](./ROADMAP.md) for the current direction.
+
 ## Data Rules
 
 - Do not add local job data, mock datasets, fixtures, `db.json`, or JSON snapshots to the front-end.

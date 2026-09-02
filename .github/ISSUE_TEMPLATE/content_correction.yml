@@ -1,6 +1,7 @@
 name: Content correction or removal
 description: Request a correction to indexed public information or removal of an Openings page
 title: "[content]: "
+labels: ["content-correction"]
 body:
   - type: markdown
     attributes:

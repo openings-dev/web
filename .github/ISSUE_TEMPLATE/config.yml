@@ -1,5 +1,11 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Join the discussion
+    url: https://github.com/openings-dev/web/discussions
+    about: Share an early idea, ask a public question, or meet other contributors
+  - name: Pick a first issue
+    url: https://github.com/openings-dev/web/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22good%20first%20issue%22
+    about: Browse focused issues selected for first-time contributors
   - name: Security report
     url: mailto:security@openings.dev
     about: Report vulnerabilities privately
