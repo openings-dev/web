@@ -249,6 +249,11 @@ assert.match(confidenceSource, /source\.url/u);
 assert.match(confidenceSource, /originalAuthority/u);
 assert.match(detailsSource, /buildOpportunityTrustSummary/u);
 assert.match(detailsSource, /<DataConfidence/u);
+assert.ok(
+  detailsSource.indexOf("<DataConfidence") >
+    detailsSource.indexOf("<OpportunityMarkdown"),
+  "OpportunityDetails must render data confidence after the job description",
+);
 assert.match(jobPageSource, /getCommunityStatus/u);
 assert.match(jobPageSource, /buildOpportunityTrustSummary/u);
 for (const locale of ["en", "pt", "es", "it", "fr", "de"]) {

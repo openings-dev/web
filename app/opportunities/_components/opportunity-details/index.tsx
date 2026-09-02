@@ -252,18 +252,18 @@ export function OpportunityDetails({
                 locale={locale}
               />
             </div>
-            <DataConfidence
-              item={item}
-              summary={confidence}
-              locale={locale}
-              copy={copy.dataConfidence}
-            />
             <div className="mt-8 max-w-[74ch]">
               <OpportunityMarkdown
                 body={item.description}
                 emptyDescription={copy.noDescription}
               />
             </div>
+            <DataConfidence
+              item={item}
+              summary={confidence}
+              locale={locale}
+              copy={copy.dataConfidence}
+            />
             <div className="mt-8 border-t border-line pt-6 lg:hidden">
               <DrawerTags tags={item.tags} locale={locale} />
               {sourceList}
