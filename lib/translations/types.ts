@@ -514,6 +514,36 @@ export interface TranslationMessages {
     versionLabel: string;
     learnMore: string;
   };
+  reportsPage: {
+    kicker: string;
+    title: string;
+    description: string;
+    unavailableTitle: string;
+    unavailableDescription: string;
+    emptyTitle: string;
+    emptyDescription: string;
+    latestReport: string;
+    archiveTitle: string;
+    archiveDescription: string;
+    reportListLabel: string;
+    viewReport: string;
+    reportTitle: string;
+    snapshotLabel: string;
+    openJobs: string;
+    communities: string;
+    repositories: string;
+    countries: string;
+    regions: string;
+    topCountries: string;
+    topTechnologies: string;
+    workModels: string;
+    salaryDisclosure: string;
+    salaryDescription: string;
+    methodologyTitle: string;
+    methodologyDescription: string;
+    methodologyLink: string;
+    browseJobs: string;
+  };
   footer: {
     brandTagline: string;
     description: string;
@@ -558,6 +588,7 @@ export interface TranslationMessages {
       termsOfService: string;
       designSystem: string;
       updates: string;
+      reports: string;
       methodology: string;
     };
     social: {

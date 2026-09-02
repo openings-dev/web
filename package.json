@@ -24,7 +24,8 @@
     "test:repository-discovery": "node tooling/validate-repository-discovery.mjs",
     "test:release": "node tooling/validate-release-automation.mjs",
     "test:contributors": "node tooling/validate-contributor-paths.mjs",
-    "test:footer-growth": "node tooling/validate-footer-growth.mjs"
+    "test:footer-growth": "node tooling/validate-footer-growth.mjs",
+    "test:public-reports": "node tooling/validate-public-reports.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

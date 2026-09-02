@@ -44,6 +44,7 @@ export function Footer({
         { label: messages.header.nav.docs, href: PUBLIC_ROUTES.docs },
         { label: messages.header.nav.status, href: PUBLIC_ROUTES.status },
         { label: footerMessages.links.updates, href: PUBLIC_ROUTES.updates },
+        { label: footerMessages.links.reports, href: PUBLIC_ROUTES.reports },
         { label: footerMessages.links.methodology, href: PUBLIC_ROUTES.methodology },
         { label: footerMessages.links.overview, href: PUBLIC_ROUTES.overview },
         {

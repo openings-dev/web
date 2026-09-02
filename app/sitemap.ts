@@ -11,6 +11,7 @@ import {
   getStaticOpportunityGeneratedAt,
   listStaticOpportunities,
 } from "@/lib/opportunities/static-api";
+import { listMonthlyReports } from "@/lib/reports/reports";
 
 export const dynamic = "force-static";
 
@@ -26,10 +27,11 @@ function entry(
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [items, communities, generatedAt] = await Promise.all([
+  const [items, communities, generatedAt, reports] = await Promise.all([
     listStaticOpportunities(),
     listSnapshotCommunities(),
     getStaticOpportunityGeneratedAt(),
+    listMonthlyReports(),
   ]);
   const authors = new Map<string, string>();
   for (const item of items) {
@@ -44,6 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/authors", generatedAt, "daily", 0.7),
     entry("/status", generatedAt, "daily", 0.7),
     entry("/updates", RELEASE_DATE, "weekly", 0.7),
+    entry("/reports", reports.generatedAt ?? RELEASE_DATE, "monthly", 0.7),
     entry("/methodology", RELEASE_DATE, "monthly", 0.6),
     entry("/privacy", RELEASE_DATE, "monthly", 0.3),
     entry("/terms", RELEASE_DATE, "monthly", 0.3),
@@ -63,6 +66,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           : latest, null) ?? generatedAt;
       return entry(`/${code}/discover/${preset.slug}`, lastModified, "daily", 0.7);
     }));
-  const all = [...staticPages, ...communityPages, ...authorPages, ...jobPages, ...curatedPages];
+  const reportPages = reports.reports.map((report) =>
+    entry(`/reports/${report.period}`, report.generatedAt, "monthly", 0.6));
+  const all = [...staticPages, ...reportPages, ...communityPages, ...authorPages, ...jobPages, ...curatedPages];
   return [...new Map(all.map((item) => [item.url, item])).values()];
 }

@@ -47,6 +47,7 @@ export function Header({
       id: "resources",
       label: mobileNavigation.groups.resources,
       items: [
+        { label: messages.footer.links.reports, href: PUBLIC_ROUTES.reports },
         { label: messages.footer.links.overview, href: PUBLIC_ROUTES.overview },
         {
           label: messages.footer.links.apiReference,
