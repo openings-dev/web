@@ -16,6 +16,13 @@ if (dsn) {
     tracesSampleRate: 0.05,
     replaysSessionSampleRate: 0,
     replaysOnErrorSampleRate: 0,
+    // BrowserTracing wraps window.fetch to record spans and Web Vitals
+    // (LCP/CLS/INP). Its web-vitals collection has a known crash reading
+    // `.startTime` off an entry that isn't populated yet on first pageload.
+    // Drop it until upstream fixes the crash; error capture
+    // (captureException) is unaffected.
+    integrations: (defaultIntegrations) =>
+      defaultIntegrations.filter((integration) => integration.name !== "BrowserTracing"),
     beforeSend: (event) => sanitizeSentryEvent(
       event as unknown as Record<string, unknown>,
     ) as typeof event,

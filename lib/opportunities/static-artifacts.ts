@@ -146,7 +146,7 @@ function loadStaticArtifactView(): Promise<StaticArtifactView> {
 
   const recovery = pendingStaticArtifactRecovery;
   const manifestPath = manifestPathForRecovery(recovery);
-  const request = fetchStaticJson(manifestPath, { cache: "force-cache" })
+  const request = fetchStaticJson(manifestPath)
     .then((payload) => parseStaticOpportunityManifest(payload, MANIFEST_PATH))
     .then((manifest) => {
       const view = buildStaticArtifactView(manifest);
