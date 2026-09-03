@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { Download, Smartphone } from "lucide-react";
 import { GithubIcon } from "@/components/icons/github";
 import { Button } from "@/components/ui/button";
+import { Download, Smartphone } from "lucide-react";
+import Link from "next/link";
 
 interface FooterPromotionProps {
   title: string;
@@ -25,9 +25,26 @@ export function FooterPromotion({
   androidHref,
 }: FooterPromotionProps): React.ReactNode {
   const links = [
-    { href: githubHref, label: githubAction, icon: GithubIcon, primary: true },
-    { href: iosHref, label: iosAction, icon: Download, primary: false },
-    { href: androidHref, label: androidAction, icon: Smartphone, primary: false },
+    {
+      href: githubHref,
+      label: githubAction,
+      icon: GithubIcon,
+      primary: true,
+    },
+    {
+      href: iosHref,
+      label: iosAction,
+      icon: Download,
+      primary: false,
+      disabled: true,
+    },
+    {
+      href: androidHref,
+      label: androidAction,
+      icon: Smartphone,
+      primary: false,
+      disabled: true,
+    },
   ];
 
   return (
@@ -48,23 +65,26 @@ export function FooterPromotion({
       </div>
 
       <div className="grid gap-2 sm:grid-cols-3 lg:flex lg:flex-wrap lg:justify-end">
-        {links.map(({ href, label, icon: Icon, primary }) => (
-          <Button
-            key={href}
-            asChild
-            variant={primary ? "default" : "outline"}
-            className={
-              primary
-                ? "border-primary bg-primary text-primary-foreground hover:border-primary-hover hover:bg-primary-hover"
-                : "border-night-foreground/25 text-night-foreground hover:border-night-foreground/40 hover:bg-night-foreground/10"
-            }
-          >
-            <Link href={href} target="_blank" rel="noreferrer">
-              <Icon aria-hidden="true" />
-              <span>{label}</span>
-            </Link>
-          </Button>
-        ))}
+        {links.map(
+          ({ href, label, icon: Icon, primary, disabled }) =>
+            !disabled && (
+              <Button
+                key={href}
+                asChild
+                variant={primary ? "default" : "outline"}
+                className={
+                  primary
+                    ? "border-primary bg-primary text-primary-foreground hover:border-primary-hover hover:bg-primary-hover"
+                    : "border-night-foreground/25 text-night-foreground hover:border-night-foreground/40 hover:bg-night-foreground/10"
+                }
+              >
+                <Link href={href} target="_blank" rel="noreferrer">
+                  <Icon aria-hidden="true" />
+                  <span>{label}</span>
+                </Link>
+              </Button>
+            ),
+        )}
       </div>
     </section>
   );
