@@ -16,7 +16,20 @@ assert.match(workflow, /npm ci/u);
 assert.match(workflow, /npm run test/u);
 assert.match(workflow, /npm run lint/u);
 assert.match(workflow, /npm run build/u);
+assert.match(workflow, /npm run test:metadata/u);
 assert.doesNotMatch(workflow, /contents: write|pull-requests: write/u);
+
+const commandOrder = [
+  "npm run test",
+  "npm run lint",
+  "npm run build",
+  "npm run test:metadata",
+];
+commandOrder.reduce((previousIndex, command) => {
+  const index = workflow.indexOf(command);
+  assert.ok(index > previousIndex, `${command} must follow its prerequisite`);
+  return index;
+}, -1);
 
 const packageJson = JSON.parse(packageSource);
 assert.equal(packageJson.scripts.test, "node tooling/run-validations.mjs");

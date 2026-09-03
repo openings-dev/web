@@ -40,3 +40,6 @@ jobs:
 
       - name: Build the static production site
         run: npm run build
+
+      - name: Validate the generated export
+        run: npm run test:metadata

@@ -2,7 +2,6 @@ import { spawnSync } from "node:child_process";
 
 const validators = [
   "validate-opportunity-details-header.mjs",
-  "validate-metadata-export.mjs",
   "validate-communities-artifact.mjs",
   "validate-discovery-platform.mjs",
   "validate-comparison.mjs",
