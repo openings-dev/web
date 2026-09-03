@@ -34,6 +34,8 @@ assert.match(workflow, /schedule:/u);
 assert.match(workflow, /growth-metrics/u);
 assert.match(workflow, /permissions:\s*\n\s*contents:\s*write/u);
 assert.match(workflow, /tooling\/github-traffic/u);
+assert.match(workflow, /actions\/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1/u);
+assert.match(workflow, /actions\/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38/u);
 assert.doesNotMatch(workflow, /git add \.|git add -A/u);
 
 console.log("GitHub traffic history contract is valid.");
