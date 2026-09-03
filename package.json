@@ -10,6 +10,7 @@
     "build": "next build && node tooling/publish-social-images.mjs",
     "start": "next start",
     "lint": "eslint",
+    "test": "node tooling/run-validations.mjs",
     "test:job-header": "node tooling/validate-opportunity-details-header.mjs",
     "test:metadata": "node tooling/validate-metadata-export.mjs",
     "test:communities": "node tooling/validate-communities-artifact.mjs",
@@ -26,7 +27,8 @@
     "test:contributors": "node tooling/validate-contributor-paths.mjs",
     "test:footer-growth": "node tooling/validate-footer-growth.mjs",
     "test:public-reports": "node tooling/validate-public-reports.mjs",
-    "test:traffic": "node tooling/validate-github-traffic.mjs"
+    "test:traffic": "node tooling/validate-github-traffic.mjs",
+    "test:ci": "node tooling/validate-ci-workflow.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

@@ -1,0 +1,24 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+
+const [workflow, packageSource] = await Promise.all([
+  readFile(".github/workflows/validate.yml", "utf8"),
+  readFile("package.json", "utf8"),
+]);
+
+assert.match(workflow, /^name: Validate$/mu);
+assert.match(workflow, /^\s{2}pull_request:$/mu);
+assert.match(workflow, /^\s{2}push:\s*\n\s{4}branches:\s*\[main\]$/mu);
+assert.match(workflow, /permissions:\s*\n\s{2}contents: read/u);
+assert.match(workflow, /cancel-in-progress: true/u);
+assert.match(workflow, /node-version: ["']20["']/u);
+assert.match(workflow, /npm ci/u);
+assert.match(workflow, /npm run test/u);
+assert.match(workflow, /npm run lint/u);
+assert.match(workflow, /npm run build/u);
+assert.doesNotMatch(workflow, /contents: write|pull-requests: write/u);
+
+const packageJson = JSON.parse(packageSource);
+assert.equal(packageJson.scripts.test, "node tooling/run-validations.mjs");
+
+console.log("Continuous validation workflow contract is valid.");
