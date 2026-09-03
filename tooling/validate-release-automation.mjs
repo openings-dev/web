@@ -19,5 +19,6 @@ assert.match(releaseConfig, /Fixes/u);
 assert.match(releaseConfig, /New contributors/u);
 assert.match(changelog, /# Changelog/u);
 assert.match(changelog, /Semantic Versioning/u);
+assert.match(changelog, /## \[0\.1\.0\] - 2026-09-02/u);
 
 console.log("Release automation contract is valid.");
