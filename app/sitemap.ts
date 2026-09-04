@@ -42,6 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   const staticPages = [
     entry("/", generatedAt, "daily", 1),
+    entry("/opportunities", generatedAt, "daily", 0.9),
     entry("/communities", generatedAt, "daily", 0.8),
     entry("/authors", generatedAt, "daily", 0.7),
     entry("/status", generatedAt, "daily", 0.7),

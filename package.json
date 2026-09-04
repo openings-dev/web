@@ -7,10 +7,11 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node tooling/publish-social-images.mjs",
+    "build": "next build && node tooling/validate-home-performance.mjs --exported && node tooling/publish-social-images.mjs",
     "start": "next start",
     "lint": "eslint",
     "test": "node tooling/run-validations.mjs",
+    "test:home-performance": "node tooling/validate-home-performance.mjs",
     "test:job-header": "node tooling/validate-opportunity-details-header.mjs",
     "test:metadata": "node tooling/validate-metadata-export.mjs",
     "test:communities": "node tooling/validate-communities-artifact.mjs",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import { DeferredHomeOpportunities } from "@/app/_components/deferred-home-opportunities";
 import { HomeHero } from "@/app/_components/home-hero";
-import { OpportunitiesPage } from "@/app/opportunities/_components/opportunities-page";
 import { createPageMetadata } from "@/lib/metadata/site-metadata";
 
 export const metadata: Metadata = createPageMetadata({
@@ -14,7 +14,7 @@ export default function Home(): React.ReactNode {
   return (
     <>
       <HomeHero />
-      <OpportunitiesPage showHeader={false} />
+      <DeferredHomeOpportunities />
     </>
   );
 }
