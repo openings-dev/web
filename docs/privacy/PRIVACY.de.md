@@ -1,8 +1,8 @@
 # Datenschutzerklärung
 
-_Datum des Inkrafttretens: 1. September 2026_
+_Datum des Inkrafttretens: 4. September 2026_
 
-Openings erleichtert das Auffinden öffentlicher Tech-Stellenanzeigen. Diese Erklärung erläutert, welche Informationen die Website anzeigt, was sie in deinem Browser speichert und wann dein Browser Verbindungen zu externen Diensten herstellt.
+Openings erleichtert das Auffinden öffentlicher Tech-Stellenanzeigen. Diese Erklärung gilt für die Openings-Website und die mobile App und erläutert, welche Informationen sie anzeigen, was sie auf deinem Gerät speichern und wann sie Verbindungen zu externen Diensten herstellen.
 
 ## 1. Von Openings angezeigte öffentliche Daten
 
@@ -10,15 +10,17 @@ Openings liest öffentliche Daten aus dem Repository `openings-dev/data-pipeline
 
 Openings zeigt außerdem öffentliche GitHub-Kontoinformationen an, die einer Stellenanzeige zugeordnet sind, darunter Name, Benutzername und Avatar-URL der Autorin oder des Autors. Den Link zum GitHub-Profil leitet Openings aus dem öffentlichen Benutzernamen ab. Autorprofilseiten werden aus diesen öffentlichen Stellenanzeigendaten erstellt. Sie bedeuten nicht, dass Openings die angezeigte Person, Organisation oder den Arbeitgeber überprüft hat, vertritt oder mit ihnen verbunden ist.
 
-## 2. In deinem Browser gespeicherte Einstellungen
+## 2. Auf deinem Gerät gespeicherte Einstellungen
 
-Openings speichert Sprache, Design, gespeicherte und angesehene Stellen, Sucheinstellungen und deine Analyseentscheidung im lokalen Speicher. Diese Daten stellen die gewählte Nutzung wieder her und erstellen kein Konto. Sie bleiben im Browser, bis du sie änderst oder die Websitedaten löschst.
+Openings speichert Sprache, Design, gespeicherte und angesehene Stellen, Sucheinstellungen sowie deine Analyse- und Benachrichtigungsentscheidungen im lokalen Speicher des Browsers oder Mobilgeräts. Diese Daten stellen die gewählte Nutzung wieder her und erstellen kein Konto. Sie bleiben dort, bis du sie änderst, die Website- oder App-Daten löschst oder die App deinstallierst.
 
 ## 3. Technische Überwachung und optionale Analyse
 
-Wenn konfiguriert, erhält Sentry bereinigte technische Fehler zur Diagnose. Openings deaktiviert die standardmäßige Erfassung personenbezogener Daten und Sitzungsaufzeichnungen. Suchanfragen, Stelleninhalte, Anfragekörper und -header, Cookies, Nutzeridentitäten und URL-Parameter werden nicht gesendet; IP-Erfassung und -Speicherung werden deaktiviert oder bereinigt.
+Wenn konfiguriert, erhält Sentry bereinigte technische Fehler zur Diagnose. Die Android-App nutzt außerdem Firebase Crashlytics für automatische Berichte über native Abstürze. Openings deaktiviert die standardmäßige Erfassung personenbezogener Daten und Sitzungsaufzeichnungen und sendet nicht absichtlich Suchanfragen, Stelleninhalte, Anfragekörper, Cookies, Nutzeridentitäten oder URL-Parameter. Diagnosedienste können technische Informationen über App, Gerät, Betriebssystem, Version und Absturz erhalten, die zur Fehlererkennung erforderlich sind.
 
 Mixpanel wird erst geladen, wenn du ausdrücklich „Analyse erlauben“ wählst. Danach erhält es nur eine kleine Liste anonymer Produkt-Ereignisse, etwa Filterdimension, Ergebnisspanne, Stellen-ID oder Klick zur Originalquelle. Suchtexte, Stelleninhalte, E-Mail-Adressen, vollständige URLs, IP-basierte Standorte, automatische Seitenaufrufe, Autocapture und Sitzungsaufzeichnungen werden nicht erfasst. Du kannst jederzeit ablehnen oder widerrufen; dabei wird die anonyme Analyseidentität gelöscht, ohne gespeicherte Stellen oder andere Einstellungen zu verändern.
+
+In der mobilen App wird OneSignal mit erforderlicher Einwilligung initialisiert. Openings aktiviert die Benachrichtigungsverarbeitung erst, nachdem du Benachrichtigungen erlaubt und die Betriebssystemberechtigung erteilt hast. OneSignal kann dann eine Geräte- oder Installationskennung sowie die für Versand und Funktion der Benachrichtigungen erforderlichen Zustell- oder Interaktionsdaten verarbeiten. Du kannst Benachrichtigungen in den Geräteeinstellungen deaktivieren.
 
 Fragen zur Überwachung oder Analyse kannst du an support@openings.dev senden.
 

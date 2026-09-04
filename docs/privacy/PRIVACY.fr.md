@@ -1,8 +1,8 @@
 # Politique de confidentialité
 
-_Date d’entrée en vigueur : 1er septembre 2026_
+_Date d’entrée en vigueur : 4 septembre 2026_
 
-Openings facilite la recherche d’offres d’emploi tech publiques. Cette politique explique les informations affichées par le site, ce qu’il enregistre dans votre navigateur et dans quels cas votre navigateur se connecte à des services externes.
+Openings facilite la recherche d’offres d’emploi tech publiques. Cette politique s’applique au site et à l’application mobile Openings et explique les informations qu’ils affichent, ce qu’ils enregistrent sur votre appareil et dans quels cas ils se connectent à des services externes.
 
 ## 1. Données publiques affichées par Openings
 
@@ -10,15 +10,17 @@ Openings lit les données publiques publiées par le dépôt `openings-dev/data-
 
 Openings affiche également les informations publiques du compte GitHub associé à une annonce, notamment le nom de l’auteur, son identifiant et l’URL de son avatar. Openings déduit le lien vers le profil GitHub à partir de l’identifiant public. Les pages de profil des auteurs sont générées à partir de ces enregistrements publics. Elles ne signifient pas qu’Openings a vérifié la personne, l’organisation ou l’employeur affiché, qu’il les représente ou qu’il y est affilié.
 
-## 2. Préférences enregistrées dans votre navigateur
+## 2. Préférences enregistrées sur votre appareil
 
-Openings enregistre la langue, le thème, les offres enregistrées et consultées, les préférences de découverte et votre choix d’analyse dans le stockage local. Ces données restaurent l’expérience choisie et ne créent pas de compte. Elles restent dans ce navigateur jusqu’à leur modification ou à l’effacement des données du site.
+Openings enregistre la langue, le thème, les offres enregistrées et consultées, les préférences de découverte et vos choix d’analyse et de notifications dans le stockage local du navigateur ou de l’appareil mobile. Ces données restaurent l’expérience choisie et ne créent pas de compte. Elles y restent jusqu’à leur modification, à l’effacement des données du site ou de l’app, ou à la désinstallation de l’application.
 
 ## 3. Suivi technique et analyse facultative
 
-Lorsqu’il est configuré, Sentry reçoit des erreurs techniques assainies pour aider au diagnostic. Openings désactive la collecte par défaut des données personnelles et l’enregistrement de session. Les recherches, le contenu des offres, les corps et en-têtes de requête, les cookies, les identités utilisateur et les paramètres d’URL ne sont pas envoyés ; la collecte et le stockage des adresses IP sont désactivés ou supprimés.
+Lorsqu’il est configuré, Sentry reçoit des erreurs techniques assainies pour aider au diagnostic. L’app Android utilise aussi Firebase Crashlytics pour les rapports automatiques de plantages natifs. Openings désactive la collecte par défaut des données personnelles et l’enregistrement de session et n’envoie pas intentionnellement les recherches, le contenu des offres, les corps de requête, les cookies, les identités utilisateur ou les paramètres d’URL. Les services de diagnostic peuvent recevoir les informations techniques sur l’app, l’appareil, le système, la version et le plantage nécessaires pour identifier un problème.
 
 Mixpanel n’est chargé qu’après votre choix explicite « Autoriser l’analyse ». Il reçoit alors une liste limitée d’événements anonymes, comme la dimension d’un filtre, une tranche de résultats, l’identifiant d’une offre ou l’ouverture de la source d’origine. Il ne reçoit ni texte de recherche, ni contenu d’offre, ni adresse e-mail, ni URL complète, ni position déduite de l’IP, ni page vue automatique, ni autocapture, ni enregistrement de session. Vous pouvez refuser ou retirer votre accord sur cette page ; le retrait efface l’identité d’analyse anonyme sans toucher aux offres enregistrées ni aux autres préférences.
+
+Dans l’application mobile, OneSignal est initialisé avec un consentement obligatoire. Openings n’active le traitement des notifications qu’après votre accord et l’autorisation du système d’exploitation. OneSignal peut alors traiter un identifiant de l’appareil ou de l’installation ainsi que les informations de livraison ou d’interaction nécessaires au fonctionnement des notifications. Vous pouvez les désactiver dans les réglages de l’appareil.
 
 Les questions sur le suivi ou l’analyse peuvent être envoyées à support@openings.dev.
 

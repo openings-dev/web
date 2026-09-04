@@ -1,8 +1,8 @@
 # Informativa sulla privacy
 
-_Data di entrata in vigore: 1 settembre 2026_
+_Data di entrata in vigore: 4 settembre 2026_
 
-Openings rende più facile trovare offerte di lavoro tecnologiche pubbliche. Questa informativa spiega quali informazioni mostra il sito, cosa salva nel browser e quando il browser si connette a servizi esterni.
+Openings rende più facile trovare offerte di lavoro tecnologiche pubbliche. Questa informativa si applica al sito e all'app mobile di Openings e spiega quali informazioni mostrano, cosa salvano sul dispositivo e quando si connettono a servizi esterni.
 
 ## 1. Dati pubblici visualizzati da Openings
 
@@ -10,15 +10,17 @@ Openings legge dati pubblici pubblicati dal repository `openings-dev/data-pipeli
 
 Openings visualizza anche le informazioni pubbliche dell'account GitHub associate a un'offerta, inclusi nome, identificativo e URL dell'avatar dell'autore. Openings ricava il link al profilo GitHub dall'identificativo pubblico. Le pagine del profilo degli autori sono generate da questi record pubblici delle offerte. Non indicano che Openings abbia verificato, rappresenti o sia affiliato alla persona, all'organizzazione o al datore di lavoro mostrati.
 
-## 2. Preferenze salvate nel browser
+## 2. Preferenze salvate sul dispositivo
 
-Openings salva lingua, tema, offerte salvate e visualizzate, preferenze di scoperta e la scelta sulle analisi nell’archiviazione locale. Questi dati ripristinano l’esperienza scelta e non creano un account. Rimangono nel browser finché non li modifichi o cancelli i dati del sito.
+Openings salva lingua, tema, offerte salvate e visualizzate, preferenze di scoperta e le scelte su analisi e notifiche nell’archiviazione locale del browser o dispositivo mobile. Questi dati ripristinano l’esperienza scelta e non creano un account. Rimangono lì finché non li modifichi, cancelli i dati del sito o dell'app oppure disinstalli l'applicazione.
 
 ## 3. Monitoraggio tecnico e analisi facoltative
 
-Quando configurato, Sentry riceve errori tecnici sanitizzati per aiutare a diagnosticare i problemi. Openings disattiva la raccolta predefinita di dati personali e la registrazione delle sessioni; non invia ricerche, contenuti delle offerte, corpi o intestazioni delle richieste, cookie, identità utente o parametri URL. La raccolta e la conservazione degli IP sono disattivate o rimosse.
+Quando configurato, Sentry riceve errori tecnici sanitizzati per aiutare a diagnosticare i problemi. L'app Android usa anche Firebase Crashlytics per segnalazioni automatiche di arresti anomali nativi. Openings disattiva la raccolta predefinita di dati personali e la registrazione delle sessioni e non invia intenzionalmente ricerche, contenuti delle offerte, corpi delle richieste, cookie, identità utente o parametri URL. I servizi diagnostici possono ricevere dati tecnici su app, dispositivo, sistema operativo, versione e arresto necessari a identificare un problema.
 
 Mixpanel non viene caricato finché non scegli esplicitamente “Consenti analisi”. Se autorizzato, riceve un elenco ristretto di eventi anonimi, come la dimensione di un filtro, una fascia di risultati, l’ID dell’offerta o l’apertura della fonte originale. Non riceve testo di ricerca, contenuti delle offerte, email, URL completi, posizione derivata dall’IP, visualizzazioni automatiche, autocapture o registrazioni di sessione. Puoi rifiutare o revocare il consenso in questa pagina; la revoca elimina l’identità anonima delle analisi senza influire sulle offerte salvate o sulle altre preferenze.
+
+Nell'app mobile, OneSignal viene inizializzato con consenso obbligatorio. Openings abilita l'elaborazione delle notifiche solo dopo che le hai accettate e hai concesso l'autorizzazione del sistema operativo. OneSignal può quindi elaborare un identificativo del dispositivo o dell'installazione e le informazioni di consegna o interazione necessarie al funzionamento delle notifiche. Puoi disattivarle nelle impostazioni del dispositivo.
 
 Le domande sul monitoraggio o sulle analisi possono essere inviate a support@openings.dev.
 

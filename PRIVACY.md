@@ -1,8 +1,8 @@
 # Privacy Policy
 
-_Effective date: September 1, 2026_
+_Effective date: September 4, 2026_
 
-Openings makes public technology job listings easier to find. This policy explains what information the site displays, what it saves in your browser, and when your browser connects to external services.
+Openings makes public technology job listings easier to find. This policy applies to the Openings website and mobile application and explains what information they display, what they save on your device, and when they connect to external services.
 
 ## 1. Public data displayed by Openings
 
@@ -10,15 +10,17 @@ Openings reads public data published by the `openings-dev/data-pipeline` reposit
 
 Openings also displays public GitHub account information attached to a listing, including the author’s name, handle, and avatar URL. Openings derives the GitHub profile link from the public handle. Author profile pages are generated from these public listing records. They do not indicate that Openings has verified, represents, or is affiliated with the person, organization, or employer shown.
 
-## 2. Preferences stored in your browser
+## 2. Preferences stored on your device
 
-Openings stores language, theme, saved and viewed jobs, discovery preferences, and your analytics choice in your browser’s local storage. These settings restore the experience you selected and are not used to create an account. They remain in that browser until you change them or clear the site data.
+Openings stores language, theme, saved and viewed jobs, discovery preferences, and your analytics and notification choices in local storage on your browser or mobile device. These settings restore the experience you selected and are not used to create an account. They remain there until you change them, clear the site or app data, or uninstall the app.
 
 ## 3. Technical monitoring and optional analytics
 
-When configured, Sentry receives sanitized technical errors so maintainers can diagnose failures. Openings disables default personal-data collection and session replay, does not send searches, job content, request bodies, headers, cookies, user identities, or URL query strings, and configures IP collection and storage to be disabled or scrubbed.
+When configured, Sentry receives sanitized technical errors so maintainers can diagnose failures. The Android app also uses Firebase Crashlytics for automatic native crash reports. Openings disables default personal-data collection and session replay and does not intentionally send searches, job content, request bodies, cookies, user identities, or URL query strings. Diagnostic services can receive technical app, device, operating-system, release, and crash information needed to identify a failure.
 
 Mixpanel is not loaded until you explicitly choose “Allow analytics.” If allowed, it receives a small allowlist of anonymous product events such as a filter dimension, result-count range, job ID, or original-listing click. It does not receive search text, job content, email addresses, full URLs, IP-derived location, automatic page views, autocapture, or session replay. You can decline or revoke consent at any time on this page; revocation clears the retained anonymous analytics identity and does not affect saved jobs or other product preferences.
+
+In the mobile app, OneSignal is initialized with consent required. Openings does not enable notification processing until you choose to allow notifications and grant the operating-system permission. OneSignal can then process a device or installation identifier and notification delivery or interaction information needed to send and operate notifications. You can disable notifications in your device settings.
 
 Questions about monitoring or analytics can be sent to support@openings.dev.
 
