@@ -2,14 +2,24 @@ import { cp, mkdir, readdir, rm, stat } from "node:fs/promises";
 import { relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const DEFAULT_MAXIMUM_FILES = 20_000;
-const DEFAULT_MAXIMUM_FILE_BYTES = 25 * 1024 * 1024;
+export const MAXIMUM_PAGES_FILES = 2_000;
+export const MAXIMUM_PAGES_BYTES = 500 * 1024 * 1024;
+export const MAXIMUM_PAGE_FILE_BYTES = 20 * 1024 * 1024;
+
+export function isDynamicEntityDirectory(path) {
+  const segments = path.split(sep);
+  if (segments[0] === "jobs") return true;
+  if (["authors", "users"].includes(segments[0])) return segments.length === 2;
+  if (["communities", "community"].includes(segments[0])) return segments.length === 3;
+  return false;
+}
 
 export async function prepareCloudflarePagesExport({
   source,
   target,
-  maximumFiles = DEFAULT_MAXIMUM_FILES,
-  maximumFileBytes = DEFAULT_MAXIMUM_FILE_BYTES,
+  maximumFiles = MAXIMUM_PAGES_FILES,
+  maximumBytes = MAXIMUM_PAGES_BYTES,
+  maximumFileBytes = MAXIMUM_PAGE_FILE_BYTES,
 }) {
   const sourceRoot = resolve(source);
   const targetRoot = resolve(target);
@@ -17,9 +27,11 @@ export async function prepareCloudflarePagesExport({
   await mkdir(targetRoot, { recursive: true });
   await cp(sourceRoot, targetRoot, {
     recursive: true,
-    filter: (sourcePath) => {
+    filter: async (sourcePath) => {
       const path = relative(sourceRoot, sourcePath);
-      return path !== "jobs" && !path.startsWith(`jobs${sep}`);
+      if (!path) return true;
+      const metadata = await stat(sourcePath);
+      return !metadata.isDirectory() || !isDynamicEntityDirectory(path);
     },
   });
 
@@ -37,6 +49,12 @@ export async function prepareCloudflarePagesExport({
     if (metadata.size > maximumFileBytes) {
       throw new Error(`Cloudflare Pages file exceeds 25 MiB: ${relative(targetRoot, file)}`);
     }
+  }
+
+  if (totalBytes > maximumBytes) {
+    throw new Error(
+      `Cloudflare Pages shell has ${String(totalBytes)} bytes; limit is ${String(maximumBytes)}`,
+    );
   }
 
   return { fileCount: files.length, totalBytes };
