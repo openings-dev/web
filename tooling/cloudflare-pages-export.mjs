@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir, rm, stat } from "node:fs/promises";
+import { copyFile, cp, mkdir, readdir, rm, stat } from "node:fs/promises";
 import { relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -34,6 +34,15 @@ export async function prepareCloudflarePagesExport({
       return !metadata.isDirectory() || !isDynamicEntityDirectory(path);
     },
   });
+
+  for (const route of ["authors", "users", "communities", "community"]) {
+    const aliasDirectory = resolve(targetRoot, "route-indexes", route);
+    await mkdir(aliasDirectory, { recursive: true });
+    await copyFile(
+      resolve(sourceRoot, route, "index.html"),
+      resolve(aliasDirectory, "index.html"),
+    );
+  }
 
   const files = await collectFiles(targetRoot);
   if (files.length > maximumFiles) {
