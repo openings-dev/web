@@ -8,7 +8,7 @@ export const MAXIMUM_PAGE_FILE_BYTES = 20 * 1024 * 1024;
 
 export function isDynamicEntityDirectory(path) {
   const segments = path.split(sep);
-  if (segments[0] === "jobs") return true;
+  if (segments[0] === "jobs") return segments.length === 2;
   if (["authors", "users"].includes(segments[0])) return segments.length === 2;
   if (["communities", "community"].includes(segments[0])) return segments.length === 3;
   return false;

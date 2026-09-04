@@ -1,0 +1,5 @@
+/jobs/* /jobs/ 200
+/authors/* /entity/author/ 200
+/users/* /entity/author/ 200
+/communities/* /entity/community/ 200
+/community/* /entity/community/ 200
