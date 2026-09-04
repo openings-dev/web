@@ -1,4 +1,8 @@
 /jobs/* /jobs/ 200
+/authors/ /authors/index.html 200
+/users/ /users/index.html 200
+/communities/ /communities/index.html 200
+/community/ /community/index.html 200
 /authors/* /entity/author/ 200
 /users/* /entity/author/ 200
 /communities/* /entity/community/ 200
