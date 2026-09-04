@@ -4,6 +4,7 @@ const validators = [
   "validate-cloudflare-preview-workflow.mjs",
   "validate-cloudflare-pages-export.mjs",
   "validate-client-job-route.mjs",
+  "validate-author-artifact.mjs",
   "validate-author-social-card-fallback.mjs",
   "validate-home-performance.mjs",
   "validate-opportunity-details-header.mjs",

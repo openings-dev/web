@@ -4,7 +4,8 @@ import * as React from "react";
 import { OpportunitiesPage } from "@/app/opportunities/_components/opportunities-page";
 import { ShareableProfileKind } from "@/app/opportunities/_components/opportunities-screen/types";
 import { useI18n } from "@/components/providers/i18n-provider/use-i18n";
-import { getSnapshotUserByHandle, type UserSummary } from "@/lib/opportunities/users";
+import { fetchAuthorArtifact } from "@/lib/opportunities/author-artifact";
+import type { UserSummary } from "@/lib/opportunities/users";
 
 function authorFromLocation(): string | null {
   const segments = window.location.pathname.split("/").filter(Boolean);
@@ -27,7 +28,7 @@ export function ClientAuthorPage(): React.ReactNode {
       return;
     }
     let active = true;
-    getSnapshotUserByHandle(handle)
+    fetchAuthorArtifact(handle)
       .then((value) => { if (active) setProfile(value); })
       .catch(() => { if (active) setProfile(null); });
     return () => { active = false; };
