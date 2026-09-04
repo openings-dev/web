@@ -183,3 +183,16 @@ export function createAuthorSocialCard(
     actionLabel: "View author profile",
   };
 }
+
+export function createUnknownAuthorSocialCard(
+  handle: string,
+): SocialCardPresentation {
+  return {
+    eyebrow: "GitHub author profile",
+    title: `@${handle}`,
+    description:
+      "Explore the current public job listings shared across community repositories.",
+    facts: [{ label: "GitHub author", value: `@${handle}` }],
+    actionLabel: "Explore current jobs",
+  };
+}
