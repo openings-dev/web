@@ -1,6 +1,8 @@
 import { spawnSync } from "node:child_process";
 
 const validators = [
+  "validate-cloudflare-preview-workflow.mjs",
+  "validate-cloudflare-pages-export.mjs",
   "validate-author-social-card-fallback.mjs",
   "validate-home-performance.mjs",
   "validate-opportunity-details-header.mjs",

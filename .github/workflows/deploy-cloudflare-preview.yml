@@ -1,0 +1,49 @@
+name: Deploy Cloudflare Preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [cloudflare-preview]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Validate, build, and deploy preview
+    environment: cloudflare-preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the website
+        # actions/checkout v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Use Node.js 20
+        # actions/setup-node v6.5.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Validate deterministic contracts
+        run: npm run test
+
+      - name: Lint source
+        run: npm run lint
+
+      - name: Build the static export
+        run: npm run build:cloudflare-preview
+
+      - name: Deploy the isolated branch preview
+        run: npx --yes wrangler@4.86.0 pages deploy .cloudflare/pages-preview --project-name=openings-dev-web --branch=cloudflare-preview
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
