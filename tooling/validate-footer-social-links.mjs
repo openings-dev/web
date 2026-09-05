@@ -8,6 +8,7 @@ const localeFiles = ["en", "pt", "es", "it", "fr", "de"].map(
 const [
   routesSource,
   footerSource,
+  footerBottomSource,
   iconSource,
   typesSource,
   packageSource,
@@ -15,6 +16,7 @@ const [
 ] = await Promise.all([
   readFile("lib/navigation/routes.ts", "utf8"),
   readFile("components/footer/index.tsx", "utf8"),
+  readFile("components/footer/footer-bottom/index.tsx", "utf8"),
   readFile("components/icons/linkedin/index.tsx", "utf8").catch(() => ""),
   readFile("lib/translations/types.ts", "utf8"),
   readFile("package.json", "utf8"),
@@ -48,6 +50,10 @@ assert.match(iconSource, /aria-hidden="true"/u);
 assert.match(iconSource, /focusable="false"/u);
 assert.match(typesSource, /linkedin: string;/u);
 assert.match(typesSource, /linkedinAriaLabel: string;/u);
+assert.match(
+  footerBottomSource,
+  /aria-label=\{`\$\{supportEmailButtonLabel\}: \$\{supportEmail\}`\}/u,
+);
 
 for (const [index, localeSource] of localeSources.entries()) {
   assert.match(

@@ -49,7 +49,7 @@ export function FooterBottom({
             size="sm"
             onClick={handleCopySupportEmail}
             className="border-night-foreground/20 bg-transparent px-3 text-xs text-night-foreground hover:border-night-foreground/35 hover:bg-night-foreground/10"
-            aria-label={supportEmailButtonLabel}
+            aria-label={`${supportEmailButtonLabel}: ${supportEmail}`}
           >
             <Mail className="size-3.5" aria-hidden="true" />
             <span>{supportEmail}</span>
