@@ -31,7 +31,7 @@ try {
 
   const result = await prepareCloudflarePagesExport({ source, target, maximumFiles: 20_000 });
 
-  assert.equal(result.fileCount, 11);
+  assert.equal(result.fileCount, 12);
   assert.equal(await readFile(join(target, "index.html"), "utf8"), "home");
   assert.equal(await readFile(join(target, "_next", "static", "app.js"), "utf8"), "asset");
   assert.equal(await readFile(join(target, "authors", "index.html"), "utf8"), "authors");
@@ -39,6 +39,11 @@ try {
   assert.equal(await readFile(join(target, "communities", "index.html"), "utf8"), "communities");
   assert.equal(await readFile(join(target, "community", "index.html"), "utf8"), "community-index");
   assert.equal(await readFile(join(target, "jobs", "index.html"), "utf8"), "job-shell");
+  const worker = await readFile(join(target, "_worker.js"), "utf8");
+  assert.match(worker, /publishing-platform-staging\.business-850\.workers\.dev/u);
+  assert.match(worker, /\/web\/openings/u);
+  assert.match(worker, /env\.ASSETS\.fetch/u);
+  assert.match(worker, /response\.status !== 404/u);
   assert.equal(await readFile(join(target, "route-indexes", "authors", "index.html"), "utf8"), "authors");
   assert.equal(await readFile(join(target, "route-indexes", "users", "index.html"), "utf8"), "users");
   assert.equal(await readFile(join(target, "route-indexes", "communities", "index.html"), "utf8"), "communities");

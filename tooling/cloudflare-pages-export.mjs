@@ -1,4 +1,4 @@
-import { copyFile, cp, mkdir, readdir, rm, stat } from "node:fs/promises";
+import { copyFile, cp, mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
 import { relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -44,6 +44,8 @@ export async function prepareCloudflarePagesExport({
     );
   }
 
+  await writeFile(resolve(targetRoot, "_worker.js"), `${pagesWorkerSource()}\n`, "utf8");
+
   const files = await collectFiles(targetRoot);
   if (files.length > maximumFiles) {
     throw new Error(
@@ -67,6 +69,23 @@ export async function prepareCloudflarePagesExport({
   }
 
   return { fileCount: files.length, totalBytes };
+}
+
+function pagesWorkerSource() {
+  return `const PLATFORM_ORIGIN = "https://publishing-platform-staging.business-850.workers.dev";
+const ENTITY_ROUTE = /^\\/(?:jobs\\/[^/]+|(?:authors|users)\\/[^/]+|(?:communities|community)\\/[^/]+\\/[^/]+)\\/?$/u;
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    if (ENTITY_ROUTE.test(url.pathname)) {
+      const target = new URL(\`/web/openings\${url.pathname}\`, PLATFORM_ORIGIN);
+      const response = await fetch(new Request(target, request));
+      if (response.status !== 404) return response;
+    }
+    return env.ASSETS.fetch(request);
+  },
+};`;
 }
 
 async function collectFiles(directory) {
