@@ -41,7 +41,7 @@ export function AndroidAppPromotion(): React.ReactNode {
     <aside
       data-android-app-promotion
       aria-labelledby="android-app-promotion-title"
-      className="fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 mx-auto max-w-sm rounded-floating border border-primary/25 bg-primary p-4 text-primary-foreground shadow-floating-lg sm:inset-x-auto sm:right-6"
+      className="fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 mx-auto max-h-[calc(100dvh-1.5rem-env(safe-area-inset-bottom))] max-w-sm overflow-y-auto rounded-floating border border-primary/25 bg-primary p-4 text-primary-foreground shadow-floating-lg sm:inset-x-auto sm:right-6"
     >
       <div className="flex gap-3">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-control bg-primary-foreground/10">

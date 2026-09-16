@@ -98,6 +98,11 @@ assert.match(componentSource, /target=["']_blank["']/u);
 assert.match(componentSource, /rel=["']noreferrer["']/u);
 assert.match(componentSource, /aria-label=\{copy\.closeLabel\}/u);
 assert.match(componentSource, /data-android-app-promotion/u);
+assert.match(
+  componentSource,
+  /max-h-\[calc\(100dvh-1\.5rem-env\(safe-area-inset-bottom\)\)\]/u,
+);
+assert.match(componentSource, /overflow-y-auto/u);
 assert.match(componentSource, /className="mt-4 flex flex-wrap items-center gap-2"/u);
 assert.match(
   componentSource,
