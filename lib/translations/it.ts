@@ -17,6 +17,12 @@ export const itTranslations: TranslationMessages = {
     saved: "La preferenza per le analisi è stata salvata.",
     couldNotSave: "Non è stato possibile salvare la preferenza. Le analisi restano disattivate.",
   },
+  androidAppPromotion: {
+    title: "Openings su Android",
+    description: "Cerca e salva offerte tech ovunque ti trovi.",
+    action: "Scarica da Google Play",
+    closeLabel: "Chiudi la promozione dell’app Android",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Offerte tech condivise nelle comunità pubbliche su GitHub",

@@ -17,6 +17,12 @@ export const deTranslations: TranslationMessages = {
     saved: "Deine Analyseeinstellung wurde gespeichert.",
     couldNotSave: "Die Einstellung konnte nicht gespeichert werden. Die Analyse bleibt deaktiviert.",
   },
+  androidAppPromotion: {
+    title: "Openings für Android",
+    description: "Tech-Stellen unterwegs suchen und speichern.",
+    action: "Bei Google Play herunterladen",
+    closeLabel: "Werbung für die Android-App schließen",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Tech-Jobs aus öffentlichen GitHub-Communities",

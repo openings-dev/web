@@ -17,6 +17,12 @@ export const ptTranslations: TranslationMessages = {
     saved: "Sua preferência de métricas foi salva.",
     couldNotSave: "Não foi possível salvar a preferência. As métricas continuam desativadas.",
   },
+  androidAppPromotion: {
+    title: "Openings no Android",
+    description: "Busque e salve vagas de tecnologia onde estiver.",
+    action: "Baixar na Google Play",
+    closeLabel: "Fechar divulgação do app para Android",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Vagas de tecnologia publicadas em comunidades públicas no GitHub",

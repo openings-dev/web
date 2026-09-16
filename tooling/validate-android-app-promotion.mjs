@@ -15,6 +15,34 @@ function dataModule(source) {
 
 const source = await readFile("components/android-app-promotion/dismissal.ts", "utf8");
 const dismissal = await import(dataModule(source));
+const translationTypes = await readFile("lib/translations/types.ts", "utf8");
+assert.match(
+  translationTypes,
+  /androidAppPromotion:\s*\{\s*title:\s*string;\s*description:\s*string;\s*action:\s*string;\s*closeLabel:\s*string;/s,
+);
+
+for (const [locale, exportName] of [
+  ["en", "enTranslations"],
+  ["pt", "ptTranslations"],
+  ["es", "esTranslations"],
+  ["it", "itTranslations"],
+  ["fr", "frTranslations"],
+  ["de", "deTranslations"],
+]) {
+  const localeSource = await readFile(`lib/translations/${locale}.ts`, "utf8");
+  const dictionary = (await import(dataModule(localeSource)))[exportName];
+  assert.ok(dictionary?.androidAppPromotion, `${locale} promotion copy is missing`);
+
+  for (const key of ["title", "description", "action", "closeLabel"]) {
+    assert.match(
+      localeSource,
+      new RegExp(`${key}: \\"[^\\"]+\\"`),
+      `${locale} ${key} must be a non-empty double-quoted string`,
+    );
+    assert.ok(dictionary.androidAppPromotion[key], `${locale} ${key} is empty`);
+  }
+}
+
 const values = new Map();
 const storage = {
   getItem: (key) => values.get(key) ?? null,

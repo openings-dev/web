@@ -20,6 +20,12 @@ export interface TranslationMessages {
     saved: string;
     couldNotSave: string;
   };
+  androidAppPromotion: {
+    title: string;
+    description: string;
+    action: string;
+    closeLabel: string;
+  };
   header: {
     brandName: string;
     brandTagline: string;

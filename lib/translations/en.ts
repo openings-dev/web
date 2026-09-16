@@ -17,6 +17,12 @@ export const enTranslations: TranslationMessages = {
     saved: "Your analytics preference was saved.",
     couldNotSave: "We couldn’t save that preference. Analytics remain disabled.",
   },
+  androidAppPromotion: {
+    title: "Openings on Android",
+    description: "Search and save tech jobs wherever you are.",
+    action: "Download on Google Play",
+    closeLabel: "Dismiss Android app promotion",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Tech jobs shared by public GitHub communities",

@@ -17,6 +17,12 @@ export const frTranslations: TranslationMessages = {
     saved: "Votre préférence d’analyse a été enregistrée.",
     couldNotSave: "Impossible d’enregistrer cette préférence. L’analyse reste désactivée.",
   },
+  androidAppPromotion: {
+    title: "Openings sur Android",
+    description: "Recherchez et enregistrez des offres tech où que vous soyez.",
+    action: "Télécharger sur Google Play",
+    closeLabel: "Fermer la promotion de l’application Android",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Offres tech partagées par des communautés GitHub publiques",

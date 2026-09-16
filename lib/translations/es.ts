@@ -17,6 +17,12 @@ export const esTranslations: TranslationMessages = {
     saved: "Tu preferencia de analítica se guardó.",
     couldNotSave: "No pudimos guardar la preferencia. La analítica sigue desactivada.",
   },
+  androidAppPromotion: {
+    title: "Openings en Android",
+    description: "Busca y guarda vacantes de tecnología donde estés.",
+    action: "Descargar en Google Play",
+    closeLabel: "Cerrar promoción de la app para Android",
+  },
   header: {
     brandName: "openings.dev",
     brandTagline: "Vacantes tech compartidas en comunidades públicas de GitHub",
