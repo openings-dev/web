@@ -42,7 +42,12 @@ function createRouteSocialImage(path: string, alt: string) {
 export function resolveCanonicalUrl(path: string): string {
   const pathname = path.split(/[?#]/u, 1)[0] ?? "/";
   const normalizedPath = `/${pathname.replace(/^\/+|\/{2,}/gu, "/").replace(/^\//u, "")}`;
-  const canonical = new URL(normalizedPath, SITE_ORIGIN);
+  const finalSegment = normalizedPath.split("/").at(-1) ?? "";
+  const isFilePath = finalSegment.includes(".");
+  const canonicalPath = normalizedPath === "/" || normalizedPath.endsWith("/") || isFilePath
+    ? normalizedPath
+    : `${normalizedPath}/`;
+  const canonical = new URL(canonicalPath, SITE_ORIGIN);
   return canonical.toString();
 }
 

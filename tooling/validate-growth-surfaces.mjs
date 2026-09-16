@@ -13,6 +13,12 @@ const [robotsSource, sitemapSource] = await Promise.all([
   readFile("app/robots.ts", "utf8"),
   readFile("app/sitemap.ts", "utf8"),
 ]);
+const siteMetadataSource = await readFile("lib/metadata/site-metadata.ts", "utf8");
+const siteMetadata = await import(dataModule(siteMetadataSource));
+assert.equal(siteMetadata.resolveCanonicalUrl("/opportunities"), "https://openings.dev/opportunities/");
+assert.equal(siteMetadata.resolveCanonicalUrl("/pt/discover/backend"), "https://openings.dev/pt/discover/backend/");
+assert.equal(siteMetadata.resolveCanonicalUrl("/feed.xml"), "https://openings.dev/feed.xml");
+assert.equal(siteMetadata.resolveCanonicalUrl("/"), "https://openings.dev/");
 assert.match(robotsSource, /allow:\s*"\/"/u);
 assert.match(robotsSource, /sitemap\.xml/u);
 assert.match(robotsSource, /dynamic\s*=\s*"force-static"/u);
