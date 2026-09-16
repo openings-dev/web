@@ -29,6 +29,7 @@
     "test:release": "node tooling/validate-release-automation.mjs",
     "test:contributors": "node tooling/validate-contributor-paths.mjs",
     "test:footer-growth": "node tooling/validate-footer-growth.mjs",
+    "test:android-promotion": "node tooling/validate-android-app-promotion.mjs",
     "test:public-reports": "node tooling/validate-public-reports.mjs",
     "test:traffic": "node tooling/validate-github-traffic.mjs",
     "test:ci": "node tooling/validate-ci-workflow.mjs"
