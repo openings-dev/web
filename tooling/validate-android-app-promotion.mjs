@@ -102,11 +102,15 @@ assert.match(
   componentSource,
   /max-h-\[calc\(100dvh-1\.5rem-env\(safe-area-inset-bottom\)\)\]/u,
 );
-assert.match(componentSource, /overflow-y-auto/u);
+assert.match(componentSource, /overflow-x-hidden overflow-y-auto/u);
+assert.equal(
+  (componentSource.match(/\[overflow-wrap:anywhere\]/gu) ?? []).length,
+  2,
+);
 assert.match(componentSource, /className="mt-4 flex flex-wrap items-center gap-2"/u);
 assert.match(
   componentSource,
-  /className="min-w-0 max-w-full !whitespace-normal text-left"/u,
+  /className="!h-auto min-h-11 min-w-0 max-w-full !whitespace-normal py-2 text-left"/u,
 );
 assert.match(
   componentSource,

@@ -41,17 +41,17 @@ export function AndroidAppPromotion(): React.ReactNode {
     <aside
       data-android-app-promotion
       aria-labelledby="android-app-promotion-title"
-      className="fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 mx-auto max-h-[calc(100dvh-1.5rem-env(safe-area-inset-bottom))] max-w-sm overflow-y-auto rounded-floating border border-primary/25 bg-primary p-4 text-primary-foreground shadow-floating-lg sm:inset-x-auto sm:right-6"
+      className="fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 mx-auto max-h-[calc(100dvh-1.5rem-env(safe-area-inset-bottom))] max-w-sm overflow-x-hidden overflow-y-auto rounded-floating border border-primary/25 bg-primary p-4 text-primary-foreground shadow-floating-lg sm:inset-x-auto sm:right-6"
     >
       <div className="flex gap-3">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-control bg-primary-foreground/10">
           <Smartphone className="size-5" aria-hidden="true" />
         </div>
         <div className="min-w-0">
-          <h2 id="android-app-promotion-title" className="text-sm font-semibold">
+          <h2 id="android-app-promotion-title" className="text-sm font-semibold [overflow-wrap:anywhere]">
             {copy.title}
           </h2>
-          <p className="mt-1 text-sm leading-5 text-primary-foreground/80">
+          <p className="mt-1 text-sm leading-5 text-primary-foreground/80 [overflow-wrap:anywhere]">
             {copy.description}
           </p>
         </div>
@@ -61,7 +61,7 @@ export function AndroidAppPromotion(): React.ReactNode {
           asChild
           size="sm"
           variant="secondary"
-          className="min-w-0 max-w-full !whitespace-normal text-left"
+          className="!h-auto min-h-11 min-w-0 max-w-full !whitespace-normal py-2 text-left"
         >
           <a
             href={EXTERNAL_ROUTES.androidApp}
