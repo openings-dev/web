@@ -9,7 +9,7 @@ export async function GET() {
   const updated = `${published.map((entry) => entry.date).sort().at(-1)}T00:00:00.000Z`;
   const body = serializeAtomFeed({
     id: resolveCanonicalUrl("/updates.xml"),
-    title: "openings.dev — Product updates",
+    title: "openings.dev: Product updates",
     subtitle: "Verified product changes and releases.",
     selfUrl: resolveCanonicalUrl("/updates.xml"),
     siteUrl: resolveCanonicalUrl("/updates"),

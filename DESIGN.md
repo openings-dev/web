@@ -6,7 +6,7 @@
 
 Approved for implementation on 2026-08-16.
 
-This document replaces the historical “Buffer Bold” baseline recorded in Specs 34–45. Those specs remain delivery history, but their thick outlines, hard offset shadows, repeated black weights, and boxed compositions are no longer design authority.
+This document replaces the historical “Buffer Bold” baseline recorded in Specs 34 to 45. Those specs remain delivery history, but their thick outlines, hard offset shadows, repeated black weights, and boxed compositions are no longer design authority.
 
 ## Product truth
 
@@ -156,10 +156,10 @@ Product truth replaces generic illustration. Use real or representative opportun
 
 | Role | Family | Weight | Use |
 | --- | --- | --- | --- |
-| Brand and display | Figtree | 500–650 | wordmark support, heroes, page and section headings |
-| Interface and body | Figtree | 400–650 | navigation, body, forms, cards, controls, metadata |
-| Editorial accent | Newsreader | 400–500 | one phrase or short passage in selected marketing/profile moments |
-| Technical | Geist Mono | 400–600 | dates, API examples, paths, code, compact numerical data |
+| Brand and display | Figtree | 500 to 650 | wordmark support, heroes, page and section headings |
+| Interface and body | Figtree | 400 to 650 | navigation, body, forms, cards, controls, metadata |
+| Editorial accent | Newsreader | 400 to 500 | one phrase or short passage in selected marketing/profile moments |
+| Technical | Geist Mono | 400 to 600 | dates, API examples, paths, code, compact numerical data |
 
 Newsreader is an accent, not a second body system. It must not appear in filters, buttons, dense result cards, tables, or routine UI.
 
@@ -167,16 +167,16 @@ Recommended scale:
 
 | Context | Size / line height |
 | --- | --- |
-| Marketing hero | `clamp(3.25rem, 7vw, 5rem)` / `0.98–1.02` |
-| Public profile hero | `clamp(2.5rem, 5vw, 4rem)` / `1.0–1.06` |
-| Directory/page title | `clamp(2.25rem, 4vw, 3.5rem)` / `1.04–1.1` |
-| Product title | `1.5–2rem` / `1.15` |
-| Section title | `1.75–2.5rem` / `1.1–1.2` |
+| Marketing hero | `clamp(3.25rem, 7vw, 5rem)` / `0.98 to 1.02` |
+| Public profile hero | `clamp(2.5rem, 5vw, 4rem)` / `1.0 to 1.06` |
+| Directory/page title | `clamp(2.25rem, 4vw, 3.5rem)` / `1.04 to 1.1` |
+| Product title | `1.5 to 2rem` / `1.15` |
+| Section title | `1.75 to 2.5rem` / `1.1 to 1.2` |
 | Marketing body | `1.125rem` / `1.55` |
-| Product body | `0.9375–1rem` / `1.45–1.55` |
-| Metadata | `0.75–0.875rem` / `1.35–1.45` |
+| Product body | `0.9375 to 1rem` / `1.45 to 1.55` |
+| Metadata | `0.75 to 0.875rem` / `1.35 to 1.45` |
 
-Prefer weights 400, 500, 600, and occasional 700. Do not use `font-black`. Uppercase microtype is reserved for a rare marketing eyebrow and stays at 11–12 px with sufficient letter spacing.
+Prefer weights 400, 500, 600, and occasional 700. Do not use `font-black`. Uppercase microtype is reserved for a rare marketing eyebrow and stays at 11 to 12 px with sufficient letter spacing.
 
 ### Color
 
@@ -202,9 +202,9 @@ Brand Mint is controlled. It belongs to one priority action, selected states, an
 
 ### Layout and spacing
 
-- Marketing and profiles: twelve-column grid, `1180–1280px` content width, generous vertical rhythm.
+- Marketing and profiles: twelve-column grid, `1180 to 1280px` content width, generous vertical rhythm.
 - Product discovery: up to `1440px`, compact controls, list/detail composition on wide screens.
-- Documentation: navigation rail, reading column of `68–74ch`, optional table of contents.
+- Documentation: navigation rail, reading column of `68 to 74ch`, optional table of contents.
 - Base spacing rhythm: 4 px, composed primarily with 8, 12, 16, 24, 32, 48, 64, 96, and 128 px.
 - Mobile is recomposed, not a squeezed desktop canvas.
 
@@ -212,22 +212,22 @@ Brand Mint is controlled. It belongs to one priority action, selected states, an
 
 - Default border: 1 px low-contrast hairline.
 - Form controls and outline controls use the stronger semantic control border; hairlines remain reserved for content grouping.
-- Control radius: 10–14 px.
-- Card and grouped surface radius: 14–18 px.
-- Large editorial panel radius: 18–24 px.
+- Control radius: 10 to 14 px.
+- Card and grouped surface radius: 14 to 18 px.
+- Large editorial panel radius: 18 to 24 px.
 - Pill: primary marketing CTA, chips, segmented controls, and compact toggles only.
 - Shadow: diffuse and low opacity, reserved for popovers, dialogs, drawers, selected floating layers, and rare editorial objects.
 - No hard offset shadows or hover translations that imitate a printed sticker.
 
 ### Iconography
 
-Lucide remains the interface icon system. Use consistent 16, 18, 20, or 24 px sizes and approximately 1.75–2 px strokes. Icons support labels; they do not replace understandable copy unless the action has an accessible name and an established symbol.
+Lucide remains the interface icon system. Use consistent 16, 18, 20, or 24 px sizes and approximately 1.75 to 2 px strokes. Icons support labels; they do not replace understandable copy unless the action has an accessible name and an established symbol.
 
 Custom SVG is reserved for the canonical logo lockup and stacked-page compact mark, flags where still required, and product-specific graphics Lucide cannot represent.
 
 ### Motion
 
-- 140–220 ms for hover, focus, selection, and small overlays.
+- 140 to 220 ms for hover, focus, selection, and small overlays.
 - Up to 320 ms for drawer/dialog continuity.
 - Use opacity and small translation or scale only where state continuity benefits.
 - Keep the shell static.
@@ -329,7 +329,7 @@ Documentation uses a quiet reading system:
 - breadcrumb and page identity;
 - desktop navigation rail;
 - article without a heavy outer card;
-- `68–74ch` reading measure;
+- `68 to 74ch` reading measure;
 - visible heading anchors;
 - optional sticky table of contents for long pages;
 - code, tables, callouts, and links with complete light/dark states;
@@ -355,7 +355,7 @@ The showcase is documentation, not a second component implementation or a higher
 
 ### Header
 
-- 68–76 px on public/marketing pages; compact variant is allowed in the discovery workspace.
+- 68 to 76 px on public/marketing pages; compact variant is allowed in the discovery workspace.
 - unboxed wordmark and navigation;
 - no nested navigation card;
 - GitHub, theme, and locale controls remain secondary;

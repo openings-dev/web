@@ -124,7 +124,7 @@ export const deTranslations: TranslationMessages = {
       sortLabel: "Communities sortieren",
       sortCount: "Meiste offene Stellen",
       sortRecent: "Zuletzt veröffentlichte Stelle",
-      sortName: "Name A–Z",
+      sortName: "Name von A bis Z",
       activityLabel: "Community-Aktivität",
       activeOnly: "Jetzt aktiv ({count})",
       noOpenings: "Keine offenen Stellen ({count})",
@@ -184,7 +184,7 @@ export const deTranslations: TranslationMessages = {
       sortLabel: "GitHub-Autor:innen sortieren",
       sortCount: "Meiste offene Stellen",
       sortRecent: "Zuletzt veröffentlichte Stelle",
-      sortName: "Name A–Z",
+      sortName: "Name von A bis Z",
     },
     list: {
       summaryOne: "1 GitHub-Autor:in",
@@ -273,7 +273,7 @@ export const deTranslations: TranslationMessages = {
     },
     range: {
       zeroResults: "0 Ergebnisse",
-      rangeOfTotal: "{start}–{end} von {total}",
+      rangeOfTotal: "{start} bis {end} von {total}",
     },
     status: {
       ariaLabel: "Status der Stellen",
@@ -405,7 +405,7 @@ export const deTranslations: TranslationMessages = {
         "Der Link konnte weder geteilt noch kopiert werden. Kopiere stattdessen die Seitenadresse aus deinem Browser.",
       salaryFrom: "Ab {amount}/{period}",
       salaryUpTo: "Bis zu {amount}/{period}",
-      salaryRange: "{minimum}–{maximum}/{period}",
+      salaryRange: "{minimum} bis {maximum}/{period}",
       salaryPeriodMonth: "Monat",
       salaryPeriodYear: "Jahr",
       salaryPeriodHour: "Stunde",
@@ -476,7 +476,7 @@ export const deTranslations: TranslationMessages = {
     archiveDescription: "Jeder Bericht ist eine unveränderliche Momentaufnahme aus der öffentlichen Datenpipeline.",
     reportListLabel: "Öffentliche Monatsberichte",
     viewReport: "Bericht öffnen",
-    reportTitle: "Tech-Job-Bericht — {period}",
+    reportTitle: "Tech-Job-Bericht: {period}",
     snapshotLabel: "Momentaufnahme erstellt am {date}",
     openJobs: "Offene Jobs",
     communities: "Communities",
@@ -508,7 +508,7 @@ export const deTranslations: TranslationMessages = {
       description:
         "Gib Openings einen Stern auf GitHub, verfolge die öffentliche Arbeit oder nutze die Suche mobil.",
       githubAction: "Stern auf GitHub geben",
-      iosAction: "iOS — Demnächst verfügbar",
+      iosAction: "iOS (demnächst verfügbar)",
       androidAction: "Für Android laden",
     },
     groups: {
@@ -554,7 +554,7 @@ export const deTranslations: TranslationMessages = {
   },
   docsHub: {
     eyebrow: "Dokumentation",
-    title: "Openings verstehen – vom Produkt bis zu den Daten.",
+    title: "Openings verstehen: vom Produkt bis zu den Daten.",
     description:
       "Beginne mit dem Produktüberblick, sieh dir das Format der öffentlichen Daten an oder finde den passenden Leitfaden für Beiträge und deine Community.",
     navigationLabel: "Dokumentationsressourcen",
@@ -664,12 +664,12 @@ export const deTranslations: TranslationMessages = {
       productPatterns: "Beispieldaten helfen, realistische Inhaltsdichte zu prüfen, ohne wie eine aktive Stelle oder Empfehlung zu wirken.",
       content: "Texte benennen die Aktion, erklären die öffentliche GitHub-Quelle und vermeiden unbelegte Aussagen.",
       states: "Rückmeldungen bleiben bei Auswahl, Deaktivierung, ungültiger Eingabe, Laden, leeren Ergebnissen und destruktiven Aktionen sachlich.",
-      responsive: "Auf kleinen Bildschirmen ordnet sich das Layout nach Priorität neu, statt einen breiten Arbeitsbereich nur zu verkleinern.",
+      responsive: "Auf kleinen Bildschirmen ordnet das Layout Inhalte nach Priorität.",
       usage: "Beginne mit DESIGN.md und prüfe danach die Variablen und Basiskomponenten aus der Produktion. Auf dieser Seite siehst du das Ergebnis.",
     },
     labels: {
       specimen: "Beispiel",
-      representativeData: "Repräsentative Daten — kein echtes Stellenangebot",
+      representativeData: "Repräsentative Daten. Kein echtes Stellenangebot",
       lightSurface: "Helle Fläche",
       inverseSurface: "Inverse Fläche",
       defaultState: "Standard",

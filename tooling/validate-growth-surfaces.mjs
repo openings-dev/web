@@ -36,7 +36,7 @@ const [homePageSource, siteIdentitySource] = await Promise.all([
   readFile("app/page.tsx", "utf8"),
   readFile("lib/metadata/site-identity.ts", "utf8"),
 ]);
-assert.match(homePageSource, /title:\s*"openings\.dev — Find tech jobs/u);
+assert.match(homePageSource, /title:\s*"openings\.dev \| Find tech jobs/u);
 assert.match(homePageSource, /application\/ld\+json/u);
 assert.match(homePageSource, /serializeSiteIdentityJsonLd/u);
 assert.match(siteIdentitySource, /"@type":\s*"WebSite"/u);

@@ -23,6 +23,7 @@ const validators = [
   "validate-contributor-paths.mjs",
   "validate-footer-growth.mjs",
   "validate-android-app-promotion.mjs",
+  "validate-copy-style.mjs",
   "validate-public-reports.mjs",
   "validate-github-traffic.mjs",
   "validate-ci-workflow.mjs",

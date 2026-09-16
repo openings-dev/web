@@ -124,7 +124,7 @@ export const esTranslations: TranslationMessages = {
       sortLabel: "Ordenar comunidades",
       sortCount: "Más vacantes abiertas",
       sortRecent: "Publicación más reciente",
-      sortName: "Nombre A–Z",
+      sortName: "Nombre de A a Z",
       activityLabel: "Actividad de las comunidades",
       activeOnly: "Activas ahora ({count})",
       noOpenings: "Sin vacantes abiertas ({count})",
@@ -184,7 +184,7 @@ export const esTranslations: TranslationMessages = {
       sortLabel: "Ordenar autores",
       sortCount: "Más vacantes abiertas",
       sortRecent: "Publicación más reciente",
-      sortName: "Nombre A–Z",
+      sortName: "Nombre de A a Z",
     },
     list: {
       summaryOne: "1 autor",
@@ -278,7 +278,7 @@ export const esTranslations: TranslationMessages = {
     },
     range: {
       zeroResults: "0 resultados",
-      rangeOfTotal: "{start}–{end} de {total}",
+      rangeOfTotal: "{start} a {end} de {total}",
     },
     status: {
       ariaLabel: "Estado de las vacantes",
@@ -409,7 +409,7 @@ export const esTranslations: TranslationMessages = {
       shareFailed: "No se pudo compartir esta vacante. Copia la URL del navegador.",
       salaryFrom: "Desde {amount}/{period}",
       salaryUpTo: "Hasta {amount}/{period}",
-      salaryRange: "{minimum}–{maximum}/{period}",
+      salaryRange: "{minimum} a {maximum}/{period}",
       salaryPeriodMonth: "mes",
       salaryPeriodYear: "año",
       salaryPeriodHour: "hora",
@@ -480,7 +480,7 @@ export const esTranslations: TranslationMessages = {
     archiveDescription: "Cada informe es un registro inmutable de un momento, respaldado por el pipeline público de datos.",
     reportListLabel: "Informes públicos mensuales",
     viewReport: "Ver informe",
-    reportTitle: "Informe de empleos tecnológicos — {period}",
+    reportTitle: "Informe de empleos tecnológicos: {period}",
     snapshotLabel: "Instantánea generada el {date}",
     openJobs: "Empleos abiertos",
     communities: "Comunidades",
@@ -512,7 +512,7 @@ export const esTranslations: TranslationMessages = {
       description:
         "Destaca Openings en GitHub, sigue el trabajo público o lleva la búsqueda contigo en el móvil.",
       githubAction: "Dar una estrella en GitHub",
-      iosAction: "iOS — Próximamente",
+      iosAction: "iOS (próximamente)",
       androidAction: "Descargar para Android",
     },
     groups: {
@@ -668,12 +668,12 @@ export const esTranslations: TranslationMessages = {
       productPatterns: "Los datos representativos prueban la densidad real sin parecer una vacante activa ni un aval.",
       content: "El texto nombra la acción, explica la fuente pública en GitHub y evita afirmaciones que los datos no prueban.",
       states: "La respuesta sigue siendo factual en estados seleccionado, deshabilitado, no válido, cargando, vacío y destructivo.",
-      responsive: "En móvil, el diseño se recompone por prioridad; no se limita a comprimir el espacio de trabajo.",
+      responsive: "En móvil, el diseño ordena el contenido por prioridad.",
       usage: "Empieza por DESIGN.md y después consulta tokens y primitivos de producción. Usa esta página para inspeccionar el resultado.",
     },
     labels: {
       specimen: "Muestra",
-      representativeData: "Datos representativos — no es una vacante real",
+      representativeData: "Datos representativos. No es una vacante real",
       lightSurface: "Superficie clara",
       inverseSurface: "Superficie inversa",
       defaultState: "Predeterminado",

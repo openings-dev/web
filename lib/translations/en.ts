@@ -124,7 +124,7 @@ export const enTranslations: TranslationMessages = {
       sortLabel: "Sort communities",
       sortCount: "Most open jobs",
       sortRecent: "Latest job posted",
-      sortName: "Name A–Z",
+      sortName: "Name A-Z",
       activityLabel: "Community activity",
       activeOnly: "Active now ({count})",
       noOpenings: "No open jobs ({count})",
@@ -184,7 +184,7 @@ export const enTranslations: TranslationMessages = {
       sortLabel: "Sort GitHub authors",
       sortCount: "Most open jobs",
       sortRecent: "Latest job posted",
-      sortName: "Name A–Z",
+      sortName: "Name A-Z",
     },
     list: {
       summaryOne: "1 GitHub author",
@@ -282,7 +282,7 @@ export const enTranslations: TranslationMessages = {
     },
     range: {
       zeroResults: "0 results",
-      rangeOfTotal: "{start}–{end} of {total}",
+      rangeOfTotal: "{start} to {end} of {total}",
     },
     status: {
       ariaLabel: "Job data status",
@@ -412,7 +412,7 @@ export const enTranslations: TranslationMessages = {
       shareFailed: "We couldn’t share or copy the link. Copy the page URL from your browser instead.",
       salaryFrom: "From {amount}/{period}",
       salaryUpTo: "Up to {amount}/{period}",
-      salaryRange: "{minimum}–{maximum}/{period}",
+      salaryRange: "{minimum} to {maximum}/{period}",
       salaryPeriodMonth: "month",
       salaryPeriodYear: "year",
       salaryPeriodHour: "hour",
@@ -545,7 +545,7 @@ export const enTranslations: TranslationMessages = {
       description:
         "Star Openings on GitHub, follow the public work, or take the search experience with you on mobile.",
       githubAction: "Star on GitHub",
-      iosAction: "iOS — Coming soon",
+      iosAction: "iOS (coming soon)",
       androidAction: "Get it for Android",
     },
     groups: {
@@ -701,12 +701,12 @@ export const enTranslations: TranslationMessages = {
       productPatterns: "Representative product data tests real density without presenting a live listing or endorsement.",
       content: "Copy names the job-search action, explains the public GitHub source, and avoids claims the data cannot prove.",
       states: "Feedback stays factual across selected, disabled, invalid, loading, empty, and destructive states.",
-      responsive: "Mobile layouts recompose by priority; they do not shrink a wide workspace into a narrow column.",
+      responsive: "Mobile layouts order content by priority for narrow screens.",
       usage: "Start with DESIGN.md, then production tokens and primitives. Use this page to inspect the result.",
     },
     labels: {
       specimen: "Specimen",
-      representativeData: "Representative data — not a live listing",
+      representativeData: "Representative data. Not a live listing",
       lightSurface: "Light surface",
       inverseSurface: "Inverse surface",
       defaultState: "Default",

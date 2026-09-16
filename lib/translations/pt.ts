@@ -125,7 +125,7 @@ export const ptTranslations: TranslationMessages = {
       sortLabel: "Ordenar comunidades",
       sortCount: "Mais vagas abertas",
       sortRecent: "Vaga publicada mais recentemente",
-      sortName: "Nome A–Z",
+      sortName: "Nome de A a Z",
       activityLabel: "Atividade das comunidades",
       activeOnly: "Ativas agora ({count})",
       noOpenings: "Sem vagas abertas ({count})",
@@ -185,7 +185,7 @@ export const ptTranslations: TranslationMessages = {
       sortLabel: "Ordenar autores no GitHub",
       sortCount: "Mais vagas abertas",
       sortRecent: "Vaga publicada mais recentemente",
-      sortName: "Nome A–Z",
+      sortName: "Nome de A a Z",
     },
     list: {
       summaryOne: "1 autor no GitHub",
@@ -283,7 +283,7 @@ export const ptTranslations: TranslationMessages = {
     },
     range: {
       zeroResults: "0 resultados",
-      rangeOfTotal: "{start}–{end} de {total}",
+      rangeOfTotal: "{start} a {end} de {total}",
     },
     status: {
       ariaLabel: "Status dos dados de vagas",
@@ -413,7 +413,7 @@ export const ptTranslations: TranslationMessages = {
       shareFailed: "Não foi possível compartilhar nem copiar o link. Copie a URL da página pelo navegador.",
       salaryFrom: "A partir de {amount}/{period}",
       salaryUpTo: "Até {amount}/{period}",
-      salaryRange: "{minimum}–{maximum}/{period}",
+      salaryRange: "{minimum} a {maximum}/{period}",
       salaryPeriodMonth: "mês",
       salaryPeriodYear: "ano",
       salaryPeriodHour: "hora",
@@ -514,7 +514,7 @@ export const ptTranslations: TranslationMessages = {
     archiveDescription: "Cada relatório é um registro imutável de um momento, sustentado pelo pipeline público de dados.",
     reportListLabel: "Relatórios públicos mensais",
     viewReport: "Ver relatório",
-    reportTitle: "Relatório de vagas de tecnologia — {period}",
+    reportTitle: "Relatório de vagas de tecnologia: {period}",
     snapshotLabel: "Retrato gerado em {date}",
     openJobs: "Vagas abertas",
     communities: "Comunidades",
@@ -546,7 +546,7 @@ export const ptTranslations: TranslationMessages = {
       description:
         "Favorite o Openings no GitHub, acompanhe o trabalho público ou leve a busca com você no celular.",
       githubAction: "Dar estrela no GitHub",
-      iosAction: "iOS — Em breve",
+      iosAction: "iOS (em breve)",
       androidAction: "Baixar para Android",
     },
     groups: {
@@ -702,12 +702,12 @@ export const ptTranslations: TranslationMessages = {
       productPatterns: "Dados representativos testam a densidade real sem apresentar uma vaga ativa ou um endosso.",
       content: "O texto nomeia a ação, explica a fonte pública no GitHub e evita afirmações que os dados não comprovam.",
       states: "O feedback permanece factual nos estados selecionado, desabilitado, inválido, carregando, vazio e destrutivo.",
-      responsive: "No celular, o layout se reorganiza por prioridade; ele não apenas comprime uma área de trabalho larga.",
+      responsive: "No celular, o layout organiza o conteúdo por prioridade.",
       usage: "Comece pelo DESIGN.md e depois consulte tokens e primitivos de produção. Use esta página para inspecionar o resultado.",
     },
     labels: {
       specimen: "Exemplo",
-      representativeData: "Dados representativos — não é uma vaga real",
+      representativeData: "Dados representativos. Não é uma vaga real",
       lightSurface: "Superfície clara",
       inverseSurface: "Superfície inversa",
       defaultState: "Padrão",

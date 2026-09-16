@@ -33,7 +33,7 @@ export async function generateMetadata({
 }: LocalizedHomePageProps): Promise<Metadata> {
   const page = resolvePage((await params).locale);
   if (!page) return {};
-  const title = `openings.dev — ${page.messages.home.title.replace(/\.$/u, "")}`;
+  const title = `openings.dev | ${page.messages.home.title.replace(/\.$/u, "")}`;
   const base = createPageMetadata({
     title,
     description: page.messages.home.description,

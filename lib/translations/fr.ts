@@ -125,7 +125,7 @@ export const frTranslations: TranslationMessages = {
       sortLabel: "Trier les communautés",
       sortCount: "Plus d’offres en cours",
       sortRecent: "Offre la plus récente",
-      sortName: "Nom A–Z",
+      sortName: "Nom de A à Z",
       activityLabel: "Activité des communautés",
       activeOnly: "Actives maintenant ({count})",
       noOpenings: "Aucune offre ouverte ({count})",
@@ -185,7 +185,7 @@ export const frTranslations: TranslationMessages = {
       sortLabel: "Trier les auteurs GitHub",
       sortCount: "Plus d’offres en cours",
       sortRecent: "Offre la plus récente",
-      sortName: "Nom A–Z",
+      sortName: "Nom de A à Z",
     },
     list: {
       summaryOne: "1 auteur GitHub",
@@ -274,7 +274,7 @@ export const frTranslations: TranslationMessages = {
     },
     range: {
       zeroResults: "0 résultat",
-      rangeOfTotal: "{start}–{end} sur {total}",
+      rangeOfTotal: "{start} à {end} sur {total}",
     },
     status: {
       ariaLabel: "État des offres",
@@ -406,7 +406,7 @@ export const frTranslations: TranslationMessages = {
         "Impossible de partager ou de copier le lien. Copiez l’adresse de la page depuis votre navigateur.",
       salaryFrom: "À partir de {amount}/{period}",
       salaryUpTo: "Jusqu’à {amount}/{period}",
-      salaryRange: "{minimum}–{maximum}/{period}",
+      salaryRange: "{minimum} à {maximum}/{period}",
       salaryPeriodMonth: "mois",
       salaryPeriodYear: "an",
       salaryPeriodHour: "heure",
@@ -477,7 +477,7 @@ export const frTranslations: TranslationMessages = {
     archiveDescription: "Chaque rapport est un relevé immuable à un instant donné, fondé sur le pipeline public de données.",
     reportListLabel: "Rapports publics mensuels",
     viewReport: "Voir le rapport",
-    reportTitle: "Rapport sur les emplois tech — {period}",
+    reportTitle: "Rapport sur les emplois tech: {period}",
     snapshotLabel: "Instantané généré le {date}",
     openJobs: "Emplois ouverts",
     communities: "Communautés",
@@ -509,7 +509,7 @@ export const frTranslations: TranslationMessages = {
       description:
         "Ajoutez une étoile à Openings sur GitHub, suivez le travail public ou emportez la recherche sur mobile.",
       githubAction: "Ajouter une étoile sur GitHub",
-      iosAction: "iOS — Bientôt disponible",
+      iosAction: "iOS (bientôt disponible)",
       androidAction: "Télécharger pour Android",
     },
     groups: {
@@ -665,12 +665,12 @@ export const frTranslations: TranslationMessages = {
       productPatterns: "Les données d’exemple permettent de vérifier une densité réaliste sans passer pour une offre active ou une recommandation.",
       content: "Le texte nomme l'action, explique la source publique GitHub et évite les affirmations non prouvées.",
       states: "Les messages restent factuels dans les états sélectionné, désactivé, invalide, chargement, vide et destructif.",
-      responsive: "Sur mobile, la mise en page se réorganise par priorité au lieu de simplement réduire un espace de travail large.",
+      responsive: "Sur mobile, la mise en page classe le contenu par priorité.",
       usage: "Commencez par DESIGN.md, puis consultez les variables et composants de base utilisés en production. Cette page permet d’en vérifier le rendu.",
     },
     labels: {
       specimen: "Exemple",
-      representativeData: "Données représentatives — pas une offre réelle",
+      representativeData: "Données représentatives. Pas une offre réelle",
       lightSurface: "Surface claire",
       inverseSurface: "Surface inversée",
       defaultState: "Par défaut",

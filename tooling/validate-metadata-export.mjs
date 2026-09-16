@@ -42,7 +42,7 @@ async function main() {
 
   assert.match(
     html,
-    /<title>openings\.dev — Find tech jobs shared by GitHub communities<\/title>/u,
+    /<title>openings\.dev \| Find tech jobs shared by GitHub communities<\/title>/u,
   );
   assert.match(html, /<script type="application\/ld\+json">[^<]*"@type":"WebSite"/u);
   assert.match(html, /<script type="application\/ld\+json">[^<]*"@type":"Organization"/u);

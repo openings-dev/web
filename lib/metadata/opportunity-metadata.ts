@@ -32,6 +32,6 @@ export function createOpportunityMetadata(item: OpportunityItem): Metadata {
     description: opportunityMetadataDescription(item),
     path,
     openGraphType: "article",
-    socialImageAlt: `${item.title} — Open job on openings.dev`,
+    socialImageAlt: `${item.title}. Open job on openings.dev`,
   });
 }

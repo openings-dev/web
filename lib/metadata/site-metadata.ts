@@ -9,7 +9,7 @@ export const DEFAULT_SOCIAL_IMAGE = {
   type: "image/png",
   width: 1200,
   height: 630,
-  alt: "openings.dev — Technology jobs shared by public GitHub communities",
+  alt: "openings.dev: Technology jobs shared by public GitHub communities",
 } as const;
 export const DEFAULT_TWITTER_IMAGE = {
   ...DEFAULT_SOCIAL_IMAGE,

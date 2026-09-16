@@ -124,7 +124,7 @@ export const itTranslations: TranslationMessages = {
       sortLabel: "Ordina comunità",
       sortCount: "Più offerte aperte",
       sortRecent: "Pubblicazione più recente",
-      sortName: "Nome A–Z",
+      sortName: "Nome dalla A alla Z",
       activityLabel: "Attività delle comunità",
       activeOnly: "Attive ora ({count})",
       noOpenings: "Nessuna offerta aperta ({count})",
@@ -184,7 +184,7 @@ export const itTranslations: TranslationMessages = {
       sortLabel: "Ordina autori",
       sortCount: "Più offerte aperte",
       sortRecent: "Pubblicazione più recente",
-      sortName: "Nome A–Z",
+      sortName: "Nome dalla A alla Z",
     },
     list: {
       summaryOne: "1 autore",
@@ -273,7 +273,7 @@ export const itTranslations: TranslationMessages = {
     },
     range: {
       zeroResults: "0 risultati",
-      rangeOfTotal: "{start}–{end} di {total}",
+      rangeOfTotal: "Da {start} a {end} di {total}",
     },
     status: {
       ariaLabel: "Stato delle offerte",
@@ -404,7 +404,7 @@ export const itTranslations: TranslationMessages = {
       shareFailed: "Impossibile condividere questa offerta. Copia l'URL dal browser.",
       salaryFrom: "Da {amount}/{period}",
       salaryUpTo: "Fino a {amount}/{period}",
-      salaryRange: "{minimum}–{maximum}/{period}",
+      salaryRange: "{minimum} a {maximum}/{period}",
       salaryPeriodMonth: "mese",
       salaryPeriodYear: "anno",
       salaryPeriodHour: "ora",
@@ -475,7 +475,7 @@ export const itTranslations: TranslationMessages = {
     archiveDescription: "Ogni report è un registro immutabile di un momento, sostenuto dalla pipeline pubblica dei dati.",
     reportListLabel: "Report pubblici mensili",
     viewReport: "Apri il report",
-    reportTitle: "Report sui lavori tech — {period}",
+    reportTitle: "Report sui lavori tech: {period}",
     snapshotLabel: "Istantanea generata il {date}",
     openJobs: "Lavori aperti",
     communities: "Community",
@@ -507,7 +507,7 @@ export const itTranslations: TranslationMessages = {
       description:
         "Metti una stella a Openings su GitHub, segui il lavoro pubblico o porta la ricerca con te sul telefono.",
       githubAction: "Metti una stella su GitHub",
-      iosAction: "iOS — Prossimamente",
+      iosAction: "iOS (prossimamente)",
       androidAction: "Scarica per Android",
     },
     groups: {
@@ -663,12 +663,12 @@ export const itTranslations: TranslationMessages = {
       productPatterns: "I dati rappresentativi verificano la densità reale senza sembrare un'offerta attiva o un'approvazione.",
       content: "Il testo nomina l'azione, spiega la fonte pubblica su GitHub ed evita affermazioni non dimostrabili.",
       states: "Il feedback resta fattuale negli stati selezionato, disabilitato, non valido, caricamento, vuoto e distruttivo.",
-      responsive: "Su mobile, il layout si ricompone per priorità; non comprime semplicemente il workspace.",
+      responsive: "Su mobile, il layout ordina i contenuti per priorità.",
       usage: "Parti da DESIGN.md, poi consulta token e primitive di produzione. Usa questa pagina per verificare il risultato.",
     },
     labels: {
       specimen: "Esempio",
-      representativeData: "Dati rappresentativi — non è un'offerta reale",
+      representativeData: "Dati rappresentativi. Non è un'offerta reale",
       lightSurface: "Superficie chiara",
       inverseSurface: "Superficie inversa",
       defaultState: "Predefinito",

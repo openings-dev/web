@@ -195,7 +195,7 @@ export function DesignSystemShowcase(): React.ReactNode {
         <div className="grid gap-4 xl:grid-cols-3">
           <article className="rounded-card border border-line bg-surface p-4">
             <Smartphone className="size-5 text-primary-deep" aria-hidden="true" />
-            <h3 className="font-mono mt-3 font-semibold">320–767px</h3>
+            <h3 className="font-mono mt-3 font-semibold">320 to 767 px</h3>
             <div className="mt-4 space-y-2 rounded-control border border-line bg-paper p-3">
               <div className="h-9 rounded-control bg-primary-soft" />
               <div className="h-16 rounded-control border border-line" />
@@ -205,7 +205,7 @@ export function DesignSystemShowcase(): React.ReactNode {
           </article>
           <article className="rounded-card border border-line bg-surface p-4">
             <Tablet className="size-5 text-primary-deep" aria-hidden="true" />
-            <h3 className="font-mono mt-3 font-semibold">768–1279px</h3>
+            <h3 className="font-mono mt-3 font-semibold">768 to 1279 px</h3>
             <div className="mt-4 grid grid-cols-2 gap-2 rounded-control border border-line bg-paper p-3">
               <div className="col-span-2 h-9 rounded-control bg-primary-soft" />
               <div className="h-24 rounded-control border border-line" />

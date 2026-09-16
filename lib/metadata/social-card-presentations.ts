@@ -83,7 +83,7 @@ function formatSalary(salary: OpportunitySalary | undefined): string {
     const formattedMaximum = formatMoney(maximum, salary.currency);
     return minimum === maximum
       ? `${formattedMinimum}/${period}`
-      : `${formattedMinimum}–${formattedMaximum}/${period}`;
+      : `${formattedMinimum} to ${formattedMaximum}/${period}`;
   }
   if (minimum !== null) {
     return `From ${formatMoney(minimum, salary.currency)}/${period}`;

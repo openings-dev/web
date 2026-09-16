@@ -17,7 +17,7 @@ export function createCommunityProfileMetadata({
   const identity = profile?.name ?? repository;
   return createPageMetadata({
     title: profile
-      ? `Jobs shared through ${profile.name} — ${profile.repository}`
+      ? `Jobs shared through ${profile.name} | ${profile.repository}`
       : `Community profile: ${identity}`,
     description: profile
       ? `Browse open jobs shared through ${profile.name}. Each listing links to its original public source.`
@@ -47,7 +47,7 @@ export function createPublisherProfileMetadata({
       ? `Browse open jobs authored by @${profile.handle} across public GitHub community repositories.`
       : `This GitHub author profile is unavailable. Browse current jobs on openings.dev instead.`,
     path,
-    socialImageAlt: `${profile?.name ?? `@${handle}`} — GitHub author job profile on openings.dev`,
+    socialImageAlt: `${profile?.name ?? `@${handle}`}. GitHub author job profile on openings.dev`,
   });
 
 }

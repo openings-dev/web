@@ -28,7 +28,7 @@ export async function GET(
   const path = `/feeds/${slug}`;
   const body = serializeAtomFeed({
     id: resolveCanonicalUrl(path),
-    title: `openings.dev — ${typedFeedSlug} jobs`,
+    title: `openings.dev: ${typedFeedSlug} jobs`,
     subtitle: `Curated ${typedFeedSlug} technology jobs from public GitHub communities.`,
     selfUrl: resolveCanonicalUrl(path),
     siteUrl: resolveCanonicalUrl(`/en/discover/${typedFeedSlug}`),
@@ -39,4 +39,3 @@ export async function GET(
     headers: { "Content-Type": "application/atom+xml; charset=utf-8" },
   });
 }
-

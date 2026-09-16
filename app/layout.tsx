@@ -37,13 +37,13 @@ const newsreader = Newsreader({
 
 export const metadata: Metadata = {
   ...createPageMetadata({
-    title: "openings.dev — Jobs from public GitHub communities",
+    title: "openings.dev | Jobs from public GitHub communities",
     description: SITE_DEFAULT_DESCRIPTION,
     path: "/",
   }),
   metadataBase: SITE_ORIGIN,
   title: {
-    default: "openings.dev — Jobs from public GitHub communities",
+    default: "openings.dev | Jobs from public GitHub communities",
     template: "%s | openings.dev",
   },
   alternates: {

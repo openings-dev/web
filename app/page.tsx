@@ -10,7 +10,7 @@ import {
 } from "@/lib/metadata/site-identity";
 
 const homeMetadata = createPageMetadata({
-  title: "openings.dev — Find tech jobs shared by GitHub communities",
+  title: "openings.dev | Find tech jobs shared by GitHub communities",
   description:
     "Search tech jobs shared by public GitHub communities, then open the original listing to verify current details and next steps.",
   path: "/",

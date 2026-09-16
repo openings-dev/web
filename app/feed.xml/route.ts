@@ -15,7 +15,7 @@ export async function GET() {
   ]);
   const body = serializeAtomFeed({
     id: resolveCanonicalUrl("/feed.xml"),
-    title: "openings.dev — Recent jobs",
+    title: "openings.dev: Recent jobs",
     subtitle: "Recent technology jobs from public GitHub communities.",
     selfUrl: resolveCanonicalUrl("/feed.xml"),
     siteUrl: resolveCanonicalUrl("/"),
