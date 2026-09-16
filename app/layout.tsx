@@ -5,6 +5,7 @@ import { I18nProvider } from "@/components/providers/i18n-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TelemetryProvider } from "@/components/providers/telemetry-provider";
 import { AnalyticsConsentBanner } from "@/components/privacy/analytics-consent-banner";
+import { AndroidAppPromotion } from "@/components/android-app-promotion";
 import { ThemeScript } from "@/components/providers/theme-provider/theme-script";
 import { Theme } from "@/components/providers/theme-provider/types";
 import { Toaster } from "@/components/ui/sonner";
@@ -100,6 +101,7 @@ export default function RootLayout({
             <TelemetryProvider>
               <AppShell>{children}</AppShell>
               <AnalyticsConsentBanner />
+              <AndroidAppPromotion />
             </TelemetryProvider>
           </I18nProvider>
           <Toaster position="bottom-right" richColors={false} />

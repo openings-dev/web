@@ -247,6 +247,10 @@
   --shadow-floating-lg: var(--elevation-lg);
 }
 
+body:has([data-comparison-panel]) [data-android-app-promotion] {
+  display: none;
+}
+
 * {
   border-color: var(--line);
 }

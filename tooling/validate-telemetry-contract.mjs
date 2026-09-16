@@ -38,6 +38,10 @@ assert.deepEqual(Object.keys(contracts.TELEMETRY_EVENT_FIELDS), [
   "Community Viewed",
   "Status Viewed",
   "Updates Viewed",
+  "Android App Promotion Opened",
+]);
+assert.deepEqual(contracts.TELEMETRY_EVENT_FIELDS["Android App Promotion Opened"], [
+  "locale",
 ]);
 
 assert.equal(sanitize.sanitizeProductEvent("Unknown Event", {}), null);
@@ -182,6 +186,7 @@ const productCallSites = await Promise.all([
   readFile("app/communities/[owner]/[name]/_components/community-telemetry.tsx", "utf8"),
   readFile("app/status/_components/status-telemetry.tsx", "utf8"),
   readFile("app/updates/_components/updates-telemetry.tsx", "utf8"),
+  readFile("components/android-app-promotion/index.tsx", "utf8"),
 ]);
 for (const event of Object.keys(contracts.TELEMETRY_EVENT_FIELDS)) {
   const pattern = new RegExp(`trackProductEvent\\(\\s*["']${event}["']`, "gu");

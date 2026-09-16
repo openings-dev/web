@@ -43,6 +43,7 @@ export interface TelemetryEventMap {
   };
   "Status Viewed": { health: "healthy" | "partial" | "unavailable" };
   "Updates Viewed": { section: "changelog" | "releases" | "roadmap" };
+  "Android App Promotion Opened": { locale: string };
 }
 
 export type TelemetryEventName = keyof TelemetryEventMap;
@@ -58,6 +59,7 @@ export const TELEMETRY_EVENT_FIELDS = {
   "Community Viewed": ["repository", "activity"],
   "Status Viewed": ["health"],
   "Updates Viewed": ["section"],
+  "Android App Promotion Opened": ["locale"],
 } as const satisfies {
   [Name in TelemetryEventName]: readonly (keyof TelemetryEventMap[Name])[];
 };

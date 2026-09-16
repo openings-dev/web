@@ -75,4 +75,45 @@ assert.equal(
   false,
 );
 
+const [
+  componentSource,
+  layoutSource,
+  globalsSource,
+  comparisonPanelSource,
+  routesSource,
+  telemetryContractsSource,
+] = await Promise.all([
+  readFile("components/android-app-promotion/index.tsx", "utf8"),
+  readFile("app/layout.tsx", "utf8"),
+  readFile("app/globals.css", "utf8"),
+  readFile("app/opportunities/_components/opportunities-screen/comparison-panel/index.tsx", "utf8"),
+  readFile("lib/navigation/routes.ts", "utf8"),
+  readFile("lib/telemetry/contracts.ts", "utf8"),
+]);
+
+assert.match(layoutSource, /<AndroidAppPromotion\s*\/>/u);
+assert.match(componentSource, /EXTERNAL_ROUTES\.androidApp/u);
+assert.match(componentSource, /consent\s*===\s*["']undecided["']/u);
+assert.match(componentSource, /target=["']_blank["']/u);
+assert.match(componentSource, /rel=["']noreferrer["']/u);
+assert.match(componentSource, /aria-label=\{copy\.closeLabel\}/u);
+assert.match(componentSource, /data-android-app-promotion/u);
+assert.match(
+  componentSource,
+  /trackProductEvent\(\s*["']Android App Promotion Opened["']\s*,\s*\{\s*locale\s*[,}]/u,
+);
+assert.match(comparisonPanelSource, /data-comparison-panel/u);
+assert.match(
+  globalsSource,
+  /body:has\(\[data-comparison-panel\]\)\s+\[data-android-app-promotion\]/u,
+);
+assert.match(
+  routesSource,
+  /androidApp:\s*["']https:\/\/play\.google\.com\/store\/apps\/details\?id=dev\.openings\.mobile["']/u,
+);
+assert.match(
+  telemetryContractsSource,
+  /["']Android App Promotion Opened["']:\s*\{\s*locale:\s*string\s*\};/u,
+);
+
 console.log("Android app promotion contract validated.");

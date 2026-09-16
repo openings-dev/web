@@ -33,7 +33,7 @@ export function ComparisonPanel({ items, onRemove, onClear }: ComparisonPanelPro
   };
 
   return (
-    <aside className="fixed inset-x-3 bottom-3 z-40 mx-auto max-w-6xl rounded-floating border border-line bg-surface-elevated p-4 shadow-floating-lg sm:inset-x-6"
+    <aside data-comparison-panel className="fixed inset-x-3 bottom-3 z-40 mx-auto max-w-6xl rounded-floating border border-line bg-surface-elevated p-4 shadow-floating-lg sm:inset-x-6"
       aria-label={copy.title}>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
