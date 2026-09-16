@@ -98,6 +98,11 @@ assert.match(componentSource, /target=["']_blank["']/u);
 assert.match(componentSource, /rel=["']noreferrer["']/u);
 assert.match(componentSource, /aria-label=\{copy\.closeLabel\}/u);
 assert.match(componentSource, /data-android-app-promotion/u);
+assert.match(componentSource, /className="mt-4 flex flex-wrap items-center gap-2"/u);
+assert.match(
+  componentSource,
+  /className="min-w-0 max-w-full !whitespace-normal text-left"/u,
+);
 assert.match(
   componentSource,
   /trackProductEvent\(\s*["']Android App Promotion Opened["']\s*,\s*\{\s*locale\s*[,}]/u,

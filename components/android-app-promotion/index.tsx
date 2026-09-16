@@ -56,8 +56,13 @@ export function AndroidAppPromotion(): React.ReactNode {
           </p>
         </div>
       </div>
-      <div className="mt-4 flex items-center gap-2">
-        <Button asChild size="sm" variant="secondary">
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <Button
+          asChild
+          size="sm"
+          variant="secondary"
+          className="min-w-0 max-w-full !whitespace-normal text-left"
+        >
           <a
             href={EXTERNAL_ROUTES.androidApp}
             target="_blank"
