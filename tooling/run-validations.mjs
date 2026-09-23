@@ -9,6 +9,7 @@ const validators = [
   "validate-author-social-card-fallback.mjs",
   "validate-home-performance.mjs",
   "validate-opportunity-details-header.mjs",
+  "validate-compact-job-actions.mjs",
   "validate-communities-artifact.mjs",
   "validate-discovery-platform.mjs",
   "validate-comparison.mjs",
