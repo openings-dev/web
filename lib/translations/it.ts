@@ -394,6 +394,8 @@ export const itTranslations: TranslationMessages = {
       postedAt: "Pubblicata: {date}",
       updatedAt: "Aggiornata: {date}",
       openOriginal: "Apri la pubblicazione originale",
+      actions: "Azioni",
+      closeActions: "Chiudi azioni",
       showCommunityJobs: "Vedi le offerte di {name}",
       showAuthorJobs: "Vedi le offerte pubblicate da @{handle}",
       noDescription:

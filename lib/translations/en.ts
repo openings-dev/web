@@ -403,6 +403,8 @@ export const enTranslations: TranslationMessages = {
       postedAt: "Posted {date}",
       updatedAt: "Updated {date}",
       openOriginal: "Open original listing",
+      actions: "Actions",
+      closeActions: "Close actions",
       showCommunityJobs: "Show jobs from {name}",
       showAuthorJobs: "Show jobs shared by @{handle}",
       noDescription: "No description is available here. Open the original listing for full details.",

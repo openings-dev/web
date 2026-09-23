@@ -386,6 +386,8 @@ export interface TranslationMessages {
       postedAt: string;
       updatedAt: string;
       openOriginal: string;
+      actions: string;
+      closeActions: string;
       showCommunityJobs: string;
       showAuthorJobs: string;
       noDescription: string;

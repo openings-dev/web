@@ -394,6 +394,8 @@ export const deTranslations: TranslationMessages = {
       postedAt: "Veröffentlicht am {date}",
       updatedAt: "Aktualisiert am {date}",
       openOriginal: "Originalanzeige öffnen",
+      actions: "Aktionen",
+      closeActions: "Aktionen schließen",
       showCommunityJobs: "Stellen von {name} anzeigen",
       showAuthorJobs: "Von @{handle} geteilte Stellen anzeigen",
       noDescription:

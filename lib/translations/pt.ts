@@ -404,6 +404,8 @@ export const ptTranslations: TranslationMessages = {
       postedAt: "Publicada em {date}",
       updatedAt: "Atualizada em {date}",
       openOriginal: "Abrir anúncio original",
+      actions: "Ações",
+      closeActions: "Fechar ações",
       showCommunityJobs: "Ver vagas de {name}",
       showAuthorJobs: "Ver vagas publicadas por @{handle}",
       noDescription: "Não há uma descrição disponível aqui. Abra o anúncio original para ver os detalhes.",
