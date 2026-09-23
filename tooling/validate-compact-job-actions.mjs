@@ -23,6 +23,7 @@ assert.match(componentSource, /aria-haspopup="dialog"/u);
 assert.match(componentSource, /role="dialog"/u);
 assert.match(componentSource, /aria-modal="true"/u);
 assert.match(componentSource, /event\.key === "Escape"/u);
+assert.match(componentSource, /event\.stopPropagation\(\)/u);
 assert.match(componentSource, /actionsButton\?\.focus\(\)/u);
 assert.match(componentSource, /pb-\[max\([^\]]*env\(safe-area-inset-bottom\)/u);
 assert.match(componentSource, /handleSecondaryAction/u);

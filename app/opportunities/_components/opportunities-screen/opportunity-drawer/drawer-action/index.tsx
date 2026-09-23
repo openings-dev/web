@@ -110,6 +110,7 @@ export function DrawerAction({
   const handleSheetKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
       event.preventDefault();
+      event.stopPropagation();
       setActionsOpen(false);
       return;
     }
