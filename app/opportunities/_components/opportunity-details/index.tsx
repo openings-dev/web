@@ -170,6 +170,8 @@ export function OpportunityDetails({
   const action = (
     <DrawerAction
       openOriginalLabel={copy.openOriginal}
+      actionsLabel={copy.actions}
+      closeActionsLabel={copy.closeActions}
       shareLabel={copy.share}
       shareSharedLabel={copy.shareShared}
       shareCopiedLabel={copy.shareCopied}
