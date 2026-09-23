@@ -14,6 +14,8 @@ The unparameterized workspace is global. Preset links use the same URL contract 
 
 List and grid use distinct information compositions. Selecting a result opens the same fullscreen native dialog at every breakpoint, preserving the discovery context behind it. The canonical `/jobs/<id>` page reuses the same Product Sheet information hierarchy for direct visits and sharing.
 
+Job details keep the original listing as the visible primary action. Share, save, and report remain available behind one compact secondary action trigger that opens a safe-area-aware action sheet, avoiding stacked footer controls on small screens.
+
 Job, community, and GitHub-author social previews use route-specific 1200×630 Product Sheet cards generated from validated build-time data. They use the canonical wordmark and tokens, omit absent optional fields, and never introduce remote avatars, fake listings, or unsupported claims.
 
 Opportunity cards show company/community, semantic role heading, salary/work model/location, stack/seniority, publisher/date, and source context in that order. Do not duplicate repository metadata.
