@@ -1,6 +1,6 @@
 # Política de privacidad
 
-_Fecha de entrada en vigor: 4 de septiembre de 2026_
+_Fecha de entrada en vigor: 22 de noviembre de 2026_
 
 Openings facilita la búsqueda de ofertas públicas de empleo tecnológico. Esta política se aplica al sitio web y a la aplicación móvil de Openings y explica qué información muestran, qué guardan en tu dispositivo y cuándo se conectan a servicios externos.
 
@@ -16,11 +16,13 @@ Openings guarda el idioma, el tema, las ofertas guardadas y vistas, las preferen
 
 ## 3. Supervisión técnica y analítica opcional
 
-Cuando está configurado, Sentry recibe errores técnicos depurados para ayudar a diagnosticar fallos. La app de Android también usa Firebase Crashlytics para informes automáticos de fallos nativos. Openings desactiva la recopilación predeterminada de datos personales y la reproducción de sesiones y no envía intencionadamente búsquedas, contenido de ofertas, cuerpos de solicitudes, cookies, identidades de usuario ni parámetros de URL. Los servicios de diagnóstico pueden recibir datos técnicos de la app, dispositivo, sistema operativo, versión y fallo necesarios para identificar un problema.
+Cuando está configurado, Sentry recibe errores técnicos depurados para ayudar a diagnosticar fallos. Las apps de Android e iOS también usan Firebase Crashlytics para informes automáticos de fallos nativos. Openings desactiva la recopilación predeterminada de datos personales y la reproducción de sesiones y no envía intencionadamente búsquedas, contenido de ofertas, cuerpos de solicitudes, cookies, identidades de usuario ni parámetros de URL. Los servicios de diagnóstico pueden recibir datos técnicos de la app, dispositivo, sistema operativo, versión y fallo necesarios para identificar un problema.
 
 Mixpanel no se carga hasta que eliges expresamente “Permitir analítica”. Si lo permites, recibe una lista pequeña de eventos anónimos, como la dimensión de un filtro, un rango de resultados, el ID de una oferta o la apertura de la fuente original. No recibe texto de búsqueda, contenido de ofertas, correos, URLs completas, ubicación derivada de IP, vistas automáticas, autocaptura ni reproducción de sesiones. Puedes rechazar o revocar el permiso en esta página; al revocarlo se borra la identidad analítica anónima sin afectar las ofertas guardadas ni otras preferencias.
 
-En la aplicación móvil, OneSignal se inicia con consentimiento obligatorio. Openings solo activa el procesamiento de notificaciones después de que las permitas y concedas el permiso del sistema operativo. OneSignal puede entonces procesar un identificador del dispositivo o la instalación e información de entrega o interacción necesaria para operar las notificaciones. Puedes desactivarlas en los ajustes del dispositivo.
+En la aplicación móvil, OneSignal se inicia con consentimiento obligatorio. Openings solo activa el procesamiento de notificaciones después de que las permitas en la aplicación. Su visualización también requiere el permiso del sistema operativo; son controles distintos. OneSignal puede entonces procesar un identificador del dispositivo o la instalación e información de entrega o interacción necesaria para operar las notificaciones. Puedes desactivarlas en los ajustes del dispositivo.
+
+Las apps de Android e iOS usan Firebase Remote Config para obtener ajustes de compatibilidad y actualización. Firebase procesa datos técnicos de instalación y conexión para este servicio.
 
 Puedes enviar preguntas sobre supervisión o analítica a support@openings.dev.
 

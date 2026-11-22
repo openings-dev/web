@@ -1,6 +1,6 @@
 # Privacy Policy
 
-_Effective date: September 4, 2026_
+_Effective date: November 22, 2026_
 
 Openings makes public technology job listings easier to find. This policy applies to the Openings website and mobile application and explains what information they display, what they save on your device, and when they connect to external services.
 
@@ -16,11 +16,13 @@ Openings stores language, theme, saved and viewed jobs, discovery preferences, a
 
 ## 3. Technical monitoring and optional analytics
 
-When configured, Sentry receives sanitized technical errors so maintainers can diagnose failures. The Android app also uses Firebase Crashlytics for automatic native crash reports. Openings disables default personal-data collection and session replay and does not intentionally send searches, job content, request bodies, cookies, user identities, or URL query strings. Diagnostic services can receive technical app, device, operating-system, release, and crash information needed to identify a failure.
+When configured, Sentry receives sanitized technical errors so maintainers can diagnose failures. The Android and iOS apps also use Firebase Crashlytics for automatic native crash reports. Openings disables default personal-data collection and session replay and does not intentionally send searches, job content, request bodies, cookies, user identities, or URL query strings. Diagnostic services can receive technical app, device, operating-system, release, and crash information needed to identify a failure.
 
 Mixpanel is not loaded until you explicitly choose “Allow analytics.” If allowed, it receives a small allowlist of anonymous product events such as a filter dimension, result-count range, job ID, or original-listing click. It does not receive search text, job content, email addresses, full URLs, IP-derived location, automatic page views, autocapture, or session replay. You can decline or revoke consent at any time on this page; revocation clears the retained anonymous analytics identity and does not affect saved jobs or other product preferences.
 
-In the mobile app, OneSignal is initialized with consent required. Openings does not enable notification processing until you choose to allow notifications and grant the operating-system permission. OneSignal can then process a device or installation identifier and notification delivery or interaction information needed to send and operate notifications. You can disable notifications in your device settings.
+In the mobile app, OneSignal is initialized with consent required. Openings does not enable notification processing until you choose to allow notifications in the app. Displaying notifications also requires the operating-system permission; these are separate controls. OneSignal can then process a device or installation identifier and notification delivery or interaction information needed to send and operate notifications. You can disable notifications in your device settings.
+
+The Android and iOS apps use Firebase Remote Config to retrieve compatibility and update settings. Firebase processes technical installation and connection data for this service.
 
 Questions about monitoring or analytics can be sent to support@openings.dev.
 

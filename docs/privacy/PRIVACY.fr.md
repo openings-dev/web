@@ -1,6 +1,6 @@
 # Politique de confidentialité
 
-_Date d’entrée en vigueur : 4 septembre 2026_
+_Date d’entrée en vigueur : 22 novembre 2026_
 
 Openings facilite la recherche d’offres d’emploi tech publiques. Cette politique s’applique au site et à l’application mobile Openings et explique les informations qu’ils affichent, ce qu’ils enregistrent sur votre appareil et dans quels cas ils se connectent à des services externes.
 
@@ -16,11 +16,13 @@ Openings enregistre la langue, le thème, les offres enregistrées et consultée
 
 ## 3. Suivi technique et analyse facultative
 
-Lorsqu’il est configuré, Sentry reçoit des erreurs techniques assainies pour aider au diagnostic. L’app Android utilise aussi Firebase Crashlytics pour les rapports automatiques de plantages natifs. Openings désactive la collecte par défaut des données personnelles et l’enregistrement de session et n’envoie pas intentionnellement les recherches, le contenu des offres, les corps de requête, les cookies, les identités utilisateur ou les paramètres d’URL. Les services de diagnostic peuvent recevoir les informations techniques sur l’app, l’appareil, le système, la version et le plantage nécessaires pour identifier un problème.
+Lorsqu’il est configuré, Sentry reçoit des erreurs techniques assainies pour aider au diagnostic. Les apps Android et iOS utilisent aussi Firebase Crashlytics pour les rapports automatiques de plantages natifs. Openings désactive la collecte par défaut des données personnelles et l’enregistrement de session et n’envoie pas intentionnellement les recherches, le contenu des offres, les corps de requête, les cookies, les identités utilisateur ou les paramètres d’URL. Les services de diagnostic peuvent recevoir les informations techniques sur l’app, l’appareil, le système, la version et le plantage nécessaires pour identifier un problème.
 
 Mixpanel n’est chargé qu’après votre choix explicite « Autoriser l’analyse ». Il reçoit alors une liste limitée d’événements anonymes, comme la dimension d’un filtre, une tranche de résultats, l’identifiant d’une offre ou l’ouverture de la source d’origine. Il ne reçoit ni texte de recherche, ni contenu d’offre, ni adresse e-mail, ni URL complète, ni position déduite de l’IP, ni page vue automatique, ni autocapture, ni enregistrement de session. Vous pouvez refuser ou retirer votre accord sur cette page ; le retrait efface l’identité d’analyse anonyme sans toucher aux offres enregistrées ni aux autres préférences.
 
-Dans l’application mobile, OneSignal est initialisé avec un consentement obligatoire. Openings n’active le traitement des notifications qu’après votre accord et l’autorisation du système d’exploitation. OneSignal peut alors traiter un identifiant de l’appareil ou de l’installation ainsi que les informations de livraison ou d’interaction nécessaires au fonctionnement des notifications. Vous pouvez les désactiver dans les réglages de l’appareil.
+Dans l’application mobile, OneSignal est initialisé avec un consentement obligatoire. Openings n’active le traitement des notifications qu’après votre accord dans l’application. Leur affichage nécessite également l’autorisation du système d’exploitation ; ces contrôles sont distincts. OneSignal peut alors traiter un identifiant de l’appareil ou de l’installation ainsi que les informations de livraison ou d’interaction nécessaires au fonctionnement des notifications. Vous pouvez les désactiver dans les réglages de l’appareil.
+
+Les apps Android et iOS utilisent Firebase Remote Config pour obtenir les paramètres de compatibilité et de mise à jour. Firebase traite les données techniques d’installation et de connexion nécessaires à ce service.
 
 Les questions sur le suivi ou l’analyse peuvent être envoyées à support@openings.dev.
 
