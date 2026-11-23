@@ -1,6 +1,6 @@
 # Privacy Policy
 
-_Effective date: November 22, 2026_
+_Effective date: November 23, 2026_
 
 Openings makes public technology job listings easier to find. This policy applies to the Openings website and mobile application and explains what information they display, what they save on your device, and when they connect to external services.
 
@@ -14,11 +14,15 @@ Openings also displays public GitHub account information attached to a listing, 
 
 Openings stores language, theme, saved and viewed jobs, discovery preferences, and your analytics and notification choices in local storage on your browser or mobile device. These settings restore the experience you selected and are not used to create an account. They remain there until you change them, clear the site or app data, or uninstall the app.
 
+In the mobile app, blocked-author handles are stored only on your device to hide their listings, including saved listings. You can unblock authors in the navigation menu without deleting saved jobs. Blocked-author handles are not sent as analytics.
+
 ## 3. Technical monitoring and optional analytics
 
 When configured, Sentry receives sanitized technical errors so maintainers can diagnose failures. The Android and iOS apps also use Firebase Crashlytics for automatic native crash reports. Openings disables default personal-data collection and session replay and does not intentionally send searches, job content, request bodies, cookies, user identities, or URL query strings. Diagnostic services can receive technical app, device, operating-system, release, and crash information needed to identify a failure.
 
-Mixpanel is not loaded until you explicitly choose “Allow analytics.” If allowed, it receives a small allowlist of anonymous product events such as a filter dimension, result-count range, job ID, or original-listing click. It does not receive search text, job content, email addresses, full URLs, IP-derived location, automatic page views, autocapture, or session replay. You can decline or revoke consent at any time on this page; revocation clears the retained anonymous analytics identity and does not affect saved jobs or other product preferences.
+Mixpanel product analytics remain disabled until you explicitly allow them. If allowed, it receives a small allowlist of anonymous product events such as a filter dimension, result-count range, job ID, or original-listing click. It does not receive search text, job content, email addresses, full URLs, IP-derived location, automatic page views, autocapture, or session replay.
+
+This page controls analytics for the website in this browser. In the mobile app, use “Optional product analytics” in the navigation menu to allow or disable analytics. These choices are separate. Disabling analytics stops product-event forwarding and resets the local analytics identity without removing saved jobs or other preferences. It does not delete events previously received by the analytics service.
 
 In the mobile app, OneSignal is initialized with consent required. Openings does not enable notification processing until you choose to allow notifications in the app. Displaying notifications also requires the operating-system permission; these are separate controls. OneSignal can then process a device or installation identifier and notification delivery or interaction information needed to send and operate notifications. You can disable notifications in your device settings.
 

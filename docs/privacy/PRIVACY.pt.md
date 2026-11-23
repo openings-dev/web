@@ -1,6 +1,6 @@
 # Política de Privacidade
 
-_Data de vigência: 22 de novembro de 2026_
+_Data de vigência: 23 de novembro de 2026_
 
 O Openings facilita a busca por anúncios públicos de vagas de tecnologia. Esta política se aplica ao site e ao aplicativo móvel do Openings e explica quais informações eles exibem, o que fica salvo no dispositivo e quando se conectam a serviços externos.
 
@@ -14,11 +14,15 @@ O Openings também exibe informações públicas da conta no GitHub associada ao
 
 O Openings salva idioma, tema, vagas salvas e visualizadas, preferências de descoberta e suas escolhas sobre métricas e notificações no armazenamento local do navegador ou dispositivo móvel. Esses dados restauram a experiência escolhida e não criam uma conta. Eles permanecem ali até você alterá-los, limpar os dados do site ou app ou desinstalar o aplicativo.
 
+No aplicativo móvel, os identificadores dos autores bloqueados ficam apenas no dispositivo para ocultar suas vagas, inclusive as salvas. Você pode desbloquear autores no menu de navegação sem apagar vagas salvas. Os identificadores dos autores bloqueados não são enviados como métricas.
+
 ## 3. Monitoramento técnico e métricas opcionais
 
 Quando configurado, o Sentry recebe erros técnicos sanitizados para que os mantenedores possam diagnosticar falhas. Os apps Android e iOS também usam o Firebase Crashlytics para relatórios automáticos de falhas nativas. O Openings desativa a coleta padrão de dados pessoais e a gravação de sessões e não envia intencionalmente buscas, conteúdo de vagas, corpo de requisições, cookies, identidade do usuário nem parâmetros de URL. Serviços de diagnóstico podem receber dados técnicos do app, aparelho, sistema operacional, versão e falha necessários para identificar um problema.
 
-O Mixpanel não é carregado até você escolher explicitamente “Permitir métricas”. Quando permitido, ele recebe uma lista pequena de eventos anônimos, como dimensão de filtro, faixa de resultados, ID da vaga ou abertura da fonte original. Não recebe texto de busca, conteúdo de vagas, e-mails, URLs completas, localização derivada de IP, visualizações automáticas, autocaptura nem gravação de sessão. Você pode recusar ou revogar a permissão nesta página; a revogação apaga a identidade anônima de métricas e não afeta vagas salvas nem outras preferências.
+As métricas de produto do Mixpanel permanecem desativadas até você permiti-las explicitamente. Quando permitido, ele recebe uma lista pequena de eventos anônimos, como dimensão de filtro, faixa de resultados, ID da vaga ou abertura da fonte original. Não recebe texto de busca, conteúdo de vagas, e-mails, URLs completas, localização derivada de IP, visualizações automáticas, autocaptura nem gravação de sessão.
+
+Esta página controla as métricas do site neste navegador. No aplicativo móvel, use “Analytics opcionais” no menu de navegação para permitir ou desativar as métricas. Essas escolhas são independentes. Desativar as métricas interrompe o envio de eventos de produto e redefine a identidade local de métricas sem remover vagas salvas ou outras preferências. Isso não apaga eventos já recebidos pelo serviço de métricas.
 
 No aplicativo móvel, o OneSignal é iniciado com consentimento obrigatório. O Openings só habilita o processamento de notificações depois que você permite as notificações no aplicativo. A exibição também depende da permissão do sistema operacional; são controles distintos. O OneSignal pode então processar um identificador do aparelho ou da instalação e informações de entrega ou interação necessárias para operar as notificações. Você pode desativá-las nos ajustes do dispositivo.
 

@@ -1,6 +1,6 @@
 # Política de privacidad
 
-_Fecha de entrada en vigor: 22 de noviembre de 2026_
+_Fecha de entrada en vigor: 23 de noviembre de 2026_
 
 Openings facilita la búsqueda de ofertas públicas de empleo tecnológico. Esta política se aplica al sitio web y a la aplicación móvil de Openings y explica qué información muestran, qué guardan en tu dispositivo y cuándo se conectan a servicios externos.
 
@@ -14,11 +14,15 @@ Openings también muestra información pública de cuentas de GitHub asociada a 
 
 Openings guarda el idioma, el tema, las ofertas guardadas y vistas, las preferencias de descubrimiento y tus elecciones de analítica y notificaciones en el almacenamiento local del navegador o dispositivo móvil. Estos datos restauran la experiencia elegida y no crean una cuenta. Permanecen allí hasta que los cambies, borres los datos del sitio o la app, o desinstales la aplicación.
 
+En la aplicación móvil, los identificadores de los autores bloqueados se guardan solo en el dispositivo para ocultar sus ofertas, incluidas las guardadas. Puedes desbloquear autores en el menú de navegación sin borrar ofertas guardadas. Los identificadores de autores bloqueados no se envían como datos analíticos.
+
 ## 3. Supervisión técnica y analítica opcional
 
 Cuando está configurado, Sentry recibe errores técnicos depurados para ayudar a diagnosticar fallos. Las apps de Android e iOS también usan Firebase Crashlytics para informes automáticos de fallos nativos. Openings desactiva la recopilación predeterminada de datos personales y la reproducción de sesiones y no envía intencionadamente búsquedas, contenido de ofertas, cuerpos de solicitudes, cookies, identidades de usuario ni parámetros de URL. Los servicios de diagnóstico pueden recibir datos técnicos de la app, dispositivo, sistema operativo, versión y fallo necesarios para identificar un problema.
 
-Mixpanel no se carga hasta que eliges expresamente “Permitir analítica”. Si lo permites, recibe una lista pequeña de eventos anónimos, como la dimensión de un filtro, un rango de resultados, el ID de una oferta o la apertura de la fuente original. No recibe texto de búsqueda, contenido de ofertas, correos, URLs completas, ubicación derivada de IP, vistas automáticas, autocaptura ni reproducción de sesiones. Puedes rechazar o revocar el permiso en esta página; al revocarlo se borra la identidad analítica anónima sin afectar las ofertas guardadas ni otras preferencias.
+La analítica de producto de Mixpanel permanece desactivada hasta que la permitas expresamente. Si lo permites, recibe una lista pequeña de eventos anónimos, como la dimensión de un filtro, un rango de resultados, el ID de una oferta o la apertura de la fuente original. No recibe texto de búsqueda, contenido de ofertas, correos, URLs completas, ubicación derivada de IP, vistas automáticas, autocaptura ni reproducción de sesiones.
+
+Esta página controla la analítica del sitio en este navegador. En la aplicación móvil, usa “Analítica opcional” en el menú de navegación para permitir o desactivar la analítica. Estas decisiones son independientes. Desactivarla detiene el envío de eventos de producto y restablece la identidad analítica local sin eliminar ofertas guardadas ni otras preferencias. No elimina eventos que el servicio de analítica ya haya recibido.
 
 En la aplicación móvil, OneSignal se inicia con consentimiento obligatorio. Openings solo activa el procesamiento de notificaciones después de que las permitas en la aplicación. Su visualización también requiere el permiso del sistema operativo; son controles distintos. OneSignal puede entonces procesar un identificador del dispositivo o la instalación e información de entrega o interacción necesaria para operar las notificaciones. Puedes desactivarlas en los ajustes del dispositivo.
 
